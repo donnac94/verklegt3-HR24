@@ -5,5 +5,5 @@
 - Gunnar Andri - 	gunnarat23@ru.is	 gunnarandriGA
 - Ylfa Sigurðardóttir - Ylfasig23@ru.is	ylfasig
 - Helga Sigrún
-- Guðni Emil - gudni24@ru.is - GudniEmil24
+- Guðni Emil - gudni24@ru.is - GudniEmil24 
 
