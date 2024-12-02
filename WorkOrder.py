@@ -6,32 +6,26 @@ class WorkOrder:
     def __init__(
         self,
         work_order_id: str,
-        property: str,
-        work_done: str,
-        upkeep_status: str,
-        employee: str,
-        total_price: int,
-        marked_as_finished: bool,
-        report_status: int,
-        contractors_used: str,
+        work_to_be_done: str,
+        property: str
+        submitting_manager : str,
+        date : datetime
+        priority : str
+        work_order_status : str
     ) -> None:
         """
         :param str work_order_id: The unique id of the work order.
+        :param str work_to_be_done: Work that needs to be done
         :param str property: The property of the work order.
-        :param str work_done: The work done in the work order.
-        :param str upkeep_status: The status of the work order.
-        :param str employee: The full name of the employee of the work order.
-        :param int total_price: The total price of the work order.
-        :param bool marked_as_finished: Whether the work order is finished.
-        :param int report_status: The report status of the work order.
-        :param str contractors_used: Contractors used in the work order.
+        :param str submitting_manager: The manager submitting the work order
+        :param str date: The datetime of the work order
+        :para, str priority: The priority order of the work to be done
+        :param work_order_status: The status on the work order
         """
         self.work_order_id = work_order_id
+        self.work_to_be_done = work_to_be_done
         self.property = property
-        self.work_done = work_done
-        self.upkeep_status = upkeep_status
-        self.employee = employee
-        self.total_price = total_price
-        self.marked_as_finished = marked_as_finished
-        self.report_status = report_status
-        self.contractors_used = contractors_used
+        self.submitting_manager = submitting_manager
+        self.date = date
+        self.priority = priority
+        self.work_order_status = work_order_status
