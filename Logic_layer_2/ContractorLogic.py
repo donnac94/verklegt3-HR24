@@ -1,4 +1,4 @@
-def reateContractor():
+def CreateContractor():
     pass
 
 
