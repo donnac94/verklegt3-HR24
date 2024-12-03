@@ -1,17 +1,19 @@
+from datetime import datetime
+
 class WorkOrder:
     """
     Model that contains information about the Work Order.
     """
 
     def __init__(
-        self,
-        work_order_id: str,
-        work_to_be_done: str,
-        property: str
-        submitting_manager : str,
-        date : datetime
-        priority : str
-        work_order_status : str
+            self,
+            work_order_id: str,
+            work_to_be_done: str,
+            property: str,
+            submitting_manager: str,
+            date: datetime,
+            priority: str,
+            work_order_status: str
     ) -> None:
         """
         :param str work_order_id: The unique id of the work order.
