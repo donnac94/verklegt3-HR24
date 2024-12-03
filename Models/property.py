@@ -16,4 +16,7 @@ class Property():
         """
         self.property_id = property_id
         self.property_condition = property_condition
-        self.requires_maintenance = requires_maintenance 
+        self.requires_maintenance = requires_maintenance
+
+    # def __str__(self):
+    #     return f"Property ID: {self.property_id} Property Condition: {self.property_condition} Requires Maintenance: {self.requires_maintenance}"
