@@ -1,3 +1,7 @@
+from employee import employee
+from property import Property
+from Contractor import Contractor
+
 class MaintenanceReport():
     """
     Model that contains information from a single maintenance report.
@@ -6,25 +10,25 @@ class MaintenanceReport():
     def __init__(
             self,
             maintenance_report_id: int,
-            property: str,
+            property: Property,
             work_done: str,
             upkeep_status: str,
-            employee: str,
+            employee: employee,
             total_costs: int,
             marked_as_finished: bool,
             report_closed: bool,
-            contractors_used: set[str] = []
+            contractors_used: set[Contractor] = []
     ) -> None:
         """
         :param int maintenance_report_id: The unique id for the maintenance report.
-        :param str property: The property which the maintenance report is about.
+        :param Property property: The property which the maintenance report is about.
         :param str work_done: Description of what work was done.
         :param str upkeep_status: States whether upkeep was regular maintenance or emergency repair.
-        :param str employee: The employee who wrote the report.
+        :param employee employee: The employee who wrote the report.
         :param int total_costs: The total costs for the maintenance.
         :param bool marked_as_finished: States whether the report marked as finished or not.
         :param bool report_closed: States whether the report is closed or open (True if closed, False if open).
-        :param set[str] contractors_used: A set of contractors used, if any.
+        :param set[Contractor] contractors_used: A set of contractors used, if any.
         """
 
         self.maintenance_report_id = maintenance_report_id

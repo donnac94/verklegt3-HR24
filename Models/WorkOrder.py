@@ -1,5 +1,6 @@
 from datetime import datetime
-
+from property import Property
+from employee import employee
 class WorkOrder:
     """
     Model that contains information about the Work Order.
@@ -9,8 +10,8 @@ class WorkOrder:
             self,
             work_order_id: str,
             work_to_be_done: str,
-            property: str,
-            submitting_manager: str,
+            property: Property,
+            submitting_manager: employee,
             date: datetime,
             priority: str,
             work_order_status: str
@@ -18,10 +19,10 @@ class WorkOrder:
         """
         :param str work_order_id: The unique id of the work order.
         :param str work_to_be_done: Work that needs to be done
-        :param str property: The property of the work order.
-        :param str submitting_manager: The manager submitting the work order
+        :param Property property: The property of the work order.
+        :param employee submitting_manager: The manager submitting the work order
         :param str date: The datetime of the work order
-        :para, str priority: The priority order of the work to be done
+        :param str priority: The priority order of the work to be done
         :param work_order_status: The status on the work order
         """
         self.work_order_id = work_order_id
