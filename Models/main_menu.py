@@ -1,12 +1,13 @@
 
 
-class main_menu:
+class main_menu():
     
     def __init__(self):
      pass
     
     def menu(self):
-        self.outlines_menu()
+        ret = self.outlines_menu()
+        print(ret)
         while input is not None:
             match input:
                 case 1:
@@ -33,6 +34,9 @@ class main_menu:
             print(d + " " * 50 + d)
         print (d + h*50 + d)
         print (c + "Your input:".center(50, h) + c)
+    
+if __name__ == "__main__":
+    main_menu()
     
     
             
