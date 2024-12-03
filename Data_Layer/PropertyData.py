@@ -1,8 +1,16 @@
-def RegisterProperty():
-    pass
+import csv
+from Models import property
 
-def GetAllProperties():
-    pass
+class PropertyData():
 
-def ChangePropertyInfo():
-    pass
+    def __init__(self):
+        self.file_name = "Enter property csv path"
+
+    def RegisterProperty():
+        pass
+
+    def GetAllProperties():
+        pass
+
+    def ChangePropertyInfo():
+        pass
