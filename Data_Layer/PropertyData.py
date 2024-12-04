@@ -1,7 +1,9 @@
 import csv
 from Models.property import Property
 
+
 class PropertyData:
+    # This class is responsible for handling the data of the properties.
     def __init__(self):
         self.file_name = "Files/properties.csv"
 
