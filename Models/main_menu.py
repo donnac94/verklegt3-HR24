@@ -1,9 +1,16 @@
+import os
+
+
 class Main:
     
     def __init__(self, fullName, username):
         self.fullName = fullName
         self.username = username
     
+    def clear_terminal(self):
+        """Clear the terminal screen."""
+        os.system('cls' if os.name == 'nt' else 'clear')
+
     
     def main_menu_input(self):
         while True:
