@@ -1,11 +1,11 @@
 import csv
-from Models.employee import Employee
+from Models.employee import employee
 
 class EmployeeData:
     def __init__(self):
         self.file_name = "Files/employees.csv"
 
-    def register_employee(self, employee: Employee) -> None:
+    def register_employee(self, employee: employee) -> None:
         with open(self.file_name, 'a', newline='', encoding="utf-8") as csvfile:
             fieldnames = ["employee_id", "full_name", "address", "phone", "gsm", "email", "location"]
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
@@ -23,14 +23,14 @@ class EmployeeData:
                 "location": employee.location
             })
 
-    def get_all_employees(self) -> list[Employee]:
+    def get_all_employees(self) -> list[employee]:
         ret_list = []
         try:
             with open(self.file_name, 'r', newline='', encoding="utf-8") as csvfile:
                 reader = csv.DictReader(csvfile)
                 for row in reader:
                     ret_list.append(
-                        Employee(
+                        employee(
                             row["employee_id"],
                             row["full_name"],
                             row["address"],

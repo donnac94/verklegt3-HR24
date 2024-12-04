@@ -1,3 +1,5 @@
+from Models.location import Location
+
 class employee():
     """ Model that contains information about employees """
     def __init__(
@@ -8,7 +10,7 @@ class employee():
             gsm: str, 
             homephone: str, 
             email: str, 
-            work_location: str, 
+            work_location: Location, 
             is_manager: bool
     ) -> None:
         """
@@ -18,7 +20,7 @@ class employee():
         :param str gsm: employee's private phone number.
         :param str homephone: the employee's homephone number.
         :param str email: email address for employee.
-        :param str work_location: where employee works.
+        :param Location work_location: where employee works.
         :param bool is_manager: to check if employee is a manager.
         """
         self.name = name
