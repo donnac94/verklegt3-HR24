@@ -1,7 +1,3 @@
-from employee import employee
-from Models.property import Property
-from Models.Contractor import Contractor
-
 class MaintenanceReport():
     """
     Model that contains information from a single maintenance report.
