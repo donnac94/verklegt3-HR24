@@ -1,16 +1,18 @@
 import csv
 from Models.property import Property
 
-
 class PropertyData:
-    # This class is responsible for handling the data of the properties.
+    """
+    This class is responsible for handling the data of the properties.
+    """
     def __init__(self):
         self.file_name = "Files/properties.csv"
 
-    def RegisterProperty(self, property_obj: Property) -> None:
+    def register_property(self, property_obj: Property) -> str:
         """
         Register a new property in the CSV file.
         :param property_obj: The Property object to save.
+        :return: Success message or raises an exception.
         """
         try:
             with open(self.file_name, 'a', newline='', encoding="utf-8") as csvfile:
@@ -32,13 +34,14 @@ class PropertyData:
                     "manager": property_obj.manager,
                     "requires_maintenance": ",".join(property_obj.requires_maintenance),
                 })
+            return "Property registered successfully."
         except Exception as e:
-            print(f"Error saving property: {e}")
+            raise Exception(f"Error saving property: {e}")
 
-    def GetAllProperties(self) -> list[Property]:
+    def get_all_properties(self) -> list[Property]:
         """
         Retrieve all properties from the CSV file.
-        :return: A list of Property objects.
+        :return: A list of Property objects or raises an exception.
         """
         ret_list = []
         try:
@@ -53,22 +56,22 @@ class PropertyData:
                         manager=row["manager"],
                         requires_maintenance=row["requires_maintenance"].split(","),
                     ))
+            return ret_list
         except FileNotFoundError:
-            print("File not found. Returning an empty list.")
+            return []  # Return an empty list if the file doesn't exist
         except Exception as e:
-            print(f"Error reading properties: {e}")
-        return ret_list
+            raise Exception(f"Error reading properties: {e}")
 
-    def ChangePropertyInfo(self, property_id: int, updated_property: Property) -> bool:
+    def change_property_info(self, property_id: int, updated_property: Property) -> str:
         """
         Change the information of a property.
         :param property_id: The ID of the property to update.
         :param updated_property: The updated Property object.
-        :return: True if successful, False otherwise.
+        :return: Success message or raises an exception.
         """
         success = False
         try:
-            properties = self.GetAllProperties()
+            properties = self.get_all_properties()
             with open(self.file_name, 'w', newline='', encoding="utf-8") as csvfile:
                 fieldnames = [
                     "property_id", "address", "location", "property_condition", 
@@ -90,6 +93,9 @@ class PropertyData:
                         "manager": property_obj.manager,
                         "requires_maintenance": ",".join(property_obj.requires_maintenance),
                     })
+            if success:
+                return "Property updated successfully."
+            else:
+                return "Property not found."
         except Exception as e:
-            print(f"Error updating property: {e}")
-        return success
+            raise Exception(f"Error updating property: {e}")
