@@ -41,7 +41,7 @@ class EmployeeData:
                         )
                     )
         except FileNotFoundError:
-            print("No employee data file found.")
+            return []
         return ret_list
 
     def change_employee_info(self, employee_id: str, field: str, new_value: str) -> None:
@@ -55,8 +55,7 @@ class EmployeeData:
                 break
 
         if not employee_found:
-            print(f"Employee with ID {employee_id} not found.")
-            return
+            raise ValueError(f"Employee with ID {employee_id} not found.")
 
         with open(self.file_name, 'w', newline='', encoding="utf-8") as csvfile:
             fieldnames = ["employee_id", "full_name", "address", "phone", "gsm", "email", "location"]
@@ -72,4 +71,3 @@ class EmployeeData:
                     "email": employee.email,
                     "location": employee.location
                 })
-        print(f"Employee with ID {employee_id} updated successfully.")
