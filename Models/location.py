@@ -1,5 +1,4 @@
 from datetime import datetime
-from employee import employee
 
 class Location():
     """
@@ -12,14 +11,14 @@ class Location():
             airport: str,
             phone_nr: str,
             opening_time: datetime,
-            manager: employee
+            manager: str
     ) -> None:
         """
         :param str country: The country of the location.
         :param str airport: The airport nearest to the location
         :param str phone_nr: The phone number for the location.
         :param datetime opening_time: The opening times for this location.
-        :param employee manager: The manager for this location.
+        :param str manager: The manager for this location.
         """
         self.country = country
         self.airport = airport

@@ -1,4 +1,4 @@
-from location import Location
+from Models.location import Location
 
 class employee():
     """ Model that contains information about employees """
