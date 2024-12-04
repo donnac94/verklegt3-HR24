@@ -38,13 +38,13 @@ class Main:
             elif choice == 'q':
                 return self.quit()
     
-    def read_file(self) -> login:
-        while True:
-            with open('users.txt', 'r'):
-                if username in 'user.txt':
-                    return self.supervisor_menu()
-                else:
-                    return self.employee_menu()
+    # def read_file(self) -> login:
+    #     while True:
+    #         with open('users.txt', 'r'):
+    #             if username in 'user.txt':
+    #                 return self.supervisor_menu()
+    #             else:
+    #                 return self.employee_menu()
 
 if __name__ == "__main__":
     testtest_menu = Main(fullName=(), username=())

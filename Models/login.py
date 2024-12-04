@@ -9,7 +9,12 @@ class login:
             
             use = input("\nEnter Username: ")
             pas = input("\nEnter Password: ")
-            with open('users.txt', 'r'):
+            with open(r'users.txt', 'r') as fp:
+                lines = fp.readlines()
+                for row in lines:
+                    word = use
+                    if row.find(word)!= None:
+                        return self.supervisor_menu()
                 if use == 1 and pas == 1:
                     return self.supervisor_menu
                 else:
