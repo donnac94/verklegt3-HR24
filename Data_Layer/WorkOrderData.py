@@ -6,19 +6,23 @@ class WorkOrderData():
     def __init__(self):
         self.file_name = "Files/work_orders.csv"
 
-    def CreateWorkOrder(self, WorkOrder):
+    def CreateWorkOrder(self, Work_order_obj: WorkOrder):
+        """
+        Register a work order in the csv file.
+        :param WorkOrder work_order_obj: The WorkOrder object to save.
+        """
         with open(self.file_name, 'a', newline='', encoding="utf-8") as csvfile:
                 fieldnames = ["work_order_id","work_to_be_done","property","submitting_manager","date","priority","work_order_status"]
                 writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
                 writer.writerow({
-                    'work_order_id': WorkOrder.work_order_id,
-                    'work_to_be_done': WorkOrder.work_to_be_done,
-                    'property': WorkOrder.property,
-                    'submitting_manager': WorkOrder.submitting_manager,
-                    'date': WorkOrder.date,
-                    'priority': WorkOrder.priority,
-                    'work_order_status': WorkOrder.work_order_status
+                    'work_order_id': Work_order_obj.work_order_id,
+                    'work_to_be_done': Work_order_obj.work_to_be_done,
+                    'property': Work_order_obj.property,
+                    'submitting_manager': Work_order_obj.submitting_manager,
+                    'date': Work_order_obj.date,
+                    'priority': Work_order_obj.priority,
+                    'work_order_status': Work_order_obj.work_order_status
                     })
 
     def GetAllWorkOrders(self):
