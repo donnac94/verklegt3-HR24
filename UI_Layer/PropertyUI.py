@@ -1,129 +1,66 @@
-import os
-from Models.property import Property
-import Data_Layer.PropertyData as PropertyData
+from PropertyLogic import change_property_info, list_properties, register_property
 
-def clear_screen():
-    """Clears the terminal screen."""
-    os.system('cls' if os.name == 'nt' else 'clear')
+from Models.property import Property
 
 def property_menu():
-    """
-    Displays the property management menu and handles user choices.
-    """
-    property_data = PropertyData()
-    
+    properties = []  # Initialize an empty list of properties
+
     while True:
-        clear_screen()
-        print("=== Property Management System ===")
+        print("\n=== Property Management Menu ===")
         print("1. Register Property")
-        print("2. List All Properties")
-        print("3. Update Property Info")
+        print("2. List Properties")
+        print("3. Change Property Info")
         print("4. Exit")
-        
+
         choice = input("Enter your choice: ")
         if choice == "1":
-            register_property_tui(property_data)
+            register_property_ui(properties)
         elif choice == "2":
-            list_properties_tui(property_data)
+            list_properties_ui(properties)
         elif choice == "3":
-            update_property_info_tui(property_data)
+            change_property_info_ui(properties)
         elif choice == "4":
-            print("Exiting Property Management System. Goodbye!")
+            print("Exiting Property Management.")
             break
         else:
             print("Invalid choice. Please try again.")
-            input("Press Enter to continue...")
 
-def register_property_tui(property_data: PropertyData):
-    """
-    Handles registering a new property via TUI.
-    """
-    clear_screen()
-    print("=== Register New Property ===")
+def register_property_ui(properties: list[Property]):
     try:
-        property_id = int(input("Enter Property ID: "))
-        address = input("Enter Address: ")
-        location = input("Enter Location (City, Country): ")
-        property_condition = input("Enter Property Condition: ")
-        manager = input("Enter Manager Name: ")
-        features = input("Enter Features (comma-separated): ").split(",")
-        requires_maintenance = input("Enter Maintenance Needs (comma-separated): ").split(",")
-
-        new_property = Property(
-            property_id=property_id,
-            address=address,
-            location=location,
-            property_condition=property_condition,
-            manager=manager,
-            features=[f.strip() for f in features if f.strip()],
-            requires_maintenance=[rm.strip() for rm in requires_maintenance if rm.strip()],
-        )
-        property_data.RegisterProperty(new_property)
-        print("Property registered successfully!")
+        property_details = {
+            "property_id": int(input("Enter Property ID: ")),
+            "address": input("Enter address: "),
+            "location": input("Enter location (City, Country): "),
+            "property_condition": input("Enter property condition: "),
+            "manager": input("Enter manager name: "),
+        }
+        message = register_property(properties, property_details)
+        print(message)
     except ValueError:
-        print("Invalid input. Please enter the correct data types.")
-    except Exception as e:
-        print(f"An error occurred: {e}")
-    input("Press Enter to continue...")
+        print("Invalid input. Please enter valid data.")
 
-def list_properties_tui(property_data: PropertyData):
-    """
-    Handles listing all properties via TUI.
-    """
-    clear_screen()
-    print("=== List of All Properties ===")
-    properties = property_data.GetAllProperties()
-
-    if not properties:
-        print("No properties found.")
+def list_properties_ui(properties: list[Property]):
+    props = list_properties(properties)
+    if not props:
+        print("No properties registered.")
     else:
-        for prop in properties:
+        for prop in props:
             print(prop)
             print("-" * 40)
-    input("Press Enter to continue...")
 
-def update_property_info_tui(property_data: PropertyData):
-    """
-    Handles updating property information via TUI.
-    """
-    clear_screen()
-    print("=== Update Property Information ===")
+def change_property_info_ui(properties: list[Property]):
     try:
-        property_id = int(input("Enter the Property ID to update: "))
-        properties = property_data.GetAllProperties()
-        property_to_edit = next((p for p in properties if p.property_id == property_id), None)
-
-        if not property_to_edit:
-            print("Property not found!")
-        else:
-            print(f"Editing Property ID: {property_id}")
-            address = input(f"Enter new Address (current: {property_to_edit.address}): ") or property_to_edit.address
-            location = input(f"Enter new Location (current: {property_to_edit.location}): ") or property_to_edit.location
-            property_condition = input(f"Enter new Condition (current: {property_to_edit.property_condition}): ") or property_to_edit.property_condition
-            manager = input(f"Enter new Manager (current: {property_to_edit.manager}): ") or property_to_edit.manager
-            features = input(f"Enter new Features (current: {', '.join(property_to_edit.features)}): ")
-            requires_maintenance = input(f"Enter new Maintenance Needs (current: {', '.join(property_to_edit.requires_maintenance)}): ")
-
-            updated_property = Property(
-                property_id=property_id,
-                address=address,
-                location=location,
-                property_condition=property_condition,
-                manager=manager,
-                features=[f.strip() for f in features.split(",")] if features else property_to_edit.features,
-                requires_maintenance=[rm.strip() for rm in requires_maintenance.split(",")] if requires_maintenance else property_to_edit.requires_maintenance,
-            )
-
-            success = property_data.ChangePropertyInfo(property_id, updated_property)
-            if success:
-                print("Property updated successfully!")
-            else:
-                print("Failed to update property.")
+        property_id = int(input("Enter Property ID to edit: "))
+        updated_details = {
+            "address": input("Enter new address: "),
+            "location": input("Enter new location: "),
+            "property_condition": input("Enter new property condition: "),
+            "manager": input("Enter new manager name: "),
+        }
+        message = change_property_info(properties, property_id, updated_details)
+        print(message)
     except ValueError:
-        print("Invalid input. Please try again.")
-    except Exception as e:
-        print(f"An error occurred: {e}")
-    input("Press Enter to continue...")
+        print("Invalid input. Please enter valid data.")
 
 if __name__ == "__main__":
     property_menu()

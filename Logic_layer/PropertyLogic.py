@@ -1,71 +1,50 @@
 from Models.property import Property
 
-
-def RegisterProperty(properties: list[Property]):
+def register_property(properties: list[Property], property_details: dict) -> str:
     """
     Register a new property.
     :param properties: List of existing properties.
+    :param property_details: Dictionary containing property details.
+    :return: Success or error message.
     """
-    try:
-        property_id = int(input("Enter Property ID: "))
-        if any(p.property_id == property_id for p in properties):
-            print("Property ID already exists!")
-            return
+    property_id = property_details.get("property_id")
+    if any(p.property_id == property_id for p in properties):
+        return "Property ID already exists."
 
-        address = input("Enter address: ")
-        location = input("Enter location (City, Country): ")
-        property_condition = input("Enter property condition: ")
-        manager = input("Enter manager name: ")
-        features = input("Enter features (comma-separated): ").split(",")
-        
-        new_property = Property(
-            property_id=property_id,
-            address=address,
-            location=location,
-            property_condition=property_condition,
-            manager=manager,
-            features=features,
-        )
-        properties.append(new_property)
-        print("Property registered successfully!")
-    except ValueError:
-        print("Invalid input. Please try again.")
+    new_property = Property(
+        property_id=property_id,
+        address=property_details.get("address"),
+        location=property_details.get("location"),
+        property_condition=property_details.get("property_condition"),
+        manager=property_details.get("manager"),
+    )
+    properties.append(new_property)
+    return "Property registered successfully."
 
-
-def ListProperties(properties: list[Property]):
+def list_properties(properties: list[Property]) -> list:
     """
     List all properties.
     :param properties: List of existing properties.
+    :return: A list of properties.
     """
-    if not properties:
-        print("No properties registered.")
-        return
+    return properties if properties else []
 
-    print("Properties List:")
-    for prop in properties:
-        print(prop)
-        print("-" * 40)
-
-
-def ChangePropertiesInfo(properties: list[Property]):
+def change_property_info(properties: list[Property], property_id: int, updated_details: dict) -> str:
     """
     Change information of an existing property.
     :param properties: List of existing properties.
+    :param property_id: ID of the property to update.
+    :param updated_details: Dictionary containing updated property details.
+    :return: Success or error message.
     """
-    property_id = int(input("Enter Property ID to edit: "))
     property_to_edit = next((p for p in properties if p.property_id == property_id), None)
 
     if not property_to_edit:
-        print("Property not found!")
-        return
+        return "Property not found."
 
-    print(f"Editing Property ID: {property_id}")
-    property_to_edit.address = input(f"Enter new address (current: {property_to_edit.address}): ") or property_to_edit.address
-    property_to_edit.location = input(f"Enter new location (current: {property_to_edit.location}): ") or property_to_edit.location
-    property_to_edit.property_condition = input(f"Enter new condition (current: {property_to_edit.property_condition}): ") or property_to_edit.property_condition
-    property_to_edit.manager = input(f"Enter new manager (current: {property_to_edit.manager}): ") or property_to_edit.manager
-    features = input(f"Enter new features (current: {', '.join(property_to_edit.features)}): ")
-    if features:
-        property_to_edit.features = features.split(",")
+    property_to_edit.address = updated_details.get("address", property_to_edit.address)
+    property_to_edit.location = updated_details.get("location", property_to_edit.location)
+    property_to_edit.property_condition = updated_details.get("property_condition", property_to_edit.property_condition)
+    property_to_edit.manager = updated_details.get("manager", property_to_edit.manager)
 
-    print("Property updated successfully!")
+    return "Property updated successfully."

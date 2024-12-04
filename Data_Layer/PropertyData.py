@@ -16,7 +16,7 @@ class PropertyData:
             with open(self.file_name, 'a', newline='', encoding="utf-8") as csvfile:
                 fieldnames = [
                     "property_id", "address", "location", "property_condition", 
-                    "manager", "features", "requires_maintenance"
+                    "manager", "requires_maintenance"
                 ]
                 writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
                 
@@ -30,7 +30,6 @@ class PropertyData:
                     "location": property_obj.location,
                     "property_condition": property_obj.property_condition,
                     "manager": property_obj.manager,
-                    "features": ",".join(property_obj.features),
                     "requires_maintenance": ",".join(property_obj.requires_maintenance),
                 })
         except Exception as e:
@@ -52,7 +51,6 @@ class PropertyData:
                         location=row["location"],
                         property_condition=row["property_condition"],
                         manager=row["manager"],
-                        features=row["features"].split(","),
                         requires_maintenance=row["requires_maintenance"].split(","),
                     ))
         except FileNotFoundError:
@@ -74,7 +72,7 @@ class PropertyData:
             with open(self.file_name, 'w', newline='', encoding="utf-8") as csvfile:
                 fieldnames = [
                     "property_id", "address", "location", "property_condition", 
-                    "manager", "features", "requires_maintenance"
+                    "manager", "requires_maintenance"
                 ]
                 writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
                 writer.writeheader()
@@ -90,7 +88,6 @@ class PropertyData:
                         "location": property_obj.location,
                         "property_condition": property_obj.property_condition,
                         "manager": property_obj.manager,
-                        "features": ",".join(property_obj.features),
                         "requires_maintenance": ",".join(property_obj.requires_maintenance),
                     })
         except Exception as e:
