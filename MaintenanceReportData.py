@@ -1,20 +1,20 @@
 import csv
 from Models.maintenance_report import MaintenanceReport
 
-class MaintainanceReportData:
+class MaintenanceReportData:
     def __init__(self):
-        self.file_name = "Files/maintainancereport.csv"
+        self.file_name = "Files/maintenancereport.csv"
         
     def submit_maintenance_report(self, maintenance_report: MaintenanceReport) -> None:
         with open(self.file_name, 'a', newline='', encoding="utf-8") as csvfile:
-            fieldnames = ["maintainance_report_id", "property", "work_done", "upkeep_status", "employee", "total_price", "report_status", "contractors_used"]
+            fieldnames = ["maintenance_report_id", "property", "work_done", "upkeep_status", "employee", "total_price", "report_status", "contractors_used"]
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
             if csvfile.tell() == 0:  
                 writer.writeheader()
 
             writer.writerow({
-                "maintainance_report_id": maintenance_report.maintainance_report_id,
+                "maintenance_report_id": maintenance_report.maintenance_report_id,
                 "property": maintenance_report.property,
                 "work_done": maintenance_report.work_done,
                 "upkeep_status": maintenance_report.upkeep_status,
@@ -32,7 +32,7 @@ class MaintainanceReportData:
                 for row in reader:
                     reports.append(
                         MaintenanceReport(
-                            row["maintainance_report_id"],
+                            row["maintenance_report_id"],
                             row["property"],
                             row["work_done"],
                             row["upkeep_status"],
@@ -46,12 +46,12 @@ class MaintainanceReportData:
             return []
         return reports
 
-    def change_maintenance_report_info(self, maintainance_report_id: str, field: str, new_value: str) -> None:
+    def change_maintenance_report_info(self, maintenance_report_id: str, field: str, new_value: str) -> None:
         reports = self.get_all_maintenance_reports()
         report_found = False
 
         for report in reports:
-            if report.maintainance_report_id == maintainance_report_id:
+            if report.maintenance_report_id == maintenance_report_id:
                 if not hasattr(report, field):
                     raise AttributeError(f"Invalid field: {field}")
                 setattr(report, field, new_value)
@@ -59,15 +59,15 @@ class MaintainanceReportData:
                 break
 
         if not report_found:
-            raise ValueError(f"Maintenance report with ID {maintainance_report_id} not found.")
+            raise ValueError(f"Maintenance report with ID {maintenance_report_id} not found.")
 
         with open(self.file_name, 'w', newline='', encoding="utf-8") as csvfile:
-            fieldnames = ["maintainance_report_id", "property", "work_done", "upkeep_status", "employee", "total_price", "report_status", "contractors_used"]
+            fieldnames = ["maintenance_report_id", "property", "work_done", "upkeep_status", "employee", "total_price", "report_status", "contractors_used"]
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writeheader()
             for report in reports:
                 writer.writerow({
-                    "maintainance_report_id": report.maintainance_report_id,
+                    "maintenance_report_id": report.maintenance_report_id,
                     "property": report.property,
                     "work_done": report.work_done,
                     "upkeep_status": report.upkeep_status,
@@ -77,8 +77,8 @@ class MaintainanceReportData:
                     "contractors_used": report.contractors_used
                 })
 
-    def mark_report_as_finished(self, maintainance_report_id: str) -> None:
-        self.change_maintenance_report_info(maintainance_report_id, "report_status", "Finished")
+    def mark_report_as_finished(self, maintenance_report_id: str) -> None:
+        self.change_maintenance_report_info(maintenance_report_id, "report_status", "Finished")
 
-    def change_report_status(self, maintainance_report_id: str, new_status: str) -> None:
-        self.change_maintenance_report_info(maintainance_report_id, "report_status", new_status)
+    def change_report_status(self, maintenance_report_id: str, new_status: str) -> None:
+        self.change_maintenance_report_info(maintenance_report_id, "report_status", new_status)
