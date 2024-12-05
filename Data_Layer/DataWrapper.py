@@ -3,6 +3,8 @@ from Data_Layer.EmployeeData import EmployeeData
 from Data_Layer.PropertyData import PropertyData
 from Data_Layer.WorkOrderData import WorkOrderData
 # from Data_Layer.ContractorData import ContractorData
+from Models.WorkOrder import WorkOrder
+
 
 class DataWrapper():
     def __init__(self):
@@ -12,5 +14,9 @@ class DataWrapper():
         self.work_order_data = WorkOrderData()
         # self.contractor_data = ContractorData()
 
-    def CreateWorkOrder(self, WorkOrder):
-        return self.work_order_data.CreateWorkOrder(WorkOrder)
+    def CreateWorkOrder(self, work_order_obj: WorkOrder):
+        """
+        Register a work order in the csv file.
+        :param WorkOrder work_order_obj: The WorkOrder object to save.
+        """
+        return self.work_order_data.CreateWorkOrder(work_order_obj)
