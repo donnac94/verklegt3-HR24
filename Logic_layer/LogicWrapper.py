@@ -4,6 +4,7 @@ from Logic_layer.MaintenanceReportLogic import MaintenanceReportLogic
 from Logic_layer.PropertyLogic import PropertyLogic
 from Logic_layer.WorkOrderLogic import WorkOrderLogic
 from Models.WorkOrder import WorkOrder
+
 class LogicWrapper:
     def __init__(self):
         self.contractor_logic = ContractorLogic()
@@ -13,6 +14,15 @@ class LogicWrapper:
         self.work_order_logic = WorkOrderLogic()
 
     def CreateWorkOrder(self, work_order_obj: WorkOrder):
-        """Takes in a WorkOrder object and forwards it to the data layer.
-        :param WorkOrder work_order_obj: The WorkOrder object to save."""
+        """
+        Takes in a WorkOrder object and forwards it to the data layer.
+        :param WorkOrder work_order_obj: The WorkOrder object to save.
+        """
         return self.work_order_logic.CreateWorkOrder(work_order_obj)
+    
+    def GetAllWorkOrders(self) -> list[WorkOrder]:
+        """
+        Retrieve all work orders from the CSV file.
+        :return: A list of work order objects or raises an exception.
+        """
+        return self.work_order_logic.GetAllWorkOrders()
