@@ -6,15 +6,19 @@ class WorkOrderData():
     def __init__(self):
         self.file_name = "Files/work_orders.csv"
 
-    def CreateWorkOrder(self, work_order_obj: WorkOrder):
+    def CreateWorkOrder(self, work_order_obj: WorkOrder) -> str:
         """
         Register a work order in the csv file.
         :param WorkOrder work_order_obj: The WorkOrder object to save.
+        :return: Success message or raises an exception.
         """
         try:
             with open(self.file_name, 'a', newline='', encoding="utf-8") as csvfile:
                     fieldnames = ["work_order_id","work_to_be_done","property","submitting_supervisor","date","priority","work_order_status"]
                     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+                    if csvfile.tell() == 0:
+                        writer.writeheader()
 
                     writer.writerow({
                         'work_order_id': work_order_obj.work_order_id,
@@ -47,11 +51,30 @@ class WorkOrderData():
         except Exception as e:
             raise Exception(f"Error reading work orders: {e}")
         
-    def ChangeWorkOrderInfo():
-        pass
+    def ChangeWorkOrderInfo(self, work_order_id, field, new_data):
+        """
+        Change the information of a work order.
+        """
+        
+        with open(self.file_name, 'r', newline='', encoding="utf-8") as csvfile:
+            reader = csv.DictReader(csvfile)
+            header = reader.fieldnames
+            rows = []
+            for row in reader:
+                if row['work_order_id'].strip() == str(work_order_id):
+                    row[field] = new_data
+                rows.append(row)
 
-    def CloseWorkOrder():
-        pass
+        with open(self.file_name, 'w', newline='', encoding="utf-8") as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames=header)
+            writer.writeheader()
+            writer.writerows(rows)
 
-    def ReopenWorkOrder():
-        pass
+
+# Bara hægt að nota ChangeWorkOrderInfo í UI til að breyta status.
+# Þarf raun ekki sín eigin function held ég
+    # def CloseWorkOrder():
+    #     pass
+
+    # def ReopenWorkOrder():
+    #     pass
