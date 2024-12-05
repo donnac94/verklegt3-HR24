@@ -1,9 +1,16 @@
+import os
+
+
 class Main:
     
     def __init__(self, fullName, username):
         self.fullName = fullName
         self.username = username
     
+    def clear_terminal(self):
+        """Clear the terminal screen."""
+        os.system('cls' if os.name == 'nt' else 'clear')
+
     
     def main_menu_input(self):
         while True:
@@ -38,13 +45,13 @@ class Main:
             elif choice == 'q':
                 return self.quit()
     
-    def read_file(self) -> login:
-        while True:
-            with open('users.txt', 'r'):
-                if username in 'user.txt':
-                    return self.supervisor_menu()
-                else:
-                    return self.employee_menu()
+    # def read_file(self) -> login:
+    #     while True:
+    #         with open('users.txt', 'r'):
+    #             if username in 'user.txt':
+    #                 return self.supervisor_menu()
+    #             else:
+    #                 return self.employee_menu()
 
 if __name__ == "__main__":
     testtest_menu = Main(fullName=(), username=())
