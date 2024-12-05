@@ -13,8 +13,12 @@ class WorkOrderLogic:
         return self.data_wrapper.CreateWorkOrder(work_order_obj)
 
 
-    def ListWorkOrders(self):
-        pass
+    def GetAllWorkOrders(self) -> list[WorkOrder]:
+        """
+        Retrieve all work orders from the CSV file.
+        :return: A list of work order objects or raises an exception.
+        """
+        return self.data_wrapper.GetAllWorkOrders()
 
 
     def ChangeWorkOrderInfo(self):

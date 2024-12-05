@@ -13,14 +13,14 @@ class WorkOrderData():
         """
         try:
             with open(self.file_name, 'a', newline='', encoding="utf-8") as csvfile:
-                    fieldnames = ["work_order_id","work_to_be_done","property","submitting_manager","date","priority","work_order_status"]
+                    fieldnames = ["work_order_id","work_to_be_done","property","submitting_supervisor","date","priority","work_order_status"]
                     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
                     writer.writerow({
                         'work_order_id': work_order_obj.work_order_id,
                         'work_to_be_done': work_order_obj.work_to_be_done,
                         'property': work_order_obj.property,
-                        'submitting_manager': work_order_obj.submitting_manager,
+                        'submitting_supervisor': work_order_obj.submitting_supervisor,
                         'date': work_order_obj.date,
                         'priority': work_order_obj.priority,
                         'work_order_status': work_order_obj.work_order_status
@@ -29,7 +29,7 @@ class WorkOrderData():
         except Exception as e:
             raise Exception(f"Error saving work order: {e}")
 
-    def GetAllWorkOrders(self):
+    def GetAllWorkOrders(self) -> list[WorkOrder]:
         """
         Retrieve all work orders from the CSV file.
         :return: A list of work order objects or raises an exception.
@@ -40,7 +40,7 @@ class WorkOrderData():
                 reader = csv.DictReader(csvfile)
                 for row in reader:
                     ret_list.append(WorkOrder(row["work_order_id"], row["work_to_be_done"], row["property"], 
-                                            row["submitting_manager"], row["date"], row["priority"], row["work_order_status"]))
+                                            row["submitting_supervisor"], row["date"], row["priority"], row["work_order_status"]))
             return ret_list
         except FileNotFoundError:
             return []  # Return an empty list if the file doesn't exist
