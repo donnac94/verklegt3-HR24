@@ -1,1 +1,4 @@
 property_id,address,location,property_condition,manager,requires_maintenance
+1,789 Oak St,Uptown,BAD,John Doe,"Roof Repair, Paint Walls"
+2,456 Elm St,Suburb,Excellent,Jane Smith,"Garden Maintenance, Window Cleaning"
+5,Austurberg 4,Reykjavík,Bad,Donna,"Fix roof, fix heater, fix bathroom tile"

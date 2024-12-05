@@ -1,39 +1,41 @@
 class Property:
     """
-    Model that contains information about a single property.
+    Model that contains information about a Property.
     """
 
     def __init__(
         self,
-        property_id: int,
-        address: str,
-        location: str,
-        property_condition: str,
-        manager: str,
-        requires_maintenance: list[str] = [],
+        property_id: int = 0,
+        address: str = "",
+        location: str = "",
+        property_condition: str = "",
+        manager: str = "",
+        requires_maintenance: list = None,
     ) -> None:
-        """
-        :param int property_id: The unique ID for this property.
-        :param str address: The address of the property.
-        :param str location: The geographical location of the property (City, Country).
-        :param str property_condition: A description of the condition of the property.
-        :param str manager: The manager assigned to oversee the property.
-        :param list[str] requires_maintenance: A list of everything that requires maintenance on the property.
-        """
         self.property_id = property_id
         self.address = address
         self.location = location
         self.property_condition = property_condition
         self.manager = manager
-        self.requires_maintenance = requires_maintenance
+        self.requires_maintenance = requires_maintenance or []
 
-    def __str__(self):
-        return (
-            f"Property ID: {self.property_id}\n"
-            f"Address: {self.address}\n"
-            f"Location: {self.location}\n"
-            f"Condition: {self.property_condition}\n"
-            f"Manager: {self.manager}\n"
-            f"Requires Maintenance: {', '.join(self.requires_maintenance)}"
+    def to_dict(self) -> dict:
+        return {
+            "property_id": self.property_id,
+            "address": self.address,
+            "location": self.location,
+            "property_condition": self.property_condition,
+            "manager": self.manager,
+            "requires_maintenance": ",".join(self.requires_maintenance),
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict):
+        return cls(
+            property_id=int(data.get("property_id", 0)),
+            address=data.get("address", ""),
+            location=data.get("location", ""),
+            property_condition=data.get("property_condition", ""),
+            manager=data.get("manager", ""),
+            requires_maintenance=data.get("requires_maintenance", "").split(",") if data.get("requires_maintenance") else []
         )
-    
