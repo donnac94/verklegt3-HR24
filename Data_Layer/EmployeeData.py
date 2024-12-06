@@ -2,8 +2,8 @@ import csv
 from Models.employee import Employee
 
 class EmployeeData:
-    def __init__(self, file_name):
-        self.file_name = file_name
+    def __init__(self):
+        self.file_name = "Files/employees.csv"
 
     def get_all_employees(self) -> list[Employee]:
         with open(self.file_name, 'r', encoding="utf-8") as csvfile:
