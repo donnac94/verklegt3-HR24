@@ -20,9 +20,9 @@ class Contractor():
                 :param str name: the full name of the contractor
                 :param contact_name : contact name of contractor
                 :param phone_nr: phone number of contractor 
-                param opening_time : opening time for contractors
-                param location : location of contractor
-                param satisfaction_with_previous_work : shows the satisfaction of previous work from contractor.
+                :param opening_time : opening time for contractors
+                :param location : location of contractor
+                :param satisfaction_with_previous_work : shows the satisfaction of previous work from contractor.
                 """
                 self.contractor_id = contractor_id
                 self.name = name
