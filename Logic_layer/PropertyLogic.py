@@ -1,33 +1,29 @@
 from Models.property import Property
+from Data_Layer.PropertyData import PropertyData
 
 class PropertyLogic:
-    """
-    Logic layer for managing property operations.
-    """
-
-    def __init__(self, data_layer):
-        self.data_layer = data_layer
-
-    def list_properties(self) -> list[Property]:
-        return self.data_layer.get_all_properties()
+    def __init__(self, property_data: PropertyData):
+        self.property_data = property_data
 
     def add_property(self, property_details: dict) -> str:
-        property_obj = Property.from_dict(property_details)
-        existing_property = self.data_layer.get_property_by_id(property_obj.property_id)
-        if existing_property:
-            return "Property ID already exists."
-        if self.data_layer.add_property(property_obj):
-            return "Property added successfully."
-        return "Failed to add property."
+        new_property = Property(
+            property_id=property_details["property_id"],
+            address=property_details["address"],
+            location=property_details["location"],
+            property_condition=property_details["property_condition"],
+            manager=property_details["manager"],
+            requires_maintenance=property_details["requires_maintenance"]
+        )
+        self.property_data.add_property(new_property)
+        return "Property added successfully."
 
-    def update_property(self, property_id: int, updated_data: dict) -> str:
-        existing_property = self.data_layer.get_property_by_id(property_id)
-        if not existing_property:
-            return "Property not found."
-        updated_property = Property.from_dict({**existing_property, **updated_data})
-        if self.data_layer.update_property(property_id, updated_property):
-            return "Property updated successfully."
-        return "Failed to update property."
+    def list_properties(self) -> list[Property]:
+        return self.property_data.get_all_properties()
 
-    def get_all_properties(self) -> list[Property]:
-        return self.data_layer.get_all_properties()
+    def update_property(self, property_id, updated_details: dict) -> str:
+        for field, new_value in updated_details.items():
+            self.property_data.update_property(property_id, field, new_value)
+        return "Property updated successfully."
+
+    def get_property_by_id(self, property_id):
+        return self.property_data.get_property_by_id(property_id)

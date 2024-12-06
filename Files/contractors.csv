@@ -1,1 +1,7 @@
 contractor_id,name,contact_name,phone_nr,opening_time,location,satisfaction_with_previous_work
+1,Contractor A,John Contractor,123-456-7890,08:00-18:00,Reykjavík,High
+2,Contractor B,Jane Contractor,234-567-8901,08:00-18:00,Nuuk,Medium
+3,Contractor C,Emily Contractor,345-678-9012,08:00-18:00,Kulusuk,Low
+4,Contractor D,Michael Contractor,456-789-0123,08:00-18:00,Þórshöfn,High
+5,Contractor E,Sarah Contractor,567-890-1234,08:00-18:00,Tingwall,Medium
+6,Contractor F,Lísa Contractor,678-901-2345,08:00-18:00,Longyearbyen,Low

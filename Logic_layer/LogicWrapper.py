@@ -1,58 +1,33 @@
-
-
-from Data_Layer.PropertyData import PropertyData
-from Logic_layer.ContractorLogic import ContractorLogic
-from Logic_layer.EmployeeLogic import EmployeeLogic
-from Logic_layer.MaintenanceReportLogic import MaintenanceReportLogic
-from Logic_layer.PropertyLogic import PropertyLogic
-from Logic_layer.WorkOrderLogic import WorkOrderLogic
-from Models.WorkOrder import WorkOrder
+from Models.property import Property
 
 class LogicWrapper:
-    def __init__(self):
-        self.contractor_logic = ContractorLogic()
-        self.employee_logic = EmployeeLogic()
-        self.maintenance_report_logic = MaintenanceReportLogic()
-        self.property_data = PropertyData()
-        self.property_logic = PropertyLogic(self.property_data)
-        self.work_order_logic = WorkOrderLogic()
+    def __init__(self, employee_data, property_data):
+        self.employee_data = employee_data
+        self.property_data = property_data
 
-    # WorkOrderLogic
-    def CreateWorkOrder(self, work_order_obj: WorkOrder):
-        """Takes in a WorkOrder object and forwards it to the data layer.
-        :param WorkOrder work_order_obj: The WorkOrder object to save."""
-        return self.work_order_logic.CreateWorkOrder(work_order_obj)
+    def list_employees(self):
+        return self.employee_data.get_all_employees()
 
-    # PropertyLogic
+    def register_employee(self, employee_details):
+        return self.employee_data.add_employee(employee_details)
+
+    def change_employee_info(self, ssn, field, new_value):
+        return self.employee_data.change_employee_info(ssn, field, new_value)
+
+    def search_employee_by_ssn(self, ssn):
+        return self.employee_data.get_employee_by_ssn(ssn)
+
     def list_properties(self):
-        """Retrieve all properties as Property objects."""
-        return self.property_logic.list_properties()
+        return self.property_data.get_all_properties()
 
-    def add_property(self, property_data: dict):
-        """Add a new property.
-        :param dict property_data: A dictionary containing property details.
-        :return: True if the property was added successfully, False otherwise.
-        """
-        return self.property_logic.add_property(property_data)
+    def add_property(self, property_details):
+        new_property = Property(**property_details)
+        return self.property_data.add_property(new_property)
 
-    def update_property(self, property_id: int, updated_data: dict):
-        """Update a property's information.
-        :param int property_id: The ID of the property to update.
-        :param dict updated_data: A dictionary containing updated field values.
-        :return: True if the update was successful, False otherwise.
-        """
-        return self.property_logic.update_property(property_id, updated_data)
+    def update_property(self, property_id, updated_details):
+        for field, new_value in updated_details.items():
+            self.property_data.update_property(property_id, field, new_value)
+        return "Property updated successfully."
 
-    def search_property_by_id(self, property_id: int):
-        """Search for a specific property by ID.
-        :param int property_id: The ID of the property to search for.
-        :return: A Property object if found, None otherwise.
-        """
-        return self.property_logic.search_property_by_id(property_id)
-
-    def get_maintenance_history(self, property_id: int):
-        """Retrieve the maintenance history of a property.
-        :param int property_id: The ID of the property.
-        :return: A list of maintenance records for the property, or an empty list if none are found.
-        """
-        return self.property_logic.get_maintenance_history(property_id)
+    def search_property_by_id(self, property_id):
+        return self.property_data.get_property_by_id(property_id)
