@@ -1,3 +1,4 @@
+import sys
 from Data_Layer.PropertyData import PropertyData
 from Data_Layer.EmployeeData import EmployeeData
 from Data_Layer.DataWrapper import DataWrapper
@@ -10,7 +11,6 @@ from Logic_layer.LogicWrapper import LogicWrapper
 from UI_Layer.LoginUI import LoginUI
 from UI_Layer.SupervisorUI import SupervisorUI
 from UI_Layer.EmployeeUI import EmployeeUI
-import sys
 
 def main():
     while True:

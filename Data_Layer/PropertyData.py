@@ -26,13 +26,15 @@ class PropertyData:
             return []
         return properties
 
-    def update_property(self, property_id, field, new_value):
+    def update_property(self, property_id, updated_details: dict):
         properties = self.get_all_properties()
         property_found = False
 
         for property in properties:
             if property.property_id == property_id:
-                setattr(property, field, new_value)
+                for key, value in updated_details.items():
+                    if hasattr(property, key):
+                        setattr(property, key, value)
                 property_found = True
                 break
 

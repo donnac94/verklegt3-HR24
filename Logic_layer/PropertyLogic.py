@@ -1,5 +1,5 @@
-from Models.property import Property
 from Data_Layer.PropertyData import PropertyData
+from Models.property import Property
 
 class PropertyLogic:
     def __init__(self, property_data: PropertyData):
@@ -21,8 +21,7 @@ class PropertyLogic:
         return self.property_data.get_all_properties()
 
     def update_property(self, property_id, updated_details: dict) -> str:
-        for field, new_value in updated_details.items():
-            self.property_data.update_property(property_id, field, new_value)
+        self.property_data.update_property(property_id, updated_details)
         return "Property updated successfully."
 
     def get_property_by_id(self, property_id):

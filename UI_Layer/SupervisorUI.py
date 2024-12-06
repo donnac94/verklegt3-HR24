@@ -1,7 +1,6 @@
 import os
 import shutil
 import sys
-
 class SupervisorUI:
     def __init__(self, logic_layer):
         self.logic_layer = logic_layer
