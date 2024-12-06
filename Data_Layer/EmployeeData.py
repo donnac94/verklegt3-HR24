@@ -1,7 +1,6 @@
 import csv
 from Models.employee import Employee
 
-
 class EmployeeData:
     def __init__(self, file_name):
         self.file_name = file_name
@@ -9,11 +8,11 @@ class EmployeeData:
     def get_all_employees(self):
         with open(self.file_name, 'r', encoding="utf-8") as csvfile:
             reader = csv.DictReader(csvfile)
-            return [Employee(**row) for row in reader]
+            return [Employee.from_dict(row) for row in reader]
 
-    def add_employee(self, employee_details):
+    def register_employee(self, employee: Employee):
         employees = self.get_all_employees()
-        employees.append(Employee(**employee_details))
+        employees.append(employee)
         self._save_employees(employees)
 
     def change_employee_info(self, ssn, field, new_value):

@@ -3,9 +3,8 @@ from Models.WorkOrder import WorkOrder
 
 
 class WorkOrderLogic:
-    def __init__(self):
-        self.data_wrapper = DataWrapper()
-        self.file_name = "Files/work_orders.csv"
+    def __init__(self, data_wrapper: DataWrapper):
+        self.data_wrapper = data_wrapper
 
     def CreateWorkOrder(self, work_order_obj: WorkOrder):
         """Takes in a WorkOrder object and forwards it to the data layer.

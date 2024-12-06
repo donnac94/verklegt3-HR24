@@ -254,7 +254,7 @@ class SupervisorUI:
         print(result)
 
         # Fetch the updated property information
-        updated_property = self.logic_layer.search_property_by_id(property_id)
+        updated_property = self.logic_layer.get_property_by_id(property_id)
         print("\nUpdated Information:")
         print(row_format.format(*headers))
         print("-" * (columns - 2))

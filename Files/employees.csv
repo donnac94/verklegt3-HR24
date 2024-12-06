@@ -7,7 +7,9 @@ ssn,full_name,address,phone,gsm,email,location,is_manager
 1706893479,Lísa Alfreðs,60 Birch St,7904444,555-6789,lisa.alfreds@example.com,Longyearbyen,True
 1312933459,Gunnar Örvar,Áshamar 44,8667373,8667373,gunnaro@nan.is,Reykjavík,True
 1111962219,Páll Elvar Kristinnsson,Sóleyjarhlíð 17,7904422,7904422,pallelvar@nan.is,Reykjavík,True
-2507992929,Tryggvi Már,Suðurberg 4,8883131,8881212,tryggvim@nan.is,Reykajavík,False
-1111002390,Tómas Örn,Tryggvagata 2,8884455,8884455,tomasorn@nan.is,Reykjavík,False
-2307992359,Dísa Sól,Langholt 4A,7871212,7871212,disas@nan.is,Reykjavík,False
-0404042200,Hildur Sif Björgvinsdóttir,Lágmúli 8,8881234,8881234,hildursif@nan.is,Reykjavík,False
+2507992929,Tryggvi Már,Suðurberg 4,8883131,8881212,tryggvim@nan.is,Reykajavík,True
+1111002390,Tómas Örn,Tryggvagata 2,8884455,8884455,tomasorn@nan.is,Reykjavík,True
+2307992359,Dísa Sól,Langholt 4A,7871212,7871212,disas@nan.is,Reykjavík,True
+0404042200,Hildur Sif Björgvinsdóttir,Lágmúli 8,8881234,8881234,hildursif@nan.is,Reykjavík,True
+2409992219,Daníel Magnús Þorsteinsson,Skipholt 4B,7871122,7871122,danielmagnus@nan.is,Reykjavík,True
+1111002000,Snorri Snorrasson,Torfufell 12,8980011,8980011,snorris@nan.is,Reykjavík,False
