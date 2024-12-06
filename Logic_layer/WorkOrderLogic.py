@@ -20,8 +20,11 @@ class WorkOrderLogic:
         return self.data_wrapper.GetAllWorkOrders()
 
 
-    def ChangeWorkOrderInfo(self):
-        pass
+    def ChangeWorkOrderInfo(self, work_order_id, field, new_data):
+        """
+        Change the information of a work order.
+        """
+        return self.data_wrapper.ChangeWorkOrderInfo(work_order_id, field, new_data)
 
 
     def CloseWorkOrder(self):
