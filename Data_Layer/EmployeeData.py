@@ -5,7 +5,7 @@ class EmployeeData:
     def __init__(self, file_name):
         self.file_name = file_name
 
-    def get_all_employees(self):
+    def get_all_employees(self) -> list[Employee]:
         with open(self.file_name, 'r', encoding="utf-8") as csvfile:
             reader = csv.DictReader(csvfile)
             return [Employee.from_dict(row) for row in reader]

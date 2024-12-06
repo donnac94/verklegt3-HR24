@@ -38,12 +38,12 @@ class Employee:
     @classmethod
     def from_dict(cls, data: dict):
         return cls(
-            ssn=data.get("ssn", ""),
-            full_name=data.get("full_name", ""),
-            address=data.get("address", ""),
-            phone=data.get("phone", ""),
-            gsm=data.get("gsm", ""),
-            email=data.get("email", ""),
-            location=data.get("location", ""),
-            is_manager=bool(data.get("is_manager", False))
+            ssn=data["ssn"],
+            full_name=data["full_name"],
+            address=data["address"],
+            phone=data["phone"],
+            gsm=data["gsm"],
+            email=data["email"],
+            location=data["location"],
+            is_manager=data["is_manager"].lower() == 'true' if isinstance(data["is_manager"], str) else bool(data["is_manager"])
         )

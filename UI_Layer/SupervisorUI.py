@@ -76,7 +76,7 @@ class SupervisorUI:
             print(row_format.format(*headers))
             print("-" * (columns - 2))
             for emp in employees:
-                print(row_format.format(emp.ssn, emp.full_name, emp.address, emp.phone, emp.gsm, emp.email, emp.location, emp.is_manager))
+                print(row_format.format(emp.ssn, emp.full_name, emp.address, emp.phone, emp.gsm, emp.email, emp.location, "True" if emp.is_manager else "False"))
         input("\nPress Enter to return to the menu.")
 
     def list_all_properties(self):
@@ -147,7 +147,7 @@ class SupervisorUI:
         print(row_format.format(*headers))
         print("-" * (columns - 2))
         for emp in employees:
-            print(row_format.format(emp.ssn, emp.full_name, emp.address, emp.phone, emp.gsm, emp.email, emp.location, emp.is_manager))
+            print(row_format.format(emp.ssn, emp.full_name, emp.address, emp.phone, emp.gsm, emp.email, emp.location, "True" if emp.is_manager else "False"))
 
         ssn = input("\nEnter SSN of the employee to update: ").strip()
         if ssn.lower() == 'b':
@@ -161,7 +161,7 @@ class SupervisorUI:
         print("\nCurrent Information:")
         print(row_format.format(*headers))
         print("-" * (columns - 2))
-        print(row_format.format(employee.ssn, employee.full_name, employee.address, employee.phone, employee.gsm, employee.email, employee.location, employee.is_manager))
+        print(row_format.format(employee.ssn, employee.full_name, employee.address, employee.phone, employee.gsm, employee.email, employee.location, "True" if employee.is_manager else "False"))
 
         field = input("\nEnter the field to update (full_name, address, phone, gsm, email, location, is_manager): ").strip()
         if field.lower() == 'b':
@@ -177,7 +177,7 @@ class SupervisorUI:
         print("\nUpdated Information:")
         print(row_format.format(*headers))
         print("-" * (columns - 2))
-        print(row_format.format(updated_employee.ssn, updated_employee.full_name, updated_employee.address, updated_employee.phone, updated_employee.gsm, updated_employee.email, updated_employee.location, updated_employee.is_manager))
+        print(row_format.format(updated_employee.ssn, updated_employee.full_name, updated_employee.address, updated_employee.phone, updated_employee.gsm, updated_employee.email, updated_employee.location, "True" if updated_employee.is_manager else "False"))
 
         input("\nPress Enter to return to the menu.")
 
