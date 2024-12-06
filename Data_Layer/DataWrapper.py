@@ -15,3 +15,10 @@ class DataWrapper:
         :param WorkOrder work_order_obj: The WorkOrder object to save.
         """
         return self.work_order_data.CreateWorkOrder(work_order_obj)
+    
+    def GetAllWorkOrders(self) -> list[WorkOrder]:
+        """
+        Retrieve all work orders from the CSV file.
+        :return: A list of work order objects or raises an exception.
+        """
+        return self.work_order_data.GetAllWorkOrders()
