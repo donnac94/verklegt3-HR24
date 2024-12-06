@@ -1,73 +1,46 @@
 import csv
-from Models.employee import employee
+from Models.employee import Employee
 
 class EmployeeData:
-    def __init__(self):
-        self.file_name = "Files/employees.csv"
+    def __init__(self, file_name):
+        self.file_name = file_name
 
-    def register_employee(self, employee: employee) -> None:
-        with open(self.file_name, 'a', newline='', encoding="utf-8") as csvfile:
-            fieldnames = ["employee_id", "full_name", "address", "phone", "gsm", "email", "location"]
-            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+    def get_all_employees(self) -> list[Employee]:
+        with open(self.file_name, 'r', encoding="utf-8") as csvfile:
+            reader = csv.DictReader(csvfile)
+            return [Employee.from_dict(row) for row in reader]
 
-            if csvfile.tell() == 0:  
-                writer.writeheader()
+    def register_employee(self, employee: Employee):
+        employees = self.get_all_employees()
+        employees.append(employee)
+        self._save_employees(employees)
 
-            writer.writerow({
-                "employee_id": employee.employee_id,
-                "full_name": employee.full_name,
-                "address": employee.address,
-                "phone": employee.phone,
-                "gsm": employee.gsm,
-                "email": employee.email,
-                "location": employee.location
-            })
-
-    def get_all_employees(self) -> list[employee]:
-        ret_list = []
-        try:
-            with open(self.file_name, 'r', newline='', encoding="utf-8") as csvfile:
-                reader = csv.DictReader(csvfile)
-                for row in reader:
-                    ret_list.append(
-                        employee(
-                            row["employee_id"],
-                            row["full_name"],
-                            row["address"],
-                            row["phone"],
-                            row["gsm"],
-                            row["email"],
-                            row["location"]
-                        )
-                    )
-        except FileNotFoundError:
-            return []
-        return ret_list
-
-    def change_employee_info(self, employee_id: str, field: str, new_value: str) -> None:
+    def change_employee_info(self, ssn, field, new_value):
         employees = self.get_all_employees()
         employee_found = False
 
         for employee in employees:
-            if employee.employee_id == employee_id:
+            if employee.ssn == ssn:
                 setattr(employee, field, new_value)
                 employee_found = True
                 break
 
         if not employee_found:
-            raise ValueError(f"Employee with ID {employee_id} not found.")
+            raise ValueError(f"Employee with SSN {ssn} not found.")
 
+        self._save_employees(employees)
+
+    def get_employee_by_ssn(self, ssn):
+        employees = self.get_all_employees()
+        for employee in employees:
+            if employee.ssn == ssn:
+                return employee
+        raise ValueError(f"Employee with SSN {ssn} not found.")
+
+    def _save_employees(self, employees):
         with open(self.file_name, 'w', newline='', encoding="utf-8") as csvfile:
-            fieldnames = ["employee_id", "full_name", "address", "phone", "gsm", "email", "location"]
+            fieldnames = ["ssn", "full_name", "address", "phone", "gsm", "email", "location", "is_manager"]
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writeheader()
             for employee in employees:
-                writer.writerow({
-                    "employee_id": employee.employee_id,
-                    "full_name": employee.full_name,
-                    "address": employee.address,
-                    "phone": employee.phone,
-                    "gsm": employee.gsm,
-                    "email": employee.email,
-                    "location": employee.location
-                })
+                writer.writerow(employee.to_dict())

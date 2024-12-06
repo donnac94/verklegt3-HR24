@@ -1,1 +1,15 @@
 property_id,address,location,property_condition,manager,requires_maintenance
+1,123 Main St,Reykjavík,Good,Donna Cruz,"Roof Repair, Paint Walls"
+2,456 Elm St,Nuuk,Excellent,Ylfa Sig,"Garden Maintenance, Window Cleaning"
+3,789 Oak St,Kulusuk,Fair,Brad Pitt,"Fix roof, fix heater"
+4,101 Pine St,Þórshöfn,Good,John Doe,"Paint Walls, Fix Plumbing"
+5,202 Maple St,Tingwall,Excellent,Sarah Connor,"Garden Maintenance, Window Cleaning"
+6,303 Birch St,Longyearbyen,Fair,Lísa Alfreðs,"Fix roof, fix heater, fix bathroom tile"
+7,Fellsmúli 18,Reykjavík,Excellent,Donna Cruz,Window Cleaning
+8,Lækjargata 8,Reykjavík,Good,Donna Cruz,"Fix heater, window cleaning"
+10,Strandgata 4,Reykjavík,Good,Donna Cruz,"Fix heater, fix window, clean doors"
+11,Skipholt 10,Reykjavík,Good,Donna Cruz,"clean carpet, fix doorbell"
+13,Túnás 45,Reykjavík,Bad,Donna Cruz,"fix roof, fix heater, paint walls, clean windows, fix wifi"
+14,Langholt 33,Reykjavík,Excellent,Donna Cruz,
+15,Smáratún 44,Reykjavík,Excellent,Donna Cruz,
+16,Setberg 12,Reykjavík,Good,Donna Cruz,
