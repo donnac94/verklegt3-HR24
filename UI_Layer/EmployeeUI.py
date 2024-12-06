@@ -1,10 +1,11 @@
+from Logic_layer.LogicWrapper import LogicWrapper
 import os
 import shutil
 import sys
 
 class EmployeeUI:
-    def __init__(self, logic_layer):
-        self.logic_layer = logic_layer
+    def __init__(self, logic_wrapper: LogicWrapper):
+        self.logic_wrapper = logic_wrapper
 
     def clear_terminal(self):
         os.system('cls' if os.name == 'nt' else 'clear')
@@ -48,7 +49,7 @@ class EmployeeUI:
         print("+".ljust(columns - 1, '-') + "+")
         print("|" + " List All Employees ".center(columns - 2) + "|")
         print("+".ljust(columns - 1, '-') + "+")
-        employees = self.logic_layer.list_employees()
+        employees = self.logic_wrapper.list_employees()
         if not employees:
             print("No employees found.")
         else:

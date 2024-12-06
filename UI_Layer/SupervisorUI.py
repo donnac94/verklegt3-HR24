@@ -1,9 +1,10 @@
+from Logic_layer.LogicWrapper import LogicWrapper
 import os
 import shutil
 import sys
 class SupervisorUI:
-    def __init__(self, logic_layer):
-        self.logic_layer = logic_layer
+    def __init__(self, logic_wrapper: LogicWrapper):
+        self.logic_wrapper = logic_wrapper
 
     def clear_terminal(self):
         os.system('cls' if os.name == 'nt' else 'clear')
@@ -64,7 +65,7 @@ class SupervisorUI:
         print("+".ljust(columns - 1, '-') + "+")
         print("|" + " List All Employees ".center(columns - 2) + "|")
         print("+".ljust(columns - 1, '-') + "+")
-        employees = self.logic_layer.list_employees()
+        employees = self.logic_wrapper.list_employees()
         if not employees:
             print("No employees found.")
         else:
@@ -84,7 +85,7 @@ class SupervisorUI:
         print("+".ljust(columns - 1, '-') + "+")
         print("|" + " List All Properties ".center(columns - 2) + "|")
         print("+".ljust(columns - 1, '-') + "+")
-        properties = self.logic_layer.list_properties()
+        properties = self.logic_wrapper.list_properties()
         if not properties:
             print("No properties found.")
         else:
@@ -121,7 +122,7 @@ class SupervisorUI:
         })
         if any(value.lower() == 'b' for key, value in employee_details.items() if key != "is_manager"):
             return
-        result = self.logic_layer.register_employee(employee_details)
+        result = self.logic_wrapper.register_employee(employee_details)
         print(result)
         print("\nEmployee registered successfully.")
         self.list_all_employees()
@@ -133,7 +134,7 @@ class SupervisorUI:
         print("|" + " Update Employee Information ".center(columns - 2) + "|")
         print("+".ljust(columns - 1, '-') + "+")
         print("Enter 'b' at any prompt to cancel and go back to the previous menu.\n")
-        employees = self.logic_layer.list_employees()
+        employees = self.logic_wrapper.list_employees()
         if not employees:
             print("No employees found.")
             input("\nPress Enter to return to the menu.")
@@ -168,11 +169,11 @@ class SupervisorUI:
         new_value = input(f"Enter new value for {field}: ").strip()
         if new_value.lower() == 'b':
             return
-        result = self.logic_layer.change_employee_info(ssn, field, new_value)
+        result = self.logic_wrapper.change_employee_info(ssn, field, new_value)
         print(result)
 
         # Fetch the updated employee information
-        updated_employee = self.logic_layer.search_employee_by_ssn(ssn)
+        updated_employee = self.logic_wrapper.search_employee_by_ssn(ssn)
         print("\nUpdated Information:")
         print(row_format.format(*headers))
         print("-" * (columns - 2))
@@ -201,7 +202,7 @@ class SupervisorUI:
         })
         if any(value.lower() == 'b' for value in property_details.values()):
             return
-        result = self.logic_layer.add_property(property_details)
+        result = self.logic_wrapper.add_property(property_details)
         print(result)
         print("\nProperty added successfully.")
         self.list_all_properties()
@@ -213,7 +214,7 @@ class SupervisorUI:
         print("|" + " Update Property Information ".center(columns - 2) + "|")
         print("+".ljust(columns - 1, '-') + "+")
         print("Enter 'b' at any prompt to cancel and go back to the previous menu.\n")
-        properties = self.logic_layer.list_properties()
+        properties = self.logic_wrapper.list_properties()
         if not properties:
             print("No properties found.")
             input("\nPress Enter to return to the menu.")
@@ -249,11 +250,11 @@ class SupervisorUI:
         if new_value.lower() == 'b':
             return
         updated_details = {field: new_value}
-        result = self.logic_layer.update_property(property_id, updated_details)
+        result = self.logic_wrapper.update_property(property_id, updated_details)
         print(result)
 
         # Fetch the updated property information
-        updated_property = self.logic_layer.get_property_by_id(property_id)
+        updated_property = self.logic_wrapper.get_property_by_id(property_id)
         print("\nUpdated Information:")
         print(row_format.format(*headers))
         print("-" * (columns - 2))

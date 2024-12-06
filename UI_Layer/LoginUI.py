@@ -1,9 +1,13 @@
+from UI_Layer.SupervisorUI import SupervisorUI
+from UI_Layer.EmployeeUI import EmployeeUI
+from Logic_layer.LogicWrapper import LogicWrapper
 import os
 import shutil
+import sys
 
 class LoginUI:
-    def __init__(self, logic_layer):
-        self.logic_layer = logic_layer
+    def __init__(self):
+        self.logic_wrapper = LogicWrapper()
 
     def clear_terminal(self):
         """Clear the terminal screen."""
@@ -16,6 +20,8 @@ class LoginUI:
 
     def display_menu(self):
         """Display the login menu and handle user input."""
+        supervisor_ui = SupervisorUI(self.logic_wrapper)
+        employee_ui = EmployeeUI(self.logic_wrapper)
         while True:
             self.clear_terminal()
             columns, _ = self.get_terminal_size()
@@ -34,11 +40,12 @@ class LoginUI:
             choice = input("\nChoose an option: ").strip().lower()
 
             if choice == "1":
-                return "supervisor"
+                supervisor_ui.display_menu()
             elif choice == "2":
-                return "employee"
+                employee_ui.display_menu()
             elif choice == "q":
-                return "q"
+                print("Exiting. Goodbye!")
+                sys.exit()
             else:
                 print("Invalid choice. Please try again.")
                 input("\nPress Enter to return to the menu.")

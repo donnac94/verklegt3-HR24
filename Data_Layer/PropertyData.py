@@ -2,8 +2,8 @@ import csv
 from Models.property import Property
 
 class PropertyData:
-    def __init__(self, file_name):
-        self.file_name = file_name
+    def __init__(self):
+        self.file_name = "Files/properties.csv"
 
     def add_property(self, property: Property) -> None:
         with open(self.file_name, 'a', newline='', encoding="utf-8") as csvfile:
@@ -44,6 +44,9 @@ class PropertyData:
         self._save_properties(properties)
 
     def get_property_by_id(self, property_id):
+        """
+        TODO: move to logic layer. all filter should be there.
+        """
         properties = self.get_all_properties()
         for property in properties:
             if property.property_id == property_id:

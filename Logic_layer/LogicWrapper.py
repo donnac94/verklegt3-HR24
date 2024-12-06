@@ -6,12 +6,12 @@ from Logic_layer.WorkOrderLogic import WorkOrderLogic
 from Models.employee import Employee
 
 class LogicWrapper:
-    def __init__(self, contractor_logic: ContractorLogic, employee_logic: EmployeeLogic, maintenance_report_logic: MaintenanceReportLogic, property_logic: PropertyLogic, work_order_logic: WorkOrderLogic):
-        self.contractor_logic = contractor_logic
-        self.employee_logic = employee_logic
-        self.maintenance_report_logic = maintenance_report_logic
-        self.property_logic = property_logic
-        self.work_order_logic = work_order_logic
+    def __init__(self):
+        self.contractor_logic = ContractorLogic()
+        self.employee_logic = EmployeeLogic()
+        self.maintenance_report_logic = MaintenanceReportLogic()
+        self.property_logic = PropertyLogic()
+        self.work_order_logic = WorkOrderLogic()
 
     # PropertyLogic
     def get_maintenance_history(self, property_id: int) -> list:
@@ -54,10 +54,10 @@ class LogicWrapper:
 
     # WorkOrderLogic
     def create_work_order(self, work_order_obj):
-        return self.work_order_logic.create_work_order(work_order_obj)
+        return self.work_order_logic.CreateWorkOrder(work_order_obj)
     
     def get_all_work_orders(self) -> list:
-        return self.work_order_logic.get_all_work_orders()
+        return self.work_order_logic.GetAllWorkOrders()
     
     def change_work_order_info(self, work_order_id, field, new_data):
-        return self.work_order_logic.change_work_order_info(work_order_id, field, new_data)
+        return self.work_order_logic.ChangeWorkOrderInfo(work_order_id, field, new_data)

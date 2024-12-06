@@ -1,15 +1,19 @@
 from Data_Layer.EmployeeData import EmployeeData
 from Data_Layer.PropertyData import PropertyData
 from Data_Layer.WorkOrderData import WorkOrderData
+from Data_Layer.MaintenanceReportData import MaintenanceReportData
+from Data_Layer.ContractorData import ContractorData
 from Models.WorkOrder import WorkOrder
 from Models.employee import Employee
 from Models.property import Property
 
 class DataWrapper:
-    def __init__(self, employee_file: str, property_file: str):
-        self.employee_data = EmployeeData(file_name=employee_file)
-        self.property_data = PropertyData(file_name=property_file)
+    def __init__(self):
+        self.employee_data = EmployeeData()
+        self.property_data = PropertyData()
         self.work_order_data = WorkOrderData()
+        self.maintenance_report_data = MaintenanceReportData()
+        self.contractor_data = ContractorData()
 
     # WorkOrder methods
     def CreateWorkOrder(self, work_order_obj: WorkOrder):
@@ -41,15 +45,14 @@ class DataWrapper:
         Retrieve all properties from the CSV file.
         :return: A list of property objects or raises an exception.
         """
-        return self.property_data.GetAllProperties()
+        return self.property_data.get_all_properties()
 
-    def add_property(self, property_details: dict):
+    def add_property(self, new_property: Property):
         """
         Add a new property to the CSV file.
-        :param dict property_details: The details of the property to add.
+        :param Property new_property: The new property to be added.
         """
-        property_obj = Property.from_dict(property_details)
-        return self.property_data.CreateProperty(property_obj)
+        return self.property_data.add_property(new_property)
 
     def update_property(self, property_id, updated_details: dict):
         """
@@ -57,7 +60,7 @@ class DataWrapper:
         :param str property_id: The ID of the property to update.
         :param dict updated_details: The updated details of the property.
         """
-        return self.property_data.UpdateProperty(property_id, updated_details)
+        return self.property_data.update_property(property_id, updated_details)
 
     # Employee methods
     def list_employees(self) -> list[Employee]:
@@ -65,20 +68,21 @@ class DataWrapper:
         Retrieve all employees from the CSV file.
         :return: A list of employee objects or raises an exception.
         """
-        return self.employee_data.GetAllEmployees()
+        return self.employee_data.get_all_employees()
 
-    def add_employee(self, employee_details: dict):
+    def add_employee(self, new_employee: Employee):
         """
         Add a new employee to the CSV file.
-        :param dict employee_details: The details of the employee to add.
+        :param Employee new_employee: The new employee to add.
         """
-        employee_obj = Employee.from_dict(employee_details)
-        return self.employee_data.CreateEmployee(employee_obj)
+        return self.employee_data.register_employee(new_employee)
 
-    def update_employee(self, ssn, updated_details: dict):
+    def update_employee(self, ssn: str, field: str, new_value: str):
         """
         Update the information of an employee.
         :param str ssn: The SSN of the employee to update.
-        :param dict updated_details: The updated details of the employee.
         """
-        return self.employee_data.UpdateEmployee(ssn, updated_details)
+        return self.employee_data.change_employee_info(ssn, field, new_value)
+    
+    def get_property_by_id(self, property_id):
+        return self.property_data.get_property_by_id(property_id)
