@@ -22,3 +22,9 @@ class DataWrapper:
         :return: A list of work order objects or raises an exception.
         """
         return self.work_order_data.GetAllWorkOrders()
+    
+    def ChangeWorkOrderInfo(self, work_order_id, field, new_data):
+        """
+        Change the information of a work order.
+        """
+        return self.work_order_data.ChangeWorkOrderInfo(work_order_id, field, new_data)

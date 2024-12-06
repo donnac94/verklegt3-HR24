@@ -81,3 +81,9 @@ class LogicWrapper:
         :return: A success message if the employee was registered successfully.
         """
         return self.employee_logic.register_employee(employee_details)
+    
+    def ChangeWorkOrderInfo(self, work_order_id, field, new_data):
+        """
+        Change the information of a work order.
+        """
+        return self.work_order_logic.ChangeWorkOrderInfo(work_order_id, field, new_data)
