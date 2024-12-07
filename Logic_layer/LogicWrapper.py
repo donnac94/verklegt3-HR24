@@ -53,11 +53,11 @@ class LogicWrapper:
         return next((emp for emp in employees if emp.ssn == ssn), None)
 
     # WorkOrderLogic
-    def create_work_order(self, work_order_obj):
-        return self.work_order_logic.CreateWorkOrder(work_order_obj)
+    def create_work_order(self, work_order_details: dict):
+        return self.work_order_logic.create_work_order(work_order_details)
     
     def get_all_work_orders(self) -> list:
-        return self.work_order_logic.GetAllWorkOrders()
+        return self.work_order_logic.get_all_work_orders()
     
     def change_work_order_info(self, work_order_id, field, new_data):
-        return self.work_order_logic.ChangeWorkOrderInfo(work_order_id, field, new_data)
+        return self.work_order_logic.change_work_order_info(work_order_id, field, new_data)

@@ -1,4 +1,4 @@
-work_order_id,work_to_be_done,property,submitting_manager,date,priority,work_order_status
+work_order_id,work_to_be_done,property,submitting_supervisor,date,priority,work_order_status
 1,Fix roof,123 Main St,Donna Cruz,2024-12-01 10:00:00,High,Complete
 2,Window cleaning,456 Elm St,Ylfa Sig,2024-12-02 11:00:00,Medium,Complete
 3,Fix heater,789 Oak St,Brad Pitt,2024-12-03 12:00:00,High,In Progress

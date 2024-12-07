@@ -16,28 +16,28 @@ class DataWrapper:
         self.contractor_data = ContractorData()
 
     # WorkOrder methods
-    def CreateWorkOrder(self, work_order_obj: WorkOrder):
+    def create_work_order(self, work_order_obj: WorkOrder):
         """
         Register a work order in the CSV file.
         :param WorkOrder work_order_obj: The WorkOrder object to save.
         """
-        return self.work_order_data.CreateWorkOrder(work_order_obj)
+        return self.work_order_data.create_work_order(work_order_obj)
     
-    def GetAllWorkOrders(self) -> list[WorkOrder]:
+    def get_all_work_orders(self) -> list[WorkOrder]:
         """
         Retrieve all work orders from the CSV file.
         :return: A list of work order objects or raises an exception.
         """
-        return self.work_order_data.GetAllWorkOrders()
+        return self.work_order_data.get_all_work_orders()
     
-    def ChangeWorkOrderInfo(self, work_order_id, field, new_data):
+    def change_work_order_info(self, work_order_id, field, new_value):
         """
         Change the information of a work order.
         :param int work_order_id: The ID of the work order to update.
         :param str field: The field to update.
-        :param str new_data: The new value for the field.
+        :param str new_value: The new value for the field.
         """
-        return self.work_order_data.ChangeWorkOrderInfo(work_order_id, field, new_data)
+        return self.work_order_data.change_work_order_info(work_order_id, field, new_value)
 
     # Property methods
     def list_properties(self) -> list[Property]:
