@@ -16,7 +16,7 @@ class WorkOrderLogic:
             submitting_supervisor=work_order_details["submitting_supervisor"],
             date=work_order_details["date"],
             priority=work_order_details["priority"],
-            work_order_status=work_order_details["work_order_status"],
+            work_order_status=work_order_details["work_order_status"]
         )
         self.data_wrapper.create_work_order(new_work_order)
         return "Work order registered successfully."
