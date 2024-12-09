@@ -1,6 +1,7 @@
 import os
+import sys
 import shutil
-from Logic_layer import LogicWrapper
+from Logic_layer.LogicWrapper import LogicWrapper
 
 
 class PropertyUI:
