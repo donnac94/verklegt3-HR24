@@ -109,21 +109,22 @@ class SupervisorUI:
             print("|" + " Register New Employee ".center(columns - 2) + "|")
             print("+".ljust(columns - 1, '-') + "+")
             print("Enter 'b' at any prompt to cancel and go back to the previous menu.\n")
-            employee_details = {
-                "ssn": input("Enter SSN: ").strip()
-            }
-            if employee_details["ssn"].lower() == 'b':
-                return
-            if not validate_ssn(employee_details["ssn"]):
-                print("Invalid SSN. It should be exactly 10 digits.")
-                input("\nPress Enter to try again.")
-                continue
+            while True:
+                employee_details = {
+                    "ssn": input("Enter SSN: ").strip()
+                }
+                if employee_details["ssn"].lower() == 'b':
+                    return
+                if not validate_ssn(employee_details["ssn"]):
+                    print("Invalid SSN. It should be exactly 10 digits.")
+                    input("\nPress Enter to try again.")
+                else:
+                    break
             employee_details.update({
                 "full_name": input("Enter Full Name: ").strip(),
                 "address": input("Enter Address: ").strip(),
                 "phone": input("Enter Phone: ").strip(),
                 "gsm": input("Enter GSM: ").strip(),
-                "email": input("Enter Email: ").strip(),
                 "location": input("Enter Location: ").strip(),
                 "is_manager": input("Is Manager (True/False): ").strip().lower() == 'true'
             })
@@ -133,10 +134,15 @@ class SupervisorUI:
                 print("Invalid Full Name. It should not be longer than 100 characters.")
                 input("\nPress Enter to try again.")
                 continue
-            if not validate_email(employee_details["email"]):
-                print("Invalid Email. It should contain '@' and '.' and not be longer than 100 characters.")
-                input("\nPress Enter to try again.")
-                continue
+            while True:
+                employee_details["email"] = input("Enter Email: ").strip()
+                if employee_details["email"].lower() == 'b':
+                    return
+                if not validate_email(employee_details["email"]):
+                    print("Invalid Email. It should contain '@' and '.' and not be longer than 100 characters.")
+                    input("\nPress Enter to try again.")
+                else:
+                    break
             result = self.logic_wrapper.register_employee(employee_details)
             print(result)
             print("\nEmployee registered successfully.")
