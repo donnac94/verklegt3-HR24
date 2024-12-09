@@ -7,7 +7,6 @@ from UI_Layer.EmployeeManagement_UI import EmployeeManagementUI
 from UI_Layer.MaintenanceReportManagement_UI import MaintenanceReportUI
 from UI_Layer.PropertyManagement_UI import PropertyUI
 
-
 class SupervisorUI:
     def __init__(self, logic_wrapper: LogicWrapper):
         self.logic_wrapper = logic_wrapper
