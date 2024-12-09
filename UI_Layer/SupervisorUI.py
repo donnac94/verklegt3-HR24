@@ -33,7 +33,7 @@ class SupervisorUI:
             print(c + h * (columns - 2) + c)
             print(d + " 1. Employee Management ".ljust(columns - 2) + d)
             print(d + " 2. Property Management ".ljust(columns - 2) + d)
-            print(d + " 3. Maintenance Report Management ".ljust(columns - 2) + d)  # New option added
+            print(d + " 3. Maintenance Report Management ".ljust(columns - 2) + d)
             print(d + " b. Back to Login Menu ".ljust(columns - 2) + d)
             print(d + " q. Quit ".ljust(columns - 2) + d)
             print(c + h * (columns - 2) + c)
@@ -45,7 +45,7 @@ class SupervisorUI:
             elif choice == "2":
                 self.property_management_ui.display_menu()
             elif choice == "3":
-                self.maintenance_report_ui.display_menu()  # New option handling
+                self.maintenance_report_ui.display_menu()
             elif choice == "b":
                 return
             elif choice == "q":
