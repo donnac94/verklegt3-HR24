@@ -6,6 +6,7 @@ from Data_Layer.ContractorData import ContractorData
 from Models.WorkOrder import WorkOrder
 from Models.employee import Employee
 from Models.property import Property
+from Models.Contractor import Contractor
 
 class DataWrapper:
     def __init__(self):
@@ -86,3 +87,28 @@ class DataWrapper:
     
     def get_property_by_id(self, property_id):
         return self.property_data.get_property_by_id(property_id)
+    
+
+    # Contractor methods
+    def register_contractor(self, contractor_obj: Contractor):
+        """
+        Register a contractor in the CSV file.
+        :param Contractor contractor_obj: The contractor to save.
+        """
+        return self.contractor_data.register_contractor(contractor_obj)
+    
+    def get_all_contractors(self) -> list[Contractor]:
+        """
+        Retrieve all contractors from the CSV file.
+        :return: A list of all contractors 
+        """
+        return self.contractor_data.get_all_contractors()
+    
+    def change_contractor_info(self, contractor_id, field, new_value):
+        """
+        Change contractors info.
+        :param contractor_id: The ID of the contractor to update.
+        :param field: The field to update.
+        :param new_value: The new value for the field. 
+        """
+        return self.contractor_data.change_contractor_info(contractor_id, field, new_value)

@@ -8,7 +8,7 @@ class ContractorData():
         self.filename = "Files/contractors.csv"
 
 
-    def RegisterContractor(self, contractor_obj: Contractor) -> str:
+    def register_contractor(self, contractor_obj: Contractor) -> str:
         ''' Register new contractor in the CSV file.
           :param Contractor_obj: the contractor to save. 
         '''
@@ -24,7 +24,7 @@ class ContractorData():
     
 
 
-    def GetAllContractors(self) -> list[Contractor]:
+    def get_all_contractors(self) -> list[Contractor]:
         '''
         Retrieve all contractors from the CSV file.
         :return: A list of all contractors.
@@ -36,12 +36,12 @@ class ContractorData():
         
     
 
-    def ChangeContractorInfo(self, contractor_id, field, new_value):
+    def change_contractor_info(self, contractor_id, field, new_value):
         '''
         Change a contractors information. 
         '''
 
-        contractors = self.GetAllContractors()
+        contractors = self.get_all_contractors()
         success = False
         for contractor in contractors:
             if contractor.contractor_id == contractor_id:
