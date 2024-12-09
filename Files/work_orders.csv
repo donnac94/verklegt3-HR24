@@ -1,2 +1,7 @@
-work_order_id,work_to_be_done,property,submitting_manager,date,priority,work_order_status
-2,fix heater,Home,Bob,2024-12-04 13:29:46.933921,High,Complete
+work_order_id,work_to_be_done,property,submitting_supervisor,date,priority,work_order_status
+1,Fix roof,123 Main St,Donna Cruz,2024-12-01 10:00:00,High,Complete
+2,Window cleaning,456 Elm St,Ylfa Sig,2024-12-02 11:00:00,Medium,Complete
+3,Fix heater,789 Oak St,Brad Pitt,2024-12-03 12:00:00,High,In Progress
+4,Fix plumbing,101 Pine St,John Doe,2024-12-04 13:00:00,Low,Complete
+5,Garden maintenance,202 Maple St,Sarah Connor,2024-12-05 14:00:00,Medium,Complete
+6,Fix bathroom tile,303 Birch St,Lísa Alfreðs,2024-12-06 15:00:00,High,In Progress

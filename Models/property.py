@@ -1,39 +1,29 @@
 class Property:
-    """
-    Model that contains information about a single property.
-    """
-
-    def __init__(
-        self,
-        property_id: int,
-        address: str,
-        location: str,
-        property_condition: str,
-        manager: str,
-        requires_maintenance: list[str] = [],
-    ) -> None:
-        """
-        :param int property_id: The unique ID for this property.
-        :param str address: The address of the property.
-        :param str location: The geographical location of the property (City, Country).
-        :param str property_condition: A description of the condition of the property.
-        :param str manager: The manager assigned to oversee the property.
-        :param list[str] requires_maintenance: A list of everything that requires maintenance on the property.
-        """
+    def __init__(self, property_id, address, location, property_condition, manager, requires_maintenance):
         self.property_id = property_id
         self.address = address
         self.location = location
         self.property_condition = property_condition
         self.manager = manager
-        self.requires_maintenance = requires_maintenance
+        self.requires_maintenance = requires_maintenance.split(", ") if isinstance(requires_maintenance, str) else requires_maintenance
 
-    def __str__(self):
-        return (
-            f"Property ID: {self.property_id}\n"
-            f"Address: {self.address}\n"
-            f"Location: {self.location}\n"
-            f"Condition: {self.property_condition}\n"
-            f"Manager: {self.manager}\n"
-            f"Requires Maintenance: {', '.join(self.requires_maintenance)}"
+    def to_dict(self):
+        return {
+            "property_id": self.property_id,
+            "address": self.address,
+            "location": self.location,
+            "property_condition": self.property_condition,
+            "manager": self.manager,
+            "requires_maintenance": ", ".join(self.requires_maintenance)
+        }
+
+    @classmethod
+    def from_dict(cls, data):
+        return cls(
+            property_id=data["property_id"],
+            address=data["address"],
+            location=data["location"],
+            property_condition=data["property_condition"],
+            manager=data["manager"],
+            requires_maintenance=data["requires_maintenance"]
         )
-    

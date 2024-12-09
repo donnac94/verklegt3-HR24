@@ -6,39 +6,56 @@ class WorkOrderData():
     def __init__(self):
         self.file_name = "Files/work_orders.csv"
 
-    def CreateWorkOrder(self, Work_order_obj: WorkOrder):
+    def create_work_order(self, work_order_obj: WorkOrder) -> None:
         """
-        Register a work order in the csv file.
+        Register a work order in the CSV file.
         :param WorkOrder work_order_obj: The WorkOrder object to save.
         """
         with open(self.file_name, 'a', newline='', encoding="utf-8") as csvfile:
-                fieldnames = ["work_order_id","work_to_be_done","property","submitting_manager","date","priority","work_order_status"]
+                fieldnames = ["work_order_id","work_to_be_done","property","submitting_supervisor","date","priority","work_order_status"]
                 writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
-                writer.writerow({
-                    'work_order_id': Work_order_obj.work_order_id,
-                    'work_to_be_done': Work_order_obj.work_to_be_done,
-                    'property': Work_order_obj.property,
-                    'submitting_manager': Work_order_obj.submitting_manager,
-                    'date': Work_order_obj.date,
-                    'priority': Work_order_obj.priority,
-                    'work_order_status': Work_order_obj.work_order_status
-                    })
+                if csvfile.tell() == 0:
+                    writer.writeheader()
 
-    def GetAllWorkOrders(self):
-        ret_list=[]
+                writer.writerow(work_order_obj.to_dict())
+
+    def get_all_work_orders(self) -> list[WorkOrder]:
+        """
+        Retrieve all work orders from the CSV file.
+        :return: A list of work orders.
+        """
         with open(self.file_name, 'r', newline='', encoding="utf-8") as csvfile:
             reader = csv.DictReader(csvfile)
-            for row in reader:
-                ret_list.append(WorkOrder(row["work_order_id"], row["work_to_be_done"], row["property"], 
-                                          row["submitting_manager"], row["date"], row["priority"], row["work_order_status"]))
-        return ret_list
+            return [WorkOrder.from_dict(row) for row in reader]
+        
+    def change_work_order_info(self, work_order_id, field, new_value):
+        """
+        Change the information of a work order.
+        """
+        work_orders = self.get_all_work_orders()
+        work_order_found = False
 
-    def ChangeWorkOrderInfo():
-        pass
+        for work_order in work_orders:
+            if work_order.work_order_id == work_order_id:
+                setattr(work_order, field, new_value)
+                work_order_found = True
 
-    def CloseWorkOrder():
-        pass
+        if not work_order_found:
+            raise ValueError(f"Work order with ID {work_order_id} not found.")
 
-    def ReopenWorkOrder():
-        pass
+        with open(self.file_name, 'w', newline='', encoding="utf-8") as csvfile:
+            fieldnames = ["work_order_id","work_to_be_done","property","submitting_supervisor","date","priority","work_order_status"]
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            writer.writeheader()
+            for work_order in work_orders:
+                writer.writerow(work_order.to_dict())
+
+
+# Nota ChangeWorkOrderInfo í UI til að breyta status.
+# Þarf raun ekki sín eigin function held ég
+    # def CloseWorkOrder():
+    #     pass
+
+    # def ReopenWorkOrder():
+    #     pass
