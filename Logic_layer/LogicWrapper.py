@@ -61,3 +61,13 @@ class LogicWrapper:
     
     def change_work_order_info(self, work_order_id, field, new_data):
         return self.work_order_logic.change_work_order_info(work_order_id, field, new_data)
+    
+    # ContractorLogic
+    def create_contractor(self, contractor_details: dict):
+        return self.contractor_logic.create_contractor(contractor_details)
+    
+    def list_contractors(self) -> list:
+        return self.contractor_logic.list_contractors()
+    
+    def change_contractor_info(self, contractor_id, field, updated_contractor):
+        return self.contractor_logic.change_contractor_info(contractor_id, field, updated_contractor)
