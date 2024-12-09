@@ -1,51 +1,64 @@
+from Logic_layer.LogicWrapper import LogicWrapper
 import os
-
+import shutil
+import sys
 
 class EmployeeUI:
-    def __init__(self, logic_layer):
-        """
-        Initialize the Employee UI with a reference to the logic layer.
-        :param logic_layer: An object containing the logic for employee-related operations.
-        """
-        self.logic_layer = logic_layer
+    def __init__(self, logic_wrapper: LogicWrapper):
+        self.logic_wrapper = logic_wrapper
 
     def clear_terminal(self):
-        """Clear the terminal screen."""
         os.system('cls' if os.name == 'nt' else 'clear')
 
+    def get_terminal_size(self):
+        """Get the current terminal size."""
+        columns, rows = shutil.get_terminal_size(fallback=(80, 24))
+        return columns, rows
+
     def display_menu(self):
-        """Display the employee menu and handle user input."""
         while True:
             self.clear_terminal()
+            columns, _ = self.get_terminal_size()
             h = '-'
             c = '+'
             d = '|'
-            print(c + "Air NaN Employee Portal".center(63, h) + c)
-            print(d + "Welcome to the Employee Menu".center(63) + d)
-            print(c + h * 63 + c)
-            print(d + " 1. List Assigned Work Orders ".ljust(62) + d)
-            print(d + " 2. Submit Maintenance Report ".ljust(62) + d)
-            print(d + " 3. View Past Work Orders ".ljust(62) + d)
-            print(d + " 4. Mark Work Order as Ready for Approval ".ljust(62) + d)
-            print(d + " 5. Search Work Orders by ID ".ljust(62) + d)
-            print(d + " q. Quit ".ljust(62) + d)
-            print(c + h * 63 + c)
+            print(c + "Air NaN Employee Portal".center(columns - 2, h) + c)
+            print(d + "Welcome to the Employee Menu".center(columns - 2) + d)
+            print(c + h * (columns - 2) + c)
+            print(d + " 1. List All Employees ".ljust(columns - 2) + d)
+            print(d + " b. Back to Login Menu ".ljust(columns - 2) + d)
+            print(d + " q. Quit ".ljust(columns - 2) + d)
+            print(c + h * (columns - 2) + c)
 
             choice = input("\nChoose an option: ").strip().lower()
 
             if choice == "1":
-                self.list_assigned_work_orders()
-            elif choice == "2":
-                self.submit_maintenance_report()
-            elif choice == "3":
-                self.view_past_work_orders()
-            elif choice == "4":
-                self.mark_work_order_ready()
-            elif choice == "5":
-                self.search_work_orders()
+                self.list_all_employees()
+            elif choice == "b":
+                return
             elif choice == "q":
                 print("Exiting Employee Menu. Goodbye!")
-                break
+                sys.exit()
             else:
                 print("Invalid choice. Please try again.")
                 input("\nPress Enter to return to the menu.")
+
+    def list_all_employees(self):
+        self.clear_terminal()
+        columns, _ = self.get_terminal_size()
+        print("+".ljust(columns - 1, '-') + "+")
+        print("|" + " List All Employees ".center(columns - 2) + "|")
+        print("+".ljust(columns - 1, '-') + "+")
+        employees = self.logic_wrapper.list_employees()
+        if not employees:
+            print("No employees found.")
+        else:
+            headers = ["SSN", "Full Name", "Address", "Phone", "GSM", "Email", "Location", "Is Manager"]
+            col_widths = [max(len(str(getattr(emp, attr))) for emp in employees) for attr in ["ssn", "full_name", "address", "phone", "gsm", "email", "location", "is_manager"]]
+            col_widths = [max(len(header), width) for header, width in zip(headers, col_widths)]
+            row_format = "  |  ".join([f"{{:<{width}}}" for width in col_widths])
+            print(row_format.format(*headers))
+            print("-" * (columns - 2))
+            for emp in employees:
+                print(row_format.format(emp.ssn, emp.full_name, emp.address, emp.phone, emp.gsm, emp.email, emp.location, emp.is_manager))
+        input("\nPress Enter to return to the menu.")

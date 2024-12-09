@@ -1,5 +1,3 @@
-from datetime import datetime
-
 class Contractor():
     """
     Model that contains information about a contractor
@@ -7,13 +5,13 @@ class Contractor():
 
     def __init__(
             self,
-            contractor_id: int,
-            name: str,
-            contact_name: str,
-            phone_nr: str,
-            opening_time: datetime,
-            location: str,
-            satisfaction_with_previous_work: str 
+            contractor_id : int,
+            name : str,
+            contact_name : str,
+            phone_nr : str,
+            opening_time : int,
+            location : str,
+            satisfaction_with_previous_work : str 
             ) -> None:
                 """
                 :param str contractor_id : the unique id for contractor
