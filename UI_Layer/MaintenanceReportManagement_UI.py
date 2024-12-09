@@ -3,6 +3,8 @@ import os
 import shutil
 import sys
 
+#TODO: Error handling, input validation
+
 class MaintenanceReportUI:
     def __init__(self, logic_wrapper: LogicWrapper):
         self.logic_wrapper = logic_wrapper
@@ -61,6 +63,9 @@ class MaintenanceReportUI:
     def submit_maintenance_report(self):
         self.clear_terminal()
         print("Submit New Maintenance Report")
+        #Todo: Add input validation
+        #Todo: Add error handling
+        #Todo: report_id should be generated automatically
         report_details = {
             "report_id": input("Enter Report ID: ").strip(),
             "title": input("Enter Title: ").strip(),

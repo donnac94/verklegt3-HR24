@@ -4,6 +4,7 @@ import shutil
 import sys
 
 from UI_Layer.EmployeeManagement_UI import EmployeeManagementUI
+from UI_Layer.MaintenanceReportManagement_UI import MaintenanceReportUI
 from UI_Layer.PropertyManagement_UI import PropertyUI
 
 
@@ -12,7 +13,7 @@ class SupervisorUI:
         self.logic_wrapper = logic_wrapper
         self.employee_management_ui = EmployeeManagementUI(logic_wrapper)
         self.property_management_ui = PropertyUI(logic_wrapper)
-
+        self.maintenance_report_ui = MaintenanceReportUI(logic_wrapper)  
     def clear_terminal(self):
         os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -32,6 +33,7 @@ class SupervisorUI:
             print(c + h * (columns - 2) + c)
             print(d + " 1. Employee Management ".ljust(columns - 2) + d)
             print(d + " 2. Property Management ".ljust(columns - 2) + d)
+            print(d + " 3. Maintenance Report Management ".ljust(columns - 2) + d)
             print(d + " b. Back to Login Menu ".ljust(columns - 2) + d)
             print(d + " q. Quit ".ljust(columns - 2) + d)
             print(c + h * (columns - 2) + c)
@@ -42,6 +44,8 @@ class SupervisorUI:
                 self.employee_management_ui.display_menu()
             elif choice == "2":
                 self.property_management_ui.display_menu()
+            elif choice == "3":
+                self.maintenance_report_ui.display_menu()
             elif choice == "b":
                 return
             elif choice == "q":
