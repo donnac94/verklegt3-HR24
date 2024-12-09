@@ -41,9 +41,6 @@ class PropertyData:
         if not property_found:
             raise ValueError(f"Property with ID {property_id} not found.")
 
-        self._save_properties(properties)
-
-    def _save_properties(self, properties):
         with open(self.file_name, 'w', newline='', encoding="utf-8") as csvfile:
             fieldnames = ["property_id", "address", "location", "property_condition", "manager", "requires_maintenance"]
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
