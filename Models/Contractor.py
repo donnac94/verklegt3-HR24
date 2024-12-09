@@ -31,3 +31,27 @@ class Contractor():
                 self.opnening_time = opening_time
                 self.location = location
                 self.satisfaction_with_previous_work = satisfaction_with_previous_work
+
+    def to_dict(self) -> dict:
+        return {
+               "contractor_id": self.contractor_id,
+               "name": self.name,
+               "contact_name": self.contact_name,
+               "phone_nr": self.phone_nr,
+               "opening_time": self.opnening_time,
+               "location": self.location,
+               "satisfaction_with_previous_work": self.satisfaction_with_previous_work
+        }
+    
+    @classmethod
+    def from_dict(cls, data: dict):
+        return cls(
+                contractor_id=data["contractor_id"],
+                name=data["name"],
+                contact_name=data["contact_name"],
+                phone_nr=data["phone_nr"],
+                opening_time=data["opening_time"],
+                location=data["location"],
+                satisfaction_with_previous_work=data["satisfaction_with_previous_work"]
+
+           )
