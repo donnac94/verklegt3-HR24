@@ -2,6 +2,8 @@ from Logic_layer.LogicWrapper import LogicWrapper
 import os
 import shutil
 import sys
+
+from UI_Layer.Validation import validate_email, validate_full_name, validate_ssn
 class SupervisorUI:
     def __init__(self, logic_wrapper: LogicWrapper):
         self.logic_wrapper = logic_wrapper
@@ -100,32 +102,52 @@ class SupervisorUI:
         input("\nPress Enter to return to the menu.")
 
     def register_employee(self):
-        self.clear_terminal()
-        columns, _ = self.get_terminal_size()
-        print("+".ljust(columns - 1, '-') + "+")
-        print("|" + " Register New Employee ".center(columns - 2) + "|")
-        print("+".ljust(columns - 1, '-') + "+")
-        print("Enter 'b' at any prompt to cancel and go back to the previous menu.\n")
-        employee_details = {
-            "ssn": input("Enter SSN: ").strip()
-        }
-        if employee_details["ssn"].lower() == 'b':
-            return
-        employee_details.update({
-            "full_name": input("Enter Full Name: ").strip(),
-            "address": input("Enter Address: ").strip(),
-            "phone": input("Enter Phone: ").strip(),
-            "gsm": input("Enter GSM: ").strip(),
-            "email": input("Enter Email: ").strip(),
-            "location": input("Enter Location: ").strip(),
-            "is_manager": input("Is Manager (True/False): ").strip().lower() == 'true'
-        })
-        if any(value.lower() == 'b' for key, value in employee_details.items() if key != "is_manager"):
-            return
-        result = self.logic_wrapper.register_employee(employee_details)
-        print(result)
-        print("\nEmployee registered successfully.")
-        self.list_all_employees()
+        while True:
+            self.clear_terminal()
+            columns, _ = self.get_terminal_size()
+            print("+".ljust(columns - 1, '-') + "+")
+            print("|" + " Register New Employee ".center(columns - 2) + "|")
+            print("+".ljust(columns - 1, '-') + "+")
+            print("Enter 'b' at any prompt to cancel and go back to the previous menu.\n")
+            while True:
+                employee_details = {
+                    "ssn": input("Enter SSN: ").strip()
+                }
+                if employee_details["ssn"].lower() == 'b':
+                    return
+                if not validate_ssn(employee_details["ssn"]):
+                    print("Invalid SSN. It should be exactly 10 digits.")
+                    input("\nPress Enter to try again.")
+                else:
+                    break
+            employee_details.update({
+                "full_name": input("Enter Full Name: ").strip(),
+                "address": input("Enter Address: ").strip(),
+                "phone": input("Enter Phone: ").strip(),
+                "gsm": input("Enter GSM: ").strip(),
+                "location": input("Enter Location: ").strip(),
+                "is_manager": input("Is Manager (True/False): ").strip().lower() == 'true'
+            })
+            if any(value.lower() == 'b' for key, value in employee_details.items() if key != "is_manager"):
+                return
+            if not validate_full_name(employee_details["full_name"]):
+                print("Invalid Full Name. It should not be longer than 100 characters.")
+                input("\nPress Enter to try again.")
+                continue
+            while True:
+                employee_details["email"] = input("Enter Email: ").strip()
+                if employee_details["email"].lower() == 'b':
+                    return
+                if not validate_email(employee_details["email"]):
+                    print("Invalid Email. It should contain '@' and '.' and not be longer than 100 characters.")
+                    input("\nPress Enter to try again.")
+                else:
+                    break
+            result = self.logic_wrapper.register_employee(employee_details)
+            print(result)
+            print("\nEmployee registered successfully.")
+            self.list_all_employees()
+            break
 
     def update_employee_info(self):
         self.clear_terminal()
@@ -166,9 +188,26 @@ class SupervisorUI:
         field = input("\nEnter the field to update (full_name, address, phone, gsm, email, location, is_manager): ").strip()
         if field.lower() == 'b':
             return
-        new_value = input(f"Enter new value for {field}: ").strip()
-        if new_value.lower() == 'b':
-            return
+        if field == "email":
+            while True:
+                new_value = input(f"Enter new value for {field}: ").strip()
+                if new_value.lower() == 'b':
+                    return
+                if not validate_email(new_value):
+                    print("Invalid Email. It should contain '@' and '.' and not be longer than 100 characters.")
+                    input("\nPress Enter to try again.")
+                else:
+                    break
+        else:
+            new_value = input(f"Enter new value for {field}: ").strip()
+            if new_value.lower() == 'b':
+                return
+            if field == "ssn" and not validate_ssn(new_value):
+                print("Invalid SSN. It should be 10 digits.")
+                return
+            if field == "full_name" and not validate_full_name(new_value):
+                print("Invalid Full Name. It should not be longer than 100 characters.")
+                return
         result = self.logic_wrapper.change_employee_info(ssn, field, new_value)
         print(result)
 
