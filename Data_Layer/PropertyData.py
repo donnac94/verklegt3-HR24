@@ -43,16 +43,6 @@ class PropertyData:
 
         self._save_properties(properties)
 
-    def get_property_by_id(self, property_id):
-        """
-        TODO: move to logic layer. all filter should be there.
-        """
-        properties = self.get_all_properties()
-        for property in properties:
-            if property.property_id == property_id:
-                return property
-        raise ValueError(f"Property with ID {property_id} not found.")
-
     def _save_properties(self, properties):
         with open(self.file_name, 'w', newline='', encoding="utf-8") as csvfile:
             fieldnames = ["property_id", "address", "location", "property_condition", "manager", "requires_maintenance"]

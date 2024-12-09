@@ -30,13 +30,6 @@ class EmployeeData:
 
         self._save_employees(employees)
 
-    def get_employee_by_ssn(self, ssn):
-        employees = self.get_all_employees()
-        for employee in employees:
-            if employee.ssn == ssn:
-                return employee
-        raise ValueError(f"Employee with SSN {ssn} not found.")
-
     def _save_employees(self, employees):
         with open(self.file_name, 'w', newline='', encoding="utf-8") as csvfile:
             fieldnames = ["ssn", "full_name", "address", "phone", "gsm", "email", "location", "is_manager"]
