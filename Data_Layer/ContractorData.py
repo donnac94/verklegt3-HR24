@@ -11,108 +11,49 @@ class ContractorData():
     def RegisterContractor(self, contractor_obj: Contractor) -> str:
         ''' Register new contractor in the CSV file.
           :param Contractor_obj: the contractor to save. 
-          :return: Success message or raise exemption 
         '''
-        try:
-            with open(self.filename, "a", newline="", encoding="utf-8") as csvfile:
-                fieldnames = [
-                    "contractor_id",
-                    "name",
-                    "contact_name",
-                    "phone_nr",
-                    "opening_time",
-                    "location",
-                    "satisfaction_with_previous_work"
-                ]
-                writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
-                if csvfile.tell() == 0:
-                    writer.writeheader()
-                
-                writer.writerow({
-                    "contractor_id": contractor_obj.contractor_id,
-                    "name": contractor_obj.name,
-                    "contact_name": contractor_obj.contact_name,
-                    "phone_nr": contractor_obj.phone_nr,
-                    "opening_time": contractor_obj.opnening_time,
-                    "location": contractor_obj.location,
-                    "satisfaction_with_previous_work": contractor_obj.satisfaction_with_previous_work
-                })
-                return "Contractor registered successfully"
+        with open(self.filename, "a", newline="", encoding="utf-8") as csvfile:
+            fieldnames = ["contractor_id", "name", "contact_name", "phone_nr", "opening_time", "location", "satisfaction_with_previous_work"]
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
-        except Exception as e:
-             raise Exception(f"Error saving contractor: {e}")
+            if csvfile.tell() == 0:
+                writer.writeheader()
+
+            writer.writerow(contractor_obj.to_dict())
     
 
 
     def GetAllContractors(self) -> list[Contractor]:
         '''
         Retrieve all contractors from the CSV file.
-        :return: A list of all contractors objects or raises an exception.
+        :return: A list of all contractors.
         '''
-        ret_list = []
-        try: 
-            with open(self.filename, "r", newline="", encoding="utf-8") as csvfile:
-                reader = csv.DictReader(csvfile)
-                for row in reader:
-                    ret_list.append(Contractor(
-                        contractor_id=int(row["contractor_id"]), 
-                        name=row["name"], 
-                        contact_name=row["contact_name"], 
-                        phone_nr=row["phone_nr"], 
-                        opening_time=row["opening_time"], 
-                        location=row["location"],
-                        satisfaction_with_previous_work=row["satisfaction_with_previous_work"]
-                    ))
-                return ret_list
-        except FileNotFoundError:
-            return []  # Return an empty list if the file doesn't exist
-        except Exception as e:
-            raise Exception(f"Error reading contractors: {e}")
 
+        with open(self.filename, "r", newline="", encoding="utf-8") as csvfile:
+            reader = csv.DictReader(csvfile)
+            return [Contractor.from_dict(row) for row in reader]
+        
     
 
-    def ChangeContractorInfo(self, contractor_id: int, updated_contractor: Contractor) -> str:
+    def ChangeContractorInfo(self, contractor_id, field, new_value):
         '''
         Change a contractors information. 
-        :param contractor_id: the ID of the cotractor to update.
-        :param updated_contractor: The updated contractor information.
-        :return: Success message or raises an exception.
         '''
 
+        contractors = self.GetAllContractors()
         success = False
-        try: 
-            contractors = self.GetAllContractors()
-            with open(self.filename, "w", newline="", encoding="utf-8") as csvfile:
-                fieldnames = [
-                    "contractor_id",
-                    "name",
-                    "contact_name",
-                    "phone_nr",
-                    "opening_time",
-                    "location",
-                    "satisfaction_with_previous_work"
-                ]
-                writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-                writer.writeheader()
-
-                for contractor_obj in contractors:
-                    if contractor_obj.contractor_id == contractor_id:
-                        # Replace with updated contractor
-                        contractor_obj = updated_contractor
-                        success = True
-                    writer.writerow({
-                        "contractor_id": contractor_obj.contractor_id,
-                        "name": contractor_obj.name,
-                        "contact_name": contractor_obj.contact_name,
-                        "phone_nr": contractor_obj.phone_nr,
-                        "opening_time": contractor_obj.opnening_time,
-                        "location": contractor_obj.location,
-                        "satisfaction_with_previous_work": contractor_obj.satisfaction_with_previous_work
-                    })
-            if success: 
-                return "Contractor updated successfully"
-            else:
-                return "Contractor not found"
-        except Exception as e:
-            raise Exception(f"Error updating contractor: {e}")
+        for contractor in contractors:
+            if contractor.contractor_id == contractor_id:
+                setattr(contractor, field, new_value)
+                success = True
+        
+        if not success: 
+            raise ValueError(f"Contractor with ID {contractor_id} not found.")
+        
+        with open(self.filename, "w", newline="", encoding="utf-8") as csvfile:
+            fieldnames = ["contractor_id", "name", "contact_name", "phone_nr", "opening_time", "location", "satisfaction_with_previous_work"]
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            writer.writeheader()
+            for contractor in contractors:
+                writer.writerow(contractor.to_dict())
