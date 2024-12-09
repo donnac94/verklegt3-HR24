@@ -227,11 +227,10 @@ class SupervisorUI:
         print("|" + " Add New Property ".center(columns - 2) + "|")
         print("+".ljust(columns - 1, '-') + "+")
         print("Enter 'b' at any prompt to cancel and go back to the previous menu.\n")
+        property_id = self.automatic_property_id()
         property_details = {
-            "property_id": input("Enter Property ID: ").strip()
+            "property_id": property_id
         }
-        if property_details["property_id"].lower() == 'b':
-            return
         property_details.update({
             "address": input("Enter Address: ").strip(),
             "location": input("Enter Location: ").strip(),
@@ -239,7 +238,7 @@ class SupervisorUI:
             "manager": input("Enter Manager: ").strip(),
             "requires_maintenance": input("Enter Requires Maintenance (comma-separated): ").strip()
         })
-        if any(value.lower() == 'b' for value in property_details.values()):
+        if any(value == 'b' for value in property_details.values()):
             return
         result = self.logic_wrapper.add_property(property_details)
         print(result)
@@ -309,3 +308,13 @@ class SupervisorUI:
         print("+".ljust(columns - 1, '-') + "+")
         # Implementation for approving maintenance reports
         input("\nPress Enter to return to the menu.")
+
+    #Possibly should be in another layer?.
+    def automatic_property_id(self):
+        """
+        Gets the latest property ID and give it plus 1.
+        """
+        properties = self.logic_wrapper.list_properties()
+        latest_property = properties[-1]
+        latest_id = int(latest_property.property_id)
+        return latest_id + 1
