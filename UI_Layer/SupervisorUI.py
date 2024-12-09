@@ -188,18 +188,26 @@ class SupervisorUI:
         field = input("\nEnter the field to update (full_name, address, phone, gsm, email, location, is_manager): ").strip()
         if field.lower() == 'b':
             return
-        new_value = input(f"Enter new value for {field}: ").strip()
-        if new_value.lower() == 'b':
-            return
-        if field == "ssn" and not validate_ssn(new_value):
-            print("Invalid SSN. It should be 10 digits.")
-            return
-        if field == "full_name" and not validate_full_name(new_value):
-            print("Invalid Full Name. It should not be longer than 100 characters.")
-            return
-        if field == "email" and not validate_email(new_value):
-            print("Invalid Email. It should contain '@' and '.' and not be longer than 100 characters.")
-            return
+        if field == "email":
+            while True:
+                new_value = input(f"Enter new value for {field}: ").strip()
+                if new_value.lower() == 'b':
+                    return
+                if not validate_email(new_value):
+                    print("Invalid Email. It should contain '@' and '.' and not be longer than 100 characters.")
+                    input("\nPress Enter to try again.")
+                else:
+                    break
+        else:
+            new_value = input(f"Enter new value for {field}: ").strip()
+            if new_value.lower() == 'b':
+                return
+            if field == "ssn" and not validate_ssn(new_value):
+                print("Invalid SSN. It should be 10 digits.")
+                return
+            if field == "full_name" and not validate_full_name(new_value):
+                print("Invalid Full Name. It should not be longer than 100 characters.")
+                return
         result = self.logic_wrapper.change_employee_info(ssn, field, new_value)
         print(result)
 
