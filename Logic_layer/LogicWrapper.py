@@ -37,20 +37,10 @@ class LogicWrapper:
         return self.employee_logic.register_employee(employee_details)
 
     def change_employee_info(self, ssn, field, new_value):
-        employees = self.list_employees()
-        employee = next((emp for emp in employees if emp.ssn == ssn), None)
-        if not employee:
-            return f"Employee with SSN {ssn} not found."
-
-        if hasattr(employee, field):
-            setattr(employee, field, new_value)
-            return self.employee_logic.change_employee_info(ssn, field, new_value)
-        else:
-            return f"Field {field} does not exist in employee data."
+        return self.employee_logic.change_employee_info(ssn, field, new_value)
 
     def search_employee_by_ssn(self, ssn: str) -> Employee:
-        employees = self.list_employees()
-        return next((emp for emp in employees if emp.ssn == ssn), None)
+        return self.employee_logic.search_employee_by_ssn(ssn)
 
     # WorkOrderLogic
     def create_work_order(self, work_order_details: dict):
@@ -61,3 +51,13 @@ class LogicWrapper:
     
     def change_work_order_info(self, work_order_id, field, new_data):
         return self.work_order_logic.change_work_order_info(work_order_id, field, new_data)
+    
+    # ContractorLogic
+    def create_contractor(self, contractor_details: dict):
+        return self.contractor_logic.create_contractor(contractor_details)
+    
+    def list_contractors(self) -> list:
+        return self.contractor_logic.list_contractors()
+    
+    def change_contractor_info(self, contractor_id, field, updated_contractor):
+        return self.contractor_logic.change_contractor_info(contractor_id, field, updated_contractor)

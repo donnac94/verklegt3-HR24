@@ -1,46 +1,39 @@
+from Data_Layer.DataWrapper import DataWrapper
 from Models.Contractor import Contractor
 
+
 class ContractorLogic:
-    def CreateContractor(contractors: list[Contractor], contractor_details: dict) -> str:
+    def __init__(self):
+        self.data_wrapper = DataWrapper()
+
+
+    def create_contractor(self, contractor_details: dict) -> str:
         '''
-        Create new contractor.
-        :param contractors: List of registered contractors.
-        :param contractor_details: Dictionary containing the contractors details.
-        :return: Success message or Error message.
+        Takes in a contractor object and forwards it to the data layer.
+        :param contractor_details: The details for the contractor to create
         '''
-        contractor_id = contractor_details.get("contractor_id")
-        if any(c.contractor_id == contractor_id for c in contractors):
-            return "Contractor already exists"
-        
         new_contractor = Contractor(
-            contractor_id=contractor_id,
-            name=contractor_details.get("name"),
-            contact_name=contractor_details.get("contact_name"),
-            phone_nr=contractor_details.get("phone_nr"),
-            opening_time=contractor_details.get("opening_time"),
-            location=contractor_details.get("location"),
-            satisfaction_with_previous_work=contractor_details.get("satisfaction_with_previous_work")
+            contractor_id=contractor_details["contractor_id"],
+            name=contractor_details["name"],
+            contact_name=contractor_details["contact_name"],
+            phone_nr=contractor_details["phone_nr"],
+            opening_time=contractor_details["opening_time"],
+            location=contractor_details["location"],
+            satisfaction_with_previous_work=contractor_details["satisfaction_with_previous_work"]
         )
-        contractors.append(new_contractor)
-        return "Contractor registered successfully"
+        self.data_wrapper.register_contractor(new_contractor)
+        return "Contractor registered successfully."
+    
 
-        
-
-    def ListContractors(contractors: list[Contractor]) -> list:
+    def list_contractors(self) -> list[Contractor]:
         '''
         List all contractors.
-        :param contractors: List of existing contractors.
-        :return: A list of contractors.
         '''
-        return contractors if contractors else []
+        return self.data_wrapper.get_all_contractors()
 
 
-    def ChangeContractorInfo(contractors: list[Contractor], contractor_id: int, updated_contractor: dict) -> str:
+    def change_contractor_info(self, contractor_id, field, updated_contractor) -> str:
         '''
         Change contractors information.
-        :param contractors: List of existing contractors.
-        :param contractor_id: The ID of the contractor to update.
-        :param updated_contractor: Dictionary containing the updated details for the contractor. 
-        :return: Success message or Error message'''
-        
-        pass
+        '''
+        return self.data_wrapper.change_contractor_info(contractor_id, field, updated_contractor)
