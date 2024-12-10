@@ -144,4 +144,13 @@ class ContractorUI():
         result = self.logic_wrapper.change_contractor_info(contractor_id, updated_details)
         print(result)
         input("\nPress Enter to return to the menu.")
+
+    def automatic_contractor_id(self):
+        """
+        Gets the latest contractor ID and give it plus 1.
+        """
+        contractors = self.logic_wrapper.list_contractors()
+        latest_contractor = contractors[-1]
+        latest_id = int(latest_contractor.contractor_id)
+        return latest_id + 1
         
