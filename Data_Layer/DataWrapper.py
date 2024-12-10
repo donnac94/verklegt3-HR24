@@ -3,6 +3,7 @@ from Data_Layer.PropertyData import PropertyData
 from Data_Layer.WorkOrderData import WorkOrderData
 from Data_Layer.MaintenanceReportData import MaintenanceReportData
 from Data_Layer.ContractorData import ContractorData
+from Data_Layer.LocationData import LocationData
 from Models.WorkOrder import WorkOrder
 from Models.employee import Employee
 from Models.property import Property
@@ -15,6 +16,7 @@ class DataWrapper:
         self.work_order_data = WorkOrderData()
         self.maintenance_report_data = MaintenanceReportData()
         self.contractor_data = ContractorData()
+        self.location_data = LocationData
 
     # WorkOrder methods
     def create_work_order(self, work_order_obj: WorkOrder):

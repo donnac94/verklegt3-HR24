@@ -25,3 +25,22 @@ class Location():
         self.phone_nr = phone_nr
         self.opening_time = opening_time
         self.manager = manager
+        
+    def to_dict_loc(self):
+        return {
+            "country": self.country,
+            "airport": self.airport,
+            "phone_nr": self.phone_nr,
+            "opening_time": self.phone_nr,
+            "manager": self.manager
+        }
+    
+    @classmethod
+    def from_dict_loc(cls, data):
+        return cls(
+            country=data["country"],
+            airport=data["airport"],
+            phone_nr=data["phone_nr"],
+            opening_time=data["opening_time"],
+            manager=data["manager"]
+        )
