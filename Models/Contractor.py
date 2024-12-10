@@ -28,7 +28,7 @@ class Contractor():
                 self.name = name
                 self.contact_name = contact_name
                 self.phone_nr = phone_nr
-                self.opnening_time = opening_time
+                self.opening_time = opening_time
                 self.location = location
                 self.satisfaction_with_previous_work = satisfaction_with_previous_work
 
@@ -38,7 +38,7 @@ class Contractor():
                "name": self.name,
                "contact_name": self.contact_name,
                "phone_nr": self.phone_nr,
-               "opening_time": self.opnening_time,
+               "opening_time": self.opening_time,
                "location": self.location,
                "satisfaction_with_previous_work": self.satisfaction_with_previous_work
         }

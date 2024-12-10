@@ -37,20 +37,10 @@ class LogicWrapper:
         return self.employee_logic.register_employee(employee_details)
 
     def change_employee_info(self, ssn, field, new_value):
-        employees = self.list_employees()
-        employee = next((emp for emp in employees if emp.ssn == ssn), None)
-        if not employee:
-            return f"Employee with SSN {ssn} not found."
-
-        if hasattr(employee, field):
-            setattr(employee, field, new_value)
-            return self.employee_logic.change_employee_info(ssn, field, new_value)
-        else:
-            return f"Field {field} does not exist in employee data."
+        return self.employee_logic.change_employee_info(ssn, field, new_value)
 
     def search_employee_by_ssn(self, ssn: str) -> Employee:
-        employees = self.list_employees()
-        return next((emp for emp in employees if emp.ssn == ssn), None)
+        return self.employee_logic.search_employee_by_ssn(ssn)
 
     # WorkOrderLogic
     def create_work_order(self, work_order_details: dict):
