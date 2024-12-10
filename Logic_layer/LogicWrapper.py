@@ -3,6 +3,7 @@ from Logic_layer.EmployeeLogic import EmployeeLogic
 from Logic_layer.MaintenanceReportLogic import MaintenanceReportLogic
 from Logic_layer.PropertyLogic import PropertyLogic
 from Logic_layer.WorkOrderLogic import WorkOrderLogic
+from Models.WorkOrder import WorkOrder
 from Models.employee import Employee
 
 class LogicWrapper:
@@ -49,8 +50,17 @@ class LogicWrapper:
     def get_all_work_orders(self) -> list:
         return self.work_order_logic.get_all_work_orders()
     
+    def get_work_order_by_id(self, work_order_id: str) -> WorkOrder:
+        return self.work_order_logic.get_work_order_by_id(work_order_id)
+    
     def change_work_order_info(self, work_order_id, field, new_data):
         return self.work_order_logic.change_work_order_info(work_order_id, field, new_data)
+    
+    def close_work_order(self, work_order_id: str) -> str:
+        return self.work_order_logic.close_work_order(work_order_id)
+    
+    def reopen_work_order(self, work_order_id: str) -> str:
+        return self.work_order_logic.reopen_work_order(work_order_id)
     
     # ContractorLogic
     def create_contractor(self, contractor_details: dict):

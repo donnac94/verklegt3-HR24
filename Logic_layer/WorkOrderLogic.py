@@ -28,6 +28,18 @@ class WorkOrderLogic:
         :return: A list of work order objects or raises an exception.
         """
         return self.data_wrapper.get_all_work_orders()
+    
+    def get_work_order_by_id(self, work_order_id: str) -> WorkOrder:
+        """
+        Retrieve a work order by its ID.
+        :param work_order_id: The ID of the work order to retrieve.
+        :return: The WorkOrder object if found, otherwise None.
+        """
+        work_orders = self.get_all_work_orders()
+        for work_order in work_orders:
+            if work_order.work_order_id == work_order_id:
+                return work_order
+        return None
 
 
     def change_work_order_info(self, work_order_id, field, new_value):
@@ -37,9 +49,29 @@ class WorkOrderLogic:
         return self.data_wrapper.change_work_order_info(work_order_id, field, new_value)
 
 
-    def CloseWorkOrder(self):
-        pass
+    def close_work_order(self, work_order_id: str) -> str:
+        """
+        Close a work order by setting its status to 'Closed'.
+        :param work_order_id: The ID of the work order to close.
+        :return: A success message if the work order is closed, otherwise an error message.
+        """
+        work_order = self.get_work_order_by_id(work_order_id)
+        if not work_order:
+            return "Work order not found."
+
+        self.change_work_order_info(work_order_id, "work_order_status", "Closed")
+        return "Work order closed successfully."
 
 
-    def ReopenWorkOrder(self):
-        pass  
+    def reopen_work_order(self, work_order_id: str) -> str:
+        """
+        Reopen a work order by setting its status to 'Open'.
+        :param work_order_id: The ID of the work order to reopen.
+        :return: A success message if the work order is reopened, otherwise an error message.
+        """
+        work_order = self.get_work_order_by_id(work_order_id)
+        if not work_order:
+            return "Work order not found."
+
+        self.change_work_order_info(work_order_id, "work_order_status", "Open")
+        return "Work order reopened successfully."
