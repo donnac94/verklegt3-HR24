@@ -83,15 +83,32 @@ class PropertyUI:
         property_details = {
             "property_id": property_id
         }
-        property_details.update({
-            "address": input("Enter Address: ").strip(),
-            "location": input("Enter Location: ").strip(),
-            "property_condition": input("Enter Property Condition: ").strip(),
-            "manager": input("Enter Manager: ").strip(),
-            "requires_maintenance": input("Enter Requires Maintenance (comma-separated): ").strip()
-        })
-        if any(value == 'b' for value in property_details.values()):
+
+        address = input("Enter Address: ").strip()
+        if address == 'b':
             return
+        property_details["address"] = address
+
+        location = input("Enter Location: ").strip()
+        if location == 'b':
+            return
+        property_details["location"] = location
+
+        property_condition = input("Enter Property Condition: ").strip()
+        if property_condition == 'b':
+            return
+        property_details["property_condition"] = property_condition
+
+        manager = input("Enter Manager: ").strip()
+        if manager == 'b':
+            return
+        property_details["manager"] = manager
+
+        requires_maintenance = input("Enter Requires Maintenance (comma-separated): ").strip()
+        if requires_maintenance == 'b':
+            return
+        property_details["requires_maintenance"] = requires_maintenance
+
         result = self.logic_wrapper.add_property(property_details)
         print(result)
         print("\nProperty added successfully.")
