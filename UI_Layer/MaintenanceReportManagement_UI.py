@@ -64,19 +64,20 @@ class MaintenanceReportUI:
                 
     def list_all_reports(self):
         self.clear_terminal()
-        print("List All Maintenance Reports")
+        columns, _ = self.get_terminal_size()
+        print("+".ljust(columns - 1, '-') + "+")
+        print("|" + " List All Maintenance Reports ".center(columns - 2) + "|")
+        print("+".ljust(columns - 1, '-') + "+")
         reports = self.logic_wrapper.get_all_maintenance_reports()
         if not reports:
             print("No maintenance reports found.")
         else:
             headers = ["Report ID", "Property", "Work Done", "Upkeep Status", "Employee", "Total Costs", "Marked as Finished", "Report Closed", "Contractors Used"]
-            col_widths = [len(header) for header in headers]
-            for report in reports:
-                col_widths = [max(len(str(getattr(report, attr))), width) for attr, width in zip(
-                    ["maintenance_report_id", "property", "work_done", "upkeep_status", "employee", "total_costs", "marked_as_finished", "report_closed", "contractors_used"], col_widths)]
+            col_widths = [max(len(str(getattr(report, attr))) for report in reports) for attr in ["maintenance_report_id", "property", "work_done", "upkeep_status", "employee", "total_costs", "marked_as_finished", "report_closed", "contractors_used"]]
+            col_widths = [max(len(header), width) for header, width in zip(headers, col_widths)]
             row_format = "  |  ".join([f"{{:<{width}}}" for width in col_widths])
             print(row_format.format(*headers))
-            print("-" * sum(col_widths))
+            print("-" * (columns - 2))
             for report in reports:
                 print(row_format.format(
                     report.maintenance_report_id, report.property, report.work_done, report.upkeep_status,
@@ -182,93 +183,93 @@ class MaintenanceReportUI:
         print("\nMaintenance report submitted successfully.")
         self.list_all_reports()
 
-def update_report_info(self):
-    self.clear_terminal()
-    columns, _ = self.get_terminal_size()
-    print("+".ljust(columns - 1, '-') + "+")
-    print("|" + " Update Maintenance Report Information ".center(columns - 2) + "|")
-    print("+".ljust(columns - 1, '-') + "+")
-    print("Enter 'b' at any prompt to cancel and go back to the previous menu.\n")
+    def update_report_info(self):
+        self.clear_terminal()
+        columns, _ = self.get_terminal_size()
+        print("+".ljust(columns - 1, '-') + "+")
+        print("|" + " Update Maintenance Report Information ".center(columns - 2) + "|")
+        print("+".ljust(columns - 1, '-') + "+")
+        print("Enter 'b' at any prompt to cancel and go back to the previous menu.\n")
 
-    # List all maintenance reports
-    reports = self.logic_wrapper.get_all_maintenance_reports()
-    if not reports:
-        print("No maintenance reports found.")
-        input("\nPress Enter to return to the menu.")
-        return
-
-    headers = ["Report ID", "Property", "Work Done", "Upkeep Status", "Employee", "Total Costs", "Marked as Finished", "Report Closed", "Contractors Used"]
-    col_widths = [len(header) for header in headers]
-    for report in reports:
-        col_widths = [max(len(str(getattr(report, attr))), width) for attr, width in zip(
-            ["maintenance_report_id", "property", "work_done", "upkeep_status", "employee", "total_costs", "marked_as_finished", "report_closed", "contractors_used"], col_widths)]
-    row_format = "  |  ".join([f"{{:<{width}}}" for width in col_widths])
-    print(row_format.format(*headers))
-    print("-" * sum(col_widths))
-    for report in reports:
-        print(row_format.format(
-            report.maintenance_report_id, report.property, report.work_done, report.upkeep_status,
-            report.employee, report.total_costs, report.marked_as_finished, report.report_closed, ", ".join(report.contractors_used)
-        ))
-
-    while True:
-        report_id = input("\nEnter the Report ID of the maintenance report you want to update: ").strip()
-        if report_id == 'b':
+        # List all maintenance reports
+        reports = self.logic_wrapper.get_all_maintenance_reports()
+        if not reports:
+            print("No maintenance reports found.")
+            input("\nPress Enter to return to the menu.")
             return
-        if report_id.isdigit() and any(report.maintenance_report_id == int(report_id) for report in reports):
-            report_id = int(report_id)
-            break
-        else:
-            print("Invalid Report ID. Please try again.")
 
-    report_details = {}
-    while True:
-        field = input("Enter the field you want to update (property, work_done, upkeep_status, employee, total_costs, marked_as_finished, report_closed, contractors_used): ").strip()
-        if field == 'b':
-            return
-        if field in ["property", "work_done", "upkeep_status", "employee", "total_costs", "marked_as_finished", "report_closed", "contractors_used"]:
-            value = input(f"Enter the new value for {field}: ").strip()
-            if value == 'b':
+        headers = ["Report ID", "Property", "Work Done", "Upkeep Status", "Employee", "Total Costs", "Marked as Finished", "Report Closed", "Contractors Used"]
+        col_widths = [len(header) for header in headers]
+        for report in reports:
+            col_widths = [max(len(str(getattr(report, attr))), width) for attr, width in zip(
+                ["maintenance_report_id", "property", "work_done", "upkeep_status", "employee", "total_costs", "marked_as_finished", "report_closed", "contractors_used"], col_widths)]
+        row_format = "  |  ".join([f"{{:<{width}}}" for width in col_widths])
+        print(row_format.format(*headers))
+        print("-" * sum(col_widths))
+        for report in reports:
+            print(row_format.format(
+                report.maintenance_report_id, report.property, report.work_done, report.upkeep_status,
+                report.employee, report.total_costs, report.marked_as_finished, report.report_closed, ", ".join(report.contractors_used)
+            ))
+
+        while True:
+            report_id = input("\nEnter the Report ID of the maintenance report you want to update: ").strip()
+            if report_id == 'b':
                 return
-            if field == "property" and validate_property(value):
-                report_details[field] = value
-                break
-            elif field == "work_done" and validate_work_done(value):
-                report_details[field] = value
-                break
-            elif field == "upkeep_status" and validate_upkeep_status(value):
-                report_details[field] = value
-                break
-            elif field == "employee" and validate_employee(value):
-                report_details[field] = value
-                break
-            elif field == "total_costs" and validate_total_costs(value):
-                report_details[field] = int(value)
-                break
-            elif field == "marked_as_finished" and validate_boolean(value):
-                report_details[field] = value.lower() == 'true'
-                break
-            elif field == "report_closed" and validate_boolean(value):
-                report_details[field] = value.lower() == 'true'
-                break
-            elif field == "contractors_used" and validate_contractors_used(value):
-                report_details[field] = set(value.split(','))
+            if report_id.isdigit() and any(report.maintenance_report_id == int(report_id) for report in reports):
+                report_id = int(report_id)
                 break
             else:
-                print(f"Invalid value for {field}. Please try again.")
-        else:
-            print("Invalid field. Please try again.")
+                print("Invalid Report ID. Please try again.")
 
-    result = self.logic_wrapper.change_maintenance_report_info(report_id, field, report_details[field])
-    print(result)
-    print("\nMaintenance report updated successfully.")
-    input("\nPress Enter to return to the menu.")
+        report_details = {}
+        while True:
+            field = input("Enter the field you want to update (property, work_done, upkeep_status, employee, total_costs, marked_as_finished, report_closed, contractors_used): ").strip()
+            if field == 'b':
+                return
+            if field in ["property", "work_done", "upkeep_status", "employee", "total_costs", "marked_as_finished", "report_closed", "contractors_used"]:
+                value = input(f"Enter the new value for {field}: ").strip()
+                if value == 'b':
+                    return
+                if field == "property" and validate_property(value):
+                    report_details[field] = value
+                    break
+                elif field == "work_done" and validate_work_done(value):
+                    report_details[field] = value
+                    break
+                elif field == "upkeep_status" and validate_upkeep_status(value):
+                    report_details[field] = value
+                    break
+                elif field == "employee" and validate_employee(value):
+                    report_details[field] = value
+                    break
+                elif field == "total_costs" and validate_total_costs(value):
+                    report_details[field] = int(value)
+                    break
+                elif field == "marked_as_finished" and validate_boolean(value):
+                    report_details[field] = value.lower() == 'true'
+                    break
+                elif field == "report_closed" and validate_boolean(value):
+                    report_details[field] = value.lower() == 'true'
+                    break
+                elif field == "contractors_used" and validate_contractors_used(value):
+                    report_details[field] = set(value.split(','))
+                    break
+                else:
+                    print(f"Invalid value for {field}. Please try again.")
+            else:
+                print("Invalid field. Please try again.")
+
+        result = self.logic_wrapper.change_maintenance_report_info(report_id, field, report_details[field])
+        print(result)
+        print("\nMaintenance report updated successfully.")
+        input("\nPress Enter to return to the menu.")
 
     def mark_report_finished(self):
         self.clear_terminal()
         print("Mark Maintenance Report as Finished")
         report_id = input("Enter Report ID: ").strip()
-        result = self.logic_wrapper.mark_report_finished(report_id)
+        result = self.logic_wrapper.mark_report_as_finished(report_id)
         print(result)
         input("\nPress Enter to return to the menu.")
 
