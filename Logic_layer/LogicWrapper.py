@@ -42,7 +42,10 @@ class LogicWrapper:
         return self.employee_logic.change_employee_info(ssn, field, new_value)
 
     def search_employee_by_ssn(self, ssn: str) -> Employee:
-        return self.employee_logic.search_employee_by_ssn(ssn)
+        try:
+            return self.employee_logic.search_employee_by_ssn(ssn)
+        except ValueError:
+            return None
 
     # WorkOrderLogic
     def create_work_order(self, work_order_details: dict):

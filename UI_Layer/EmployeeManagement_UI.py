@@ -1,7 +1,6 @@
 from Logic_layer.LogicWrapper import LogicWrapper
 import os
 import shutil
-import sys
 from UI_Layer.Validation import validate_email, validate_full_name, validate_ssn
 
 class EmployeeManagementUI:
@@ -27,7 +26,6 @@ class EmployeeManagementUI:
             print(d + " 2. Register New Employee ".ljust(columns - 2) + d)
             print(d + " 3. Update Employee Information ".ljust(columns - 2) + d)
             print(d + " b. Back to Supervisor Menu ".ljust(columns - 2) + d)
-            print(d + " q. Quit ".ljust(columns - 2) + d)
             print(c + h * (columns - 2) + c)
 
             choice = input("\nChoose an option: ").strip().lower()
@@ -40,9 +38,6 @@ class EmployeeManagementUI:
                 self.update_employee_info()
             elif choice == "b":
                 return
-            elif choice == "q":
-                print("Exiting Employee Management Menu. Goodbye!")
-                sys.exit()
             else:
                 print("Invalid choice. Please try again.")
                 input("\nPress Enter to return to the menu.")
@@ -82,10 +77,14 @@ class EmployeeManagementUI:
             if employee_details["ssn"].lower() == 'b':
                 return
             if not validate_ssn(employee_details["ssn"]):
-                print("Invalid SSN. It should be exactly 10 digits.")
+                print("Invalid SSN. Must only contain digits and should be exactly 10 digits.")
                 input("\nPress Enter to try again.")
             else:
-                break
+                if self.logic_wrapper.search_employee_by_ssn(employee_details["ssn"]):
+                    print("Error: Employee with this SSN already exists.")
+                    input("\nPress Enter to try again.")
+                else:
+                    break
                 
         while True:
             employee_details["full_name"] = input("Enter Full Name: ").strip()
@@ -125,13 +124,15 @@ class EmployeeManagementUI:
                 break
                 
         result = self.logic_wrapper.register_employee(employee_details)
-        if result:
+        if result == "Error: Employee with this SSN already exists.":
+            print("\n" + result)
+            input("\nPress Enter to try again.")
+            return self.register_employee()
+        elif result:
             print("\nEmployee registered successfully.")
         else:
             print("\nAn error occurred while registering the employee.")
-
         input("\nPress Enter to return to the menu.")
-
 
     def update_employee_info(self):
         self.clear_terminal()
