@@ -63,22 +63,22 @@ class MaintenanceReportUI:
     def list_all_reports(self):
         self.clear_terminal()
         print("List All Maintenance Reports")
-        reports = self.logic_wrapper.list_all_reports()
+        reports = self.logic_wrapper.get_all_maintenance_reports()
         if not reports:
             print("No maintenance reports found.")
         else:
-            headers = ["Report ID", "Title", "Description", "Reported By", "Assigned To", "Status", "Priority", "Date Created"]
+            headers = ["Report ID", "Property", "Work Done", "Upkeep Status", "Employee", "Total Costs", "Marked as Finished", "Report Closed", "Contractors Used"]
             col_widths = [len(header) for header in headers]
             for report in reports:
                 col_widths = [max(len(str(getattr(report, attr))), width) for attr, width in zip(
-                    ["report_id", "title", "description", "reported_by", "assigned_to", "status", "priority", "date_created"], col_widths)]
+                    ["maintenance_report_id", "property", "work_done", "upkeep_status", "employee", "total_costs", "marked_as_finished", "report_closed", "contractors_used"], col_widths)]
             row_format = "  |  ".join([f"{{:<{width}}}" for width in col_widths])
             print(row_format.format(*headers))
             print("-" * sum(col_widths))
             for report in reports:
                 print(row_format.format(
-                    report.report_id, report.title, report.description, report.reported_by,
-                    report.assigned_to, report.status, report.priority, report.date_created
+                    report.maintenance_report_id, report.property, report.work_done, report.upkeep_status,
+                    report.employee, report.total_costs, report.marked_as_finished, report.report_closed, ", ".join(report.contractors_used)
                 ))
         input("\nPress Enter to return to the menu.")
 
