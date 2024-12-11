@@ -1,8 +1,6 @@
 from Logic_layer.LogicWrapper import LogicWrapper
 import os
 import shutil
-import sys
-
 class EmployeeUI:
     def __init__(self, logic_wrapper: LogicWrapper):
         self.logic_wrapper = logic_wrapper
@@ -27,7 +25,6 @@ class EmployeeUI:
             print(c + h * (columns - 2) + c)
             print(d + " 1. List All Employees ".ljust(columns - 2) + d)
             print(d + " b. Back to Login Menu ".ljust(columns - 2) + d)
-            print(d + " q. Quit ".ljust(columns - 2) + d)
             print(c + h * (columns - 2) + c)
 
             choice = input("\nChoose an option: ").strip().lower()
@@ -36,9 +33,6 @@ class EmployeeUI:
                 self.list_all_employees()
             elif choice == "b":
                 return
-            elif choice == "q":
-                print("Exiting Employee Menu. Goodbye!")
-                sys.exit()
             else:
                 print("Invalid choice. Please try again.")
                 input("\nPress Enter to return to the menu.")

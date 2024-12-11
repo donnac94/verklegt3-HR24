@@ -1,8 +1,6 @@
 from Logic_layer.LogicWrapper import LogicWrapper
 import os
 import shutil
-import sys
-
 
 class ContractorUI():
     def __init__(self, logic_wrapper: LogicWrapper):
@@ -30,7 +28,6 @@ class ContractorUI():
             print(d + " 2. Add New Contractor ".ljust(columns - 2) + d)
             print(d + " 3. Update Contractor Information ".ljust(columns - 2) + d)
             print(d + " b. Back to Login Menu ".ljust(columns - 2) + d)
-            print(d + " q. Quit ".ljust(columns - 2) + d)
             print(c + h * (columns - 2) + c)
 
             choice = input("\nChoose an option: ").strip().lower()
@@ -43,9 +40,6 @@ class ContractorUI():
                 self.change_contractor_info()
             elif choice == "b":
                 return
-            elif choice == "q":
-                print("Exiting Contractor Menu. Goodbye!")
-                sys.exit()
             else:
                 print("Invalid choice. Please try again.")
                 input("\nPress Enter to return to the menu.")

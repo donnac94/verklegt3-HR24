@@ -3,7 +3,6 @@ from UI_Layer.EmployeeUI import EmployeeUI
 from Logic_layer.LogicWrapper import LogicWrapper
 import os
 import shutil
-import sys
 
 class LoginUI:
     def __init__(self):
@@ -44,8 +43,8 @@ class LoginUI:
             elif choice == "2":
                 employee_ui.display_menu()
             elif choice == "q":
-                print("Exiting. Goodbye!")
-                sys.exit()
+                print("\n Exiting. Goodbye!")
+                break
             else:
                 print("Invalid choice. Please try again.")
                 input("\nPress Enter to return to the menu.")
