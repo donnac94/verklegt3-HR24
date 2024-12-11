@@ -8,6 +8,7 @@ from Models.WorkOrder import WorkOrder
 from Models.employee import Employee
 from Models.property import Property
 from Models.Contractor import Contractor
+from Models.maintenance_report import MaintenanceReport
 from Models.location import Location
 
 class DataWrapper:
@@ -115,6 +116,29 @@ class DataWrapper:
         :param new_value: The new value for the field. 
         """
         return self.contractor_data.change_contractor_info(contractor_id, field, new_value)
+    
+    # MaintenanceReport methods
+
+    def submit_maintenance_report(self, maintenance_report_obj: MaintenanceReport):
+        """
+        Save a maintenance report in the CSV file.
+        :param MaintenanceReport maintenance_report: The maintenance report to be saved.
+        """
+        return self.maintenance_report_data.submit_maintenance_report(maintenance_report_obj)
+    
+    def get_all_maintenance_reports(self) -> list[MaintenanceReport]:
+        """
+        Retrieve all maintenance reports from the CSV file.
+        :return: A list of maintenance reports.
+        """
+        return self.maintenance_report_data.get_all_maintenance_reports()
+    
+    def change_maintenance_report_info(self, maintenance_report_id: int, field: str, new_value: str) -> None:
+        """
+        Change the information of a maintenance report
+        :param int maintenance_report_id
+        """
+        return self.maintenance_report_data.change_maintenance_report_info(maintenance_report_id, field, new_value)
     def list_location(self) -> list[Location]:
         """
         Takes all the Locations and returns them 

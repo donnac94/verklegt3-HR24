@@ -5,6 +5,7 @@ from Logic_layer.PropertyLogic import PropertyLogic
 from Logic_layer.WorkOrderLogic import WorkOrderLogic
 from Models.WorkOrder import WorkOrder
 from Models.employee import Employee
+from Models.maintenance_report import MaintenanceReport
 
 class LogicWrapper:
     def __init__(self):
@@ -71,3 +72,22 @@ class LogicWrapper:
     
     def change_contractor_info(self, contractor_id, field, updated_contractor):
         return self.contractor_logic.change_contractor_info(contractor_id, field, updated_contractor)
+    
+    # MaintenanceReportLogic
+    def submit_maintenance_report(self, report_details: dict):
+        return self.maintenance_report_logic.submit_maintenance_report(report_details)
+    
+    def get_all_maintenance_reports(self) -> list[MaintenanceReport]:
+        return self.maintenance_report_logic.get_all_maintenance_reports()
+    
+    def change_maintenance_report_info(self, maintenance_report_id, field, new_value):
+        return self.maintenance_report_logic.change_maintenance_report_info(maintenance_report_id, field, new_value)
+    
+    def mark_report_as_finished(self, maintenance_report_id: int) -> str:
+        return self.maintenance_report_logic.mark_report_as_finished(maintenance_report_id)
+    
+    def close_maintenance_report(self, maintenance_report_id: int) -> str:
+        return self.maintenance_report_logic.close_maintenance_report(maintenance_report_id)
+
+    def reopen_maintenance_report(self, maintenance_report_id: int) -> str:
+        return self.maintenance_report_logic.reopen_maintenance_report(maintenance_report_id)
