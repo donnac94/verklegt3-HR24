@@ -18,7 +18,10 @@ class PropertyLogic:
         return "Property added successfully."
 
     def list_properties(self) -> list[Property]:
-        return self.data_wrapper.list_properties()
+        properties = self.data_wrapper.list_properties()
+        if not properties:
+            return []
+        return properties
 
     def update_property(self, property_id, updated_details: dict) -> str:
         self.data_wrapper.update_property(property_id, updated_details)
