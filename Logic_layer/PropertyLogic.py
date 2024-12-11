@@ -11,7 +11,7 @@ class PropertyLogic:
         existing_properties = self.data_wrapper.list_properties()
         for property in existing_properties:
             if property.address == property_details["address"]:
-                return "Property already exists in system"
+                return "Error: Property with this address already exists in the system."
 
         new_property = Property(
             property_id=property_details["property_id"],
@@ -19,7 +19,7 @@ class PropertyLogic:
             location=property_details["location"],
             property_condition=property_details["property_condition"],
             supervisor=property_details["supervisor"],
-            requires_maintenance=property_details["requires_maintenance"]
+            requires_maintenance=[item.strip() for item in property_details["requires_maintenance"] if item.strip()]
         )
         self.data_wrapper.add_property(new_property)
         return "Property added successfully."
@@ -31,6 +31,8 @@ class PropertyLogic:
         return properties
 
     def update_property(self, property_id, updated_details: dict) -> str:
+        if "requires_maintenance" in updated_details:
+            updated_details["requires_maintenance"] = [item.strip() for item in updated_details["requires_maintenance"] if item.strip()]
         self.data_wrapper.update_property(property_id, updated_details)
         return "Property updated successfully."
 
@@ -40,3 +42,10 @@ class PropertyLogic:
             if property.property_id == property_id:
                 return property
         raise ValueError(f"Property with ID {property_id} not found.")
+
+    def property_exists(self, address: str) -> bool:
+        existing_properties = self.data_wrapper.list_properties()
+        for property in existing_properties:
+            if property.address == address:
+                return True
+        return False

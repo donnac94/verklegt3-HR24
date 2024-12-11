@@ -31,6 +31,9 @@ class LogicWrapper:
     def get_property_by_id(self, property_id):
         return self.property_logic.get_property_by_id(property_id)
 
+    def property_exists(self, address: str) -> bool:
+        return self.property_logic.property_exists(address)
+
     # EmployeeLogic
     def list_employees(self) -> list:
         return self.employee_logic.list_employees()
