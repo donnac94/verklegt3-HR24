@@ -61,7 +61,7 @@ class ContractorUI():
         if not contractors:
             print("No contractors found.")
         else:
-            headers = ["Contractor ID", "Name", "Contact Name", "Phone number", "Opening Time", "Location", "Satisfaction With Previous Work"]
+            headers = ["Contractor ID", "Company", "Contact Name", "Phone number", "Opening Time", "Location", "Satisfaction With Previous Work"]
             col_widths = [max(len(str(getattr(cont, attr))) for cont in contractors) for attr in ["contractor_id", "name", "contact_name", "phone_nr", "opening_time", "location", "satisfaction_with_previous_work"]]
             col_widths = [max(len(header), width) for header, width in zip(headers, col_widths)]
             row_format = "  |  ".join([f"{{:<{width}}}" for width in col_widths])
