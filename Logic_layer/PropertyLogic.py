@@ -6,6 +6,13 @@ class PropertyLogic:
         self.data_wrapper = DataWrapper()
 
     def add_property(self, property_details: dict) -> str:
+
+        # Check if property already in system
+        existing_properties = self.data_wrapper.list_properties()
+        for property in existing_properties:
+            if property.address == property_details["address"]:
+                return "Property already exists in system"
+
         new_property = Property(
             property_id=property_details["property_id"],
             address=property_details["address"],

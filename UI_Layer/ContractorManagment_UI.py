@@ -109,35 +109,48 @@ class ContractorUI():
         print("|" + " Update Contractor Information ".center(columns - 2) + "|")
         print("+".ljust(columns - 1, '-') + "+")
         print("Enter 'b' at any prompt to cancel and go back to the previous menu.\n")
+
         contractor_id = input("Enter Contractor ID to update: ").strip()
         if contractor_id.lower() == 'b':
             return
+    
+        contractor = self.logic_wrapper.get_contractor_by_id(contractor_id)
+        if not contractor: 
+            print("Contractor not found.")
+            input("\nPress Enter to return to the menu.")
+            return
+
         updated_details = {}
         name = input("Enter new Name (leave blank to keep current): ").strip()
         if name.lower() == 'b':
             return
         if name:
             updated_details["name"] = name
+
         contact_name = input("Enter Contact Name (leave blank to keep current): ").strip()
         if contact_name.lower() == 'b':
             return
         if contact_name:
             updated_details["contact_name"] = contact_name
+
         phone_nr = input("Enter Phone Number (leave blank to keep current): ").strip()
         if phone_nr.lower() == 'b':
             return
         if phone_nr:
             updated_details["phone_nr"] = phone_nr
+
         opening_time = input("Enter the opening time (leave blank to keep current): ").strip()
         if opening_time.lower() == 'b':
             return
         if opening_time:
             updated_details["opening_time"] = opening_time
+
         location = input("Enter the Location (leave blank to keep current): ").strip()
         if location.lower() == 'b':
             return
         if location:
             updated_details["location"] = location
+
         satisfaction_with_previous_work = input("Enter Satisfaction With Previous Work (leave blank to keep current): ").strip()
         if satisfaction_with_previous_work.lower() == 'b':
             return

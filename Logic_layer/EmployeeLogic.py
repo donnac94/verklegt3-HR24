@@ -6,6 +6,12 @@ class EmployeeLogic:
         self.data_wrapper = DataWrapper()
 
     def register_employee(self, employee_details: dict) -> str:
+        # Check if employee already in system
+        existing_employees = self.data_wrapper.list_employees()
+        for employee in existing_employees:
+            if employee.ssn == employee_details["ssn"]:
+                return "Employee already exists in system"
+            
         new_employee = Employee(
             ssn=employee_details["ssn"],
             full_name=employee_details["full_name"],
