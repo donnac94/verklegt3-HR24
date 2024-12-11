@@ -72,15 +72,15 @@ class MaintenanceReportUI:
         if not reports:
             print("No maintenance reports found.")
         else:
-            headers = ["Report ID", "Property", "Work Done", "Upkeep Status", "Employee", "Total Costs", "Marked as Finished", "Report Closed", "Contractors Used"]
-            col_widths = [max(len(str(getattr(report, attr))) for report in reports) for attr in ["maintenance_report_id", "property", "work_done", "upkeep_status", "employee", "total_costs", "marked_as_finished", "report_closed", "contractors_used"]]
+            headers = ["Report ID", "connected_work_order_id", "Property", "Work Done", "Upkeep Status", "Employee", "Total Costs", "Marked as Finished", "Report Closed", "Contractors Used"]
+            col_widths = [max(len(str(getattr(report, attr))) for report in reports) for attr in ["maintenance_report_id", "connected_work_order_id", "property", "work_done", "upkeep_status", "employee", "total_costs", "marked_as_finished", "report_closed", "contractors_used"]]
             col_widths = [max(len(header), width) for header, width in zip(headers, col_widths)]
             row_format = "  |  ".join([f"{{:<{width}}}" for width in col_widths])
             print(row_format.format(*headers))
             print("-" * (columns - 2))
             for report in reports:
                 print(row_format.format(
-                    report.maintenance_report_id, report.property, report.work_done, report.upkeep_status,
+                    report.maintenance_report_id, report.connected_work_order_id, report.property, report.work_done, report.upkeep_status,
                     report.employee, report.total_costs, report.marked_as_finished, report.report_closed, ", ".join(report.contractors_used)
                 ))
         input("\nPress Enter to return to the menu.")
@@ -107,6 +107,13 @@ class MaintenanceReportUI:
                 break
             else:
                 print("Invalid property. Please try again.")
+
+        while True:
+            connected_work_order_id = input("Enter the ID of the work order this report is about.").strip()
+            if connected_work_order_id == 'b':
+                return
+            else:
+                break
 
         while True:
             work_done = input("Enter Work Done: ").strip()
@@ -198,17 +205,17 @@ class MaintenanceReportUI:
             input("\nPress Enter to return to the menu.")
             return
 
-        headers = ["Report ID", "Property", "Work Done", "Upkeep Status", "Employee", "Total Costs", "Marked as Finished", "Report Closed", "Contractors Used"]
+        headers = ["Report ID", "connected_work_order_id", "Property", "Work Done", "Upkeep Status", "Employee", "Total Costs", "Marked as Finished", "Report Closed", "Contractors Used"]
         col_widths = [len(header) for header in headers]
         for report in reports:
             col_widths = [max(len(str(getattr(report, attr))), width) for attr, width in zip(
-                ["maintenance_report_id", "property", "work_done", "upkeep_status", "employee", "total_costs", "marked_as_finished", "report_closed", "contractors_used"], col_widths)]
+                ["maintenance_report_id", "connected_work_order_id", "property", "work_done", "upkeep_status", "employee", "total_costs", "marked_as_finished", "report_closed", "contractors_used"], col_widths)]
         row_format = "  |  ".join([f"{{:<{width}}}" for width in col_widths])
         print(row_format.format(*headers))
         print("-" * sum(col_widths))
         for report in reports:
             print(row_format.format(
-                report.maintenance_report_id, report.property, report.work_done, report.upkeep_status,
+                report.maintenance_report_id, report.connected_work_order_id, report.property, report.work_done, report.upkeep_status,
                 report.employee, report.total_costs, report.marked_as_finished, report.report_closed, ", ".join(report.contractors_used)
             ))
 
@@ -224,14 +231,17 @@ class MaintenanceReportUI:
 
         report_details = {}
         while True:
-            field = input("Enter the field you want to update (property, work_done, upkeep_status, employee, total_costs, marked_as_finished, report_closed, contractors_used): ").strip()
+            field = input("Enter the field you want to update (connected_work_order_id, property, work_done, upkeep_status, employee, total_costs, marked_as_finished, report_closed, contractors_used): ").strip()
             if field == 'b':
                 return
-            if field in ["property", "work_done", "upkeep_status", "employee", "total_costs", "marked_as_finished", "report_closed", "contractors_used"]:
+            if field in ["connected_work_order_id", "property", "work_done", "upkeep_status", "employee", "total_costs", "marked_as_finished", "report_closed", "contractors_used"]:
                 value = input(f"Enter the new value for {field}: ").strip()
                 if value == 'b':
                     return
-                if field == "property" and validate_property(value):
+                if field == "connected_work_order_id":
+                    report_details[field] = value
+                    break
+                elif field == "property" and validate_property(value):
                     report_details[field] = value
                     break
                 elif field == "work_done" and validate_work_done(value):

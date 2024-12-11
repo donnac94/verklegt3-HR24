@@ -6,6 +6,7 @@ class MaintenanceReport():
     def __init__(
             self,
             maintenance_report_id: int,
+            connected_work_order_id: int,
             property: str,
             work_done: str,
             upkeep_status: str,
@@ -17,6 +18,7 @@ class MaintenanceReport():
     ) -> None:
         """
         :param int maintenance_report_id: The unique id for the maintenance report.
+        :param int connected_work_order_id: The id for the work order that the maintenance report is about.
         :param str property: The property which the maintenance report is about.
         :param str work_done: Description of what work was done.
         :param str upkeep_status: States whether upkeep was regular maintenance or emergency repair.
@@ -28,6 +30,7 @@ class MaintenanceReport():
         """
 
         self.maintenance_report_id = maintenance_report_id
+        self.connected_work_order_id = connected_work_order_id
         self.property = property
         self.work_done  = work_done
         self.upkeep_status  = upkeep_status
@@ -40,6 +43,7 @@ class MaintenanceReport():
     def to_dict(self):
         return {
             "maintenance_report_id": self.maintenance_report_id,
+            "connected_work_order_id": self.connected_work_order_id,
             "property": self.property,
             "work_done": self.work_done,
             "upkeep_status": self.upkeep_status,
@@ -54,6 +58,7 @@ class MaintenanceReport():
     def from_dict(cls, dict_obj):
         return cls(
             dict_obj["maintenance_report_id"],
+            dict_obj["connected_work_order_id"],
             dict_obj["property"],
             dict_obj["work_done"],
             dict_obj["upkeep_status"],

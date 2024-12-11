@@ -7,7 +7,7 @@ class PropertyData:
 
     def add_property(self, property: Property) -> None:
         with open(self.file_name, 'a', newline='', encoding="utf-8") as csvfile:
-            fieldnames = ["property_id", "address", "location", "property_condition", "manager", "requires_maintenance"]
+            fieldnames = ["property_id", "address", "location", "property_condition", "supervisor", "requires_maintenance"]
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
             if csvfile.tell() == 0:  
@@ -42,7 +42,7 @@ class PropertyData:
             raise ValueError(f"Property with ID {property_id} not found.")
 
         with open(self.file_name, 'w', newline='', encoding="utf-8") as csvfile:
-            fieldnames = ["property_id", "address", "location", "property_condition", "manager", "requires_maintenance"]
+            fieldnames = ["property_id", "address", "location", "property_condition", "supervisor", "requires_maintenance"]
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writeheader()
             for property in properties:

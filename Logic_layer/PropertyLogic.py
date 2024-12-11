@@ -11,7 +11,7 @@ class PropertyLogic:
             address=property_details["address"],
             location=property_details["location"],
             property_condition=property_details["property_condition"],
-            manager=property_details["manager"],
+            supervisor=property_details["supervisor"],
             requires_maintenance=property_details["requires_maintenance"]
         )
         self.data_wrapper.add_property(new_property)
