@@ -1,8 +1,11 @@
 import csv
-from Data_Layer.EmployeeData import EmployeeData
-from Data_Layer.PropertyData import PropertyData
-from Data_Layer.WorkOrderData import WorkOrderData
-from Data_Layer.MaintenanceReportData import M
+from Logic_layer.EmployeeLogic import  EmployeeLogic
+from Logic_layer.PropertyLogic import PropertyLogic
+from Logic_layer.WorkOrderLogic import WorkOrderLogic
+from Logic_layer.LocationLogic import LocationLogic
+from Logic_layer.ContractorLogic import ContractorLogic
+from Logic_layer.MaintenanceReportLogic import MaintenanceReportLogic
+from Logic_layer.SearchLogic import SearchLogic
 
 class Search: 
     

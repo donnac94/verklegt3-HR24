@@ -8,6 +8,7 @@ from Models.WorkOrder import WorkOrder
 from Models.employee import Employee
 from Models.property import Property
 from Models.Contractor import Contractor
+from Models.location import Location
 
 class DataWrapper:
     def __init__(self):
@@ -114,3 +115,10 @@ class DataWrapper:
         :param new_value: The new value for the field. 
         """
         return self.contractor_data.change_contractor_info(contractor_id, field, new_value)
+    def list_location(self) -> list[Location]:
+        """
+        Takes all the Locations and returns them 
+        Returns:
+            list[Location]: 
+        """
+        return self.location_data.get_all_locations()
