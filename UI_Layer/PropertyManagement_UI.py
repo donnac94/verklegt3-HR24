@@ -1,5 +1,4 @@
 import os
-import sys
 import shutil
 from Logic_layer.LogicWrapper import LogicWrapper
 
@@ -30,7 +29,6 @@ class PropertyUI:
             print(d + " 3. Update Property Information ".ljust(columns - 2) + d)
             print(d + " 4. Approve Maintenance Reports ".ljust(columns - 2) + d)
             print(d + " b. Back to Supervisor Menu ".ljust(columns - 2) + d)
-            print(d + " q. Quit ".ljust(columns - 2) + d)
             print(c + h * (columns - 2) + c)
 
             choice = input("\nChoose an option: ").strip().lower()
@@ -45,9 +43,6 @@ class PropertyUI:
                 self.approve_maintenance_reports()
             elif choice == "b":
                 return
-            elif choice == "q":
-                print("Exiting Property Menu. Goodbye!")
-                sys.exit()
             else:
                 print("Invalid choice. Please try again.")
                 input("\nPress Enter to return to the menu.")

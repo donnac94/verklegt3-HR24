@@ -1,7 +1,6 @@
 from Logic_layer.LogicWrapper import LogicWrapper
 import os
 import shutil
-import sys
 
 from UI_Layer.Validation import validate_boolean, validate_contractors_used, validate_employee, validate_property, validate_total_costs, validate_upkeep_status, validate_work_done
 
@@ -36,7 +35,6 @@ class MaintenanceReportUI:
             print(d + " 5. Close Maintenance Report ".ljust(columns - 2) + d)
             print(d + " 6. Reopen Maintenance Report ".ljust(columns - 2) + d)
             print(d + " b. Back to Login Menu ".ljust(columns - 2) + d)
-            print(d + " q. Quit ".ljust(columns - 2) + d)
             print(c + h * (columns - 2) + c)
 
             choice = input("\nChoose an option: ").strip().lower()
@@ -55,9 +53,6 @@ class MaintenanceReportUI:
                 self.reopen_report()
             elif choice == "b":
                 return
-            elif choice == "q":
-                print("Exiting Maintenance Report Menu. Goodbye!")
-                sys.exit()
             else:
                 print("Invalid choice. Please try again.")
                 input("\nPress Enter to return to the menu.")

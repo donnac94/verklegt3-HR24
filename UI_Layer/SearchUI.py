@@ -32,7 +32,6 @@ class SearchUI:
             print(d + " 2. Search Employee by SSN ".ljust(columns - 2) + d)
             print(d + " 3. Search Property by ID ".ljust(columns - 2) + d)
             print(d + " 4. Search Workorder by ID".ljust(columns - 2) + d)
-            print(d + " q. Quit ".ljust(columns - 2) + d)
             print(c + h * (columns - 2) + c)
 
             choice = input("\nChoose an option: ").strip().lower()
@@ -53,8 +52,6 @@ class SearchUI:
                 workorder = input("\nEnter a workorder id: ")
                 result = self.search_logic.search_workorder_id(workorder)
                 return result
-            elif choice == "q":
-                print("Exiting Employee Menu. Goodbye!")
             else:
                 print("Invalid choice. Please try again.")
                 input("\nPress Enter to return to the menu.")
