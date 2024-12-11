@@ -10,6 +10,12 @@ class MaintenanceReportLogic:
         Creates a maintenance report object with specified details and forwards it to the data layer.
         :param dict report_details: The details of the maintenance report.
         """
+        # Check if maintenance report already exists in system
+        existing_maintenance_reports = self.data_wrapper.get_all_maintenance_reports()
+        for maintenance_report in existing_maintenance_reports:
+            if maintenance_report.connected_work_order_id == report_details["connected_work_order_id"]:
+                return "Maintenance report already exists for the work order"
+            
         new_report = MaintenanceReport(
             maintenance_report_id=report_details["maintenance_report_id"],
             connected_work_order_id=report_details["connected_work_order_id"],
