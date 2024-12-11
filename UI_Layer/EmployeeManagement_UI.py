@@ -82,7 +82,7 @@ class EmployeeManagementUI:
                 if employee_details["ssn"].lower() == 'b':
                     return
                 if not validate_ssn(employee_details["ssn"]):
-                    print("Invalid SSN. It should be exactly 10 digits.")
+                    print("Invalid SSN. It should be exactly 10 digits and only contain numbers.")
                     input("\nPress Enter to try again.")
                 else:
                     break
