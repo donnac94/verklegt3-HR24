@@ -77,10 +77,15 @@ class EmployeeManagementUI:
             if employee_details["ssn"].lower() == 'b':
                 return
             if not validate_ssn(employee_details["ssn"]):
-                print("Invalid SSN. It should be exactly 10 digits.")
+                print("Invalid SSN. Must only contain digits and should be exactly 10 digits.")
                 input("\nPress Enter to try again.")
             else:
-                break
+                # Check if SSN already exists
+                if self.logic_wrapper.search_employee_by_ssn(employee_details["ssn"]):
+                    print("Error: Employee with this SSN already exists.")
+                    input("\nPress Enter to try again.")
+                else:
+                    break
                 
         while True:
             employee_details["full_name"] = input("Enter Full Name: ").strip()
@@ -120,13 +125,15 @@ class EmployeeManagementUI:
                 break
                 
         result = self.logic_wrapper.register_employee(employee_details)
-        if result:
+        if result == "Error: Employee with this SSN already exists.":
+            print("\n" + result)
+            input("\nPress Enter to try again.")
+            return self.register_employee()
+        elif result:
             print("\nEmployee registered successfully.")
         else:
             print("\nAn error occurred while registering the employee.")
-
         input("\nPress Enter to return to the menu.")
-
 
     def update_employee_info(self):
         self.clear_terminal()
