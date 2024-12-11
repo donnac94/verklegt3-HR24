@@ -6,3 +6,4 @@ maintenance_report_id,property,work_done,upkeep_status,employee,total_costs,mark
 5,202 Maple St,Garden maintenance,Regular Maintenance,Sarah Connor,1500,True,True,Contractor E
 6,303 Birch St,Fixed bathroom tile,Emergency Repair,Lísa Alfreðs,3500,False,False,Contractor F
 7,Langholt 33,fix hottub,Emergency Repair,Snorri Snorrasson,500,False,False,{'Contractor D'}
+8,Langholt 33,Fix hottub,Regular Maintenance,Donna,0,False,False,{'1'}

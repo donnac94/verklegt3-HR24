@@ -119,7 +119,7 @@ class MaintenanceReportUI:
                 print("This field is required, please what work was done.")
 
         while True:
-            upkeep_status = input("Enter Upkeep Status (Regular Maintenance/Emergency Repair): ").strip()
+            upkeep_status = input("Enter Upkeep Status (Regular Maintenance / Emergency Repair): ").strip()
             if upkeep_status == 'b':
                 return
             if validate_upkeep_status(upkeep_status):
