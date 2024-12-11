@@ -12,8 +12,16 @@ class ContractorLogic:
         Takes in a contractor object and forwards it to the data layer.
         :param contractor_details: The details for the contractor to create
         '''
+
+        # Check if contractor already in system
+        existing_contractors = self.data_wrapper.get_all_contractors()
+        for contractor in existing_contractors:
+            if contractor.phone_nr == contractor_details["phone_nr"]:
+                return "Contractor is already registered in system"
+
+        contractor_id = self.automatic_contractor_id()
         new_contractor = Contractor(
-            contractor_id=contractor_details["contractor_id"],
+            contractor_id=contractor_id,
             name=contractor_details["name"],
             contact_name=contractor_details["contact_name"],
             phone_nr=contractor_details["phone_nr"],
@@ -21,6 +29,7 @@ class ContractorLogic:
             location=contractor_details["location"],
             satisfaction_with_previous_work=contractor_details["satisfaction_with_previous_work"]
         )
+
         self.data_wrapper.register_contractor(new_contractor)
         return "Contractor registered successfully."
     
@@ -29,7 +38,10 @@ class ContractorLogic:
         '''
         List all contractors.
         '''
-        return self.data_wrapper.get_all_contractors()
+        contractors = self.data_wrapper.get_all_contractors()
+        if not contractors:
+            return []
+        return contractors
 
 
     def change_contractor_info(self, contractor_id, field, updated_contractor) -> str:
@@ -37,3 +49,25 @@ class ContractorLogic:
         Change contractors information.
         '''
         return self.data_wrapper.change_contractor_info(contractor_id, field, updated_contractor)
+    
+
+    def get_contractor_by_id(self, contractor_id):
+        """ 
+        Gets a specific contractor by their ID
+        :param contractor_id: The contractor ID to look for.
+        :return: A contractor and their information or raises an error if not found.
+        """
+        contractors = self.data_wrapper.get_all_contractors()
+        for contractor in contractors:
+            if contractor.contractor_id == contractor_id:
+                return contractor
+        raise ValueError(f"Contractor with ID {contractor_id} not found.")
+
+    def automatic_contractor_id(self) -> int:
+        """
+        Gets the latest contractor ID and give it plus 1.
+        """
+        contractors = self.list_contractors()
+        latest_contractor = contractors[-1]
+        latest_id = int(latest_contractor.contractor_id)
+        return latest_id + 1

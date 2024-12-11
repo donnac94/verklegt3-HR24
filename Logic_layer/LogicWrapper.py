@@ -73,6 +73,9 @@ class LogicWrapper:
     def change_contractor_info(self, contractor_id, field, updated_contractor):
         return self.contractor_logic.change_contractor_info(contractor_id, field, updated_contractor)
     
+    def get_contractor_by_id(self, contractor_id):
+        return self.contractor_logic.get_contractor_by_id(contractor_id)
+    
     # MaintenanceReportLogic
     def submit_maintenance_report(self, report_details: dict):
         return self.maintenance_report_logic.submit_maintenance_report(report_details)
