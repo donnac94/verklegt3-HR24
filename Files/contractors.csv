@@ -1,7 +1,20 @@
 contractor_id,name,contact_name,phone_nr,opening_time,location,satisfaction_with_previous_work
-1,Contractor A,John Contractor,123-456-7890,08:00-18:00,Reykjavík,High
+1,Gangverk,John Contractor,123-456-7890,08:00-18:00,Reykjavík,High
 2,Contractor B,Jane Contractor,234-567-8901,08:00-18:00,Nuuk,Medium
 3,Contractor C,Emily Contractor,345-678-9012,08:00-18:00,Kulusuk,Low
 4,Contractor D,Michael Contractor,456-789-0123,08:00-18:00,Þórshöfn,High
 5,Contractor E,Sarah Contractor,567-890-1234,08:00-18:00,Tingwall,Medium
 6,Contractor F,Lísa Contractor,678-901-2345,08:00-18:00,Longyearbyen,Low
+7,Verkís,Anna lára,8886464,08:00-18:00,Þórshöfn,Medium
+1,Gangverk,John Contractor,123-456-7890,08:00-18:00,Reykjavík,High
+2,MarioPípur,Mario Leblanc,7758890,10:00-17:00,Tingwall,Medium
+3,Gangverk,Gússi Þorsteinsson,7791010,13:00-20:00,Reykjavík,
+4,,,7771212,13:00-21:00,,
+5,Gangverk,Dobby Potter,5578080,13:00-22:00,Nuuk,Medium
+6,Browski,Brendan Lovitt,8889090,13:00-22:00,Nuuk,Medium
+7,Browskis,Brendan Lovitt,8981011,13:00-22:00,Nuuk,Medium
+8,LetsGo,Lenny Kravitz,5521010,08:00-13:00,Nuuk,Medium
+9,BB og Synir,Bjorgvin Lárus,8985656,13:00-22:00,Reyjavík,Medium
+10,LoVerk,Lárus Long,7764747,10:00-17:00,Reykjavík,High
+11,Pipur Pipur,Piparsveinn Lárusson,8881717,09:00-16:00,Reykjavík,Low
+12,Lárus og Co,Lárus Lárusson,8884532,12:00-22:00,Reykjavík,Low

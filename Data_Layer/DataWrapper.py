@@ -1,3 +1,4 @@
+import csv
 from Data_Layer.EmployeeData import EmployeeData
 from Data_Layer.PropertyData import PropertyData
 from Data_Layer.WorkOrderData import WorkOrderData
@@ -94,13 +95,6 @@ class DataWrapper:
     
 
     # Contractor methods
-    def register_contractor(self, contractor_obj: Contractor):
-        """
-        Register a contractor in the CSV file.
-        :param Contractor contractor_obj: The contractor to save.
-        """
-        return self.contractor_data.register_contractor(contractor_obj)
-    
     def get_all_contractors(self) -> list[Contractor]:
         """
         Retrieve all contractors from the CSV file.
@@ -116,7 +110,14 @@ class DataWrapper:
         :param new_value: The new value for the field. 
         """
         return self.contractor_data.change_contractor_info(contractor_id, field, new_value)
-    
+
+    def register_contractor(self, contractor_obj: Contractor):
+        """
+        Register a contractor in the CSV file.
+        :param Contractor contractor_obj: The contractor to save.
+        """
+        return self.contractor_data.register_contractor(contractor_obj)
+
     # MaintenanceReport methods
 
     def submit_maintenance_report(self, maintenance_report_obj: MaintenanceReport):

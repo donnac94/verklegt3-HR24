@@ -2,7 +2,6 @@ import os
 import shutil
 from Logic_layer.LogicWrapper import LogicWrapper
 
-
 class PropertyUI:
     def __init__(self, logic_wrapper: LogicWrapper):
         self.logic_wrapper = logic_wrapper
@@ -27,7 +26,6 @@ class PropertyUI:
             print(d + " 1. List All Properties ".ljust(columns - 2) + d)
             print(d + " 2. Add New Property ".ljust(columns - 2) + d)
             print(d + " 3. Update Property Information ".ljust(columns - 2) + d)
-            print(d + " 4. Approve Maintenance Reports ".ljust(columns - 2) + d)
             print(d + " b. Back to Supervisor Menu ".ljust(columns - 2) + d)
             print(c + h * (columns - 2) + c)
 
@@ -39,8 +37,6 @@ class PropertyUI:
                 self.add_new_property()
             elif choice == "3":
                 self.update_property_info()
-            elif choice == "4":
-                self.approve_maintenance_reports()
             elif choice == "b":
                 return
             else:
@@ -79,10 +75,15 @@ class PropertyUI:
             "property_id": property_id
         }
 
-        address = input("Enter Address: ").strip()
-        if address == 'b':
-            return
-        property_details["address"] = address
+        while True:
+            address = input("Enter Address: ").strip()
+            if address == 'b':
+                return
+            if self.logic_wrapper.property_exists(address):
+                print("Error: Property with this address already exists in the system. Please try again.")
+            else:
+                property_details["address"] = address
+                break
 
         location = input("Enter Location: ").strip()
         if location == 'b':
@@ -102,7 +103,7 @@ class PropertyUI:
         requires_maintenance = input("Enter Requires Maintenance (comma-separated): ").strip()
         if requires_maintenance == 'b':
             return
-        property_details["requires_maintenance"] = requires_maintenance
+        property_details["requires_maintenance"] = [item.strip() for item in requires_maintenance.split(",") if item.strip()]
 
         result = self.logic_wrapper.add_property(property_details)
         print(result)
@@ -153,16 +154,16 @@ class PropertyUI:
                 selected_field = "address"
                 break
             elif selected_field == '2':
-                field = "location"
+                selected_field = "location"
                 break
             elif selected_field == '3':
-                field = "property_condition"
+                selected_field = "property_condition"
                 break
             elif selected_field == '4':
-                field = "supervisor"
+                selected_field = "supervisor"
                 break
             elif selected_field == '5':
-                field = "requires_maintenance"
+                selected_field = "requires_maintenance"
                 break
             else:
                 selected_field = input("\nYou must choose a number between 1-5, try again.\n")
@@ -170,11 +171,13 @@ class PropertyUI:
         new_value = input(f"Enter the new value for your chosen field: ").strip()
         if new_value.lower() == 'b':
             return
-        updated_details = {field: new_value}
+        if selected_field == "requires_maintenance":
+            updated_details = {selected_field: [item.strip() for item in new_value.split(",") if item.strip()]}
+        else:
+            updated_details = {selected_field: new_value}
         result = self.logic_wrapper.update_property(property_id, updated_details)
         print(result)
 
-        # Fetch the updated property information
         updated_property = self.logic_wrapper.get_property_by_id(property_id)
         print("\nUpdated Information:")
         print(row_format.format(*headers))
@@ -183,11 +186,13 @@ class PropertyUI:
 
         input("\nPress Enter to return to the menu.")
 
-    def approve_maintenance_reports(self):
-        self.clear_terminal()
-        columns, _ = self.get_terminal_size()
-        print("+".ljust(columns - 1, '-') + "+")
-        print("|" + " Approve Maintenance Reports ".center(columns - 2) + "|")
-        print("+".ljust(columns - 1, '-') + "+")
-        # Implementation for approving maintenance reports
-        input("\nPress Enter to return to the menu.")
+
+    #Possibly should be in another layer?.
+    def automatic_property_id(self):
+        """
+        Gets the latest property ID and give it plus 1.
+        """
+        properties = self.logic_wrapper.list_properties()
+        latest_property = properties[-1]
+        latest_id = int(latest_property.property_id)
+        return latest_id + 1

@@ -7,22 +7,19 @@ class ContractorData():
     def __init__(self):
         self.filename = "Files/contractors.csv"
 
-
     def register_contractor(self, contractor_obj: Contractor) -> str:
         ''' Register new contractor in the CSV file.
           :param Contractor_obj: the contractor to save. 
         '''
 
-        with open(self.filename, "a", newline="", encoding="utf-8") as csvfile:
+        contractors = self.get_all_contractors()
+        contractors.append(contractor_obj)
+        with open(self.filename, "w", newline="", encoding="utf-8") as csvfile:
             fieldnames = ["contractor_id", "name", "contact_name", "phone_nr", "opening_time", "location", "satisfaction_with_previous_work"]
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-
-            if csvfile.tell() == 0:
-                writer.writeheader()
-
-            writer.writerow(contractor_obj.to_dict())
-    
-
+            writer.writeheader()
+            for contractor in contractors:
+                writer.writerow(contractor.to_dict())
 
     def get_all_contractors(self) -> list[Contractor]:
         '''
@@ -33,8 +30,6 @@ class ContractorData():
         with open(self.filename, "r", newline="", encoding="utf-8") as csvfile:
             reader = csv.DictReader(csvfile)
             return [Contractor.from_dict(row) for row in reader]
-        
-    
 
     def change_contractor_info(self, contractor_id, field, new_value):
         '''

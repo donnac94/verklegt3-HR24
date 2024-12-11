@@ -34,6 +34,9 @@ class LogicWrapper:
     def automatic_property_id(self):
         return self.property_logic.automatic_property_id()
 
+    def property_exists(self, address: str) -> bool:
+        return self.property_logic.property_exists(address)
+
     # EmployeeLogic
     def list_employees(self) -> list:
         return self.employee_logic.list_employees()
@@ -45,7 +48,10 @@ class LogicWrapper:
         return self.employee_logic.change_employee_info(ssn, field, new_value)
 
     def search_employee_by_ssn(self, ssn: str) -> Employee:
-        return self.employee_logic.search_employee_by_ssn(ssn)
+        try:
+            return self.employee_logic.search_employee_by_ssn(ssn)
+        except ValueError:
+            return None
 
     # WorkOrderLogic
     def create_work_order(self, work_order_details: dict):
@@ -76,8 +82,8 @@ class LogicWrapper:
     def list_contractors(self) -> list:
         return self.contractor_logic.list_contractors()
     
-    def change_contractor_info(self, contractor_id, field, updated_contractor):
-        return self.contractor_logic.change_contractor_info(contractor_id, field, updated_contractor)
+    def change_contractor_info(self, contractor_id, updated_details: dict) -> str:
+        return self.contractor_logic.change_contractor_info(contractor_id, updated_details)
     
     def get_contractor_by_id(self, contractor_id):
         return self.contractor_logic.get_contractor_by_id(contractor_id)
