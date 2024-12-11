@@ -5,6 +5,7 @@ from Logic_layer.LocationLogic import LocationLogic
 from Logic_layer.MaintenanceReportLogic import MaintenanceReportLogic
 from Logic_layer.PropertyLogic import PropertyLogic
 from Logic_layer.WorkOrderLogic import WorkOrderLogic
+from Logic_layer.SearchLogic import SearchLogic
 
 class SearchUI:
     
@@ -15,6 +16,7 @@ class SearchUI:
         self.maintenance_report_logic = MaintenanceReportLogic
         self.property_logic = PropertyLogic
         self.workorder_logic = WorkOrderLogic 
+        self.search_logic = SearchLogic
     
     def display_search_main_menu(self):
         while True:
@@ -37,16 +39,24 @@ class SearchUI:
 
             if choice == '1':
                 location = input("Enter a Location: ")
-                 
+                res = self.search_logic.search_by_location(location)
+                return res
             elif choice == '2':
-                pass
+                employee = input("\n Enter Social Security number: ")
+                ris = self.search_logic.search_employee_by_ssn(employee)
+                return ris
             elif choice == '3':
-                pass
+                property_ = input("\nEnter a property id: ")
+                riss = self.search_logic.search_property_id(property_)
+                return riss
             elif choice == '4':
-                pass
+                workorder = input("\nEnter a workorder id: ")
+                result = self.search_logic.search_workorder_id(workorder)
+                return result
             elif choice == "q":
                 print("Exiting Employee Menu. Goodbye!")
             else:
                 print("Invalid choice. Please try again.")
                 input("\nPress Enter to return to the menu.")
+    
         
