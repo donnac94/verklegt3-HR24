@@ -150,10 +150,29 @@ class PropertyUI:
         print("-" * (columns - 2))
         print(row_format.format(property.property_id, property.address, property.location, property.property_condition, property.manager, ", ".join(property.requires_maintenance)))
 
-        field = input("\nEnter the field to update (address, location, property_condition, manager, requires_maintenance): ").strip()
-        if field.lower() == 'b':
-            return
-        new_value = input(f"Enter new value for {field}: ").strip()
+        selected_field = input("\nEnter the field to update: \n1. Address \n2. Location \n3. Property condition \n4. Manager \n5. Requires maintenance ").strip()
+        while True:    
+            if selected_field.lower() == 'b':
+                return
+            elif selected_field == '1':
+                selected_field = "address"
+                break
+            elif selected_field == '2':
+                field = "location"
+                break
+            elif selected_field == '3':
+                field = "property_condition"
+                break
+            elif selected_field == '4':
+                field = "manager"
+                break
+            elif selected_field == '5':
+                field = "requires_maintenance"
+                break
+            else:
+                selected_field = input("\nYou must choose a number between 1-5, try again.\n")
+
+        new_value = input(f"Enter the new value for your chosen field: ").strip()
         if new_value.lower() == 'b':
             return
         updated_details = {field: new_value}

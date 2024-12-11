@@ -7,8 +7,10 @@ class WorkOrderLogic:
         self.data_wrapper = DataWrapper()
 
     def create_work_order(self, work_order_details: dict) -> str:
-        """Takes in a WorkOrder object and forwards it to the data layer.
-        :param WorkOrder work_order_obj: The WorkOrder object to save."""
+        """
+        Creates a work order object with specified details and forwards it to the data layer.
+        :param dict work_order_details: The details of the work order.
+        """
         new_work_order = WorkOrder(
             work_order_id=work_order_details["work_order_id"],
             work_to_be_done=work_order_details["work_to_be_done"],

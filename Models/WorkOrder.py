@@ -1,5 +1,24 @@
+from datetime import datetime
 class WorkOrder:
-    def __init__(self, work_order_id, work_to_be_done, property, submitting_supervisor, date, priority, work_order_status):
+    def __init__(
+            self, 
+            work_order_id: int, 
+            work_to_be_done: str, 
+            property: str, 
+            submitting_supervisor: str, 
+            date: datetime, 
+            priority: str, 
+            work_order_status: str
+            ) -> None:
+        """
+        :param int work_order_id: The unique id for the work order.
+        :param str work_to_be_done: Description of what work should be done.
+        :param str property: What property is to be worked on.
+        :param str submitting_supervisor: The supervisor that made the work order.
+        :param dateime date: The time when the work order was made.
+        :param str priority: The priority of the work order (High, medium, low).
+        :param str work_order_status: The status of the work order (Closed or open).
+        """
         self.work_order_id = work_order_id
         self.work_to_be_done = work_to_be_done
         self.property = property
