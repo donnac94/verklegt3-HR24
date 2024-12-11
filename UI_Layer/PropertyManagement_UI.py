@@ -74,7 +74,7 @@ class PropertyUI:
         print("|" + " Add New Property ".center(columns - 2) + "|")
         print("+".ljust(columns - 1, '-') + "+")
         print("Enter 'b' at any prompt to cancel and go back to the previous menu.\n")
-        property_id = self.automatic_property_id()
+        property_id = self.logic_wrapper.automatic_property_id()
         property_details = {
             "property_id": property_id
         }
@@ -191,13 +191,3 @@ class PropertyUI:
         print("+".ljust(columns - 1, '-') + "+")
         # Implementation for approving maintenance reports
         input("\nPress Enter to return to the menu.")
-
-    #Possibly should be in another layer?.
-    def automatic_property_id(self):
-        """
-        Gets the latest property ID and give it plus 1.
-        """
-        properties = self.logic_wrapper.list_properties()
-        latest_property = properties[-1]
-        latest_id = int(latest_property.property_id)
-        return latest_id + 1

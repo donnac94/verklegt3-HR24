@@ -108,6 +108,7 @@ class MaintenanceReportUI:
             if connected_work_order_id == 'b':
                 return
             else:
+                report_details["connected_work_order_id"] = connected_work_order_id
                 break
 
         while True:
@@ -282,7 +283,7 @@ class MaintenanceReportUI:
         self.clear_terminal()
         print("Close Maintenance Report")
         report_id = input("Enter Report ID: ").strip()
-        result = self.logic_wrapper.close_report(report_id)
+        result = self.logic_wrapper.close_maintenance_report(report_id)
         print(result)
         input("\nPress Enter to return to the menu.")
 
