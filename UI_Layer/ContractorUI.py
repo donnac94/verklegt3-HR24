@@ -78,9 +78,12 @@ class ContractorUI():
         print("|" + " Add New Contractor ".center(columns - 2) + "|")
         print("+".ljust(columns - 1, '-') + "+")
         print("Enter 'b' at any prompt to cancel and go back to the previous menu.\n")
+        
+        contractor_id = self.automatic_contractor_id()
         contractor_details = {
-            "contractor_id": input("Enter Contractor ID: ").strip()
+            "contractor_id": contractor_id
         }
+        
         if contractor_details["contractor_id"].lower() == 'b':
             return
         
