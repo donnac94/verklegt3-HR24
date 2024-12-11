@@ -68,69 +68,69 @@ class EmployeeManagementUI:
         input("\nPress Enter to return to the menu.")
 
     def register_employee(self):
-    self.clear_terminal()
-    columns, _ = self.get_terminal_size()
-    print("+".ljust(columns - 1, '-') + "+")
-    print("|" + " Register New Employee ".center(columns - 2) + "|")
-    print("+".ljust(columns - 1, '-') + "+")
-    print("Enter 'b' at any prompt to cancel and go back to the previous menu.\n")
-    
-    employee_details = {}
+        self.clear_terminal()
+        columns, _ = self.get_terminal_size()
+        print("+".ljust(columns - 1, '-') + "+")
+        print("|" + " Register New Employee ".center(columns - 2) + "|")
+        print("+".ljust(columns - 1, '-') + "+")
+        print("Enter 'b' at any prompt to cancel and go back to the previous menu.\n")
+        
+        employee_details = {}
 
-    while True:
-        employee_details["ssn"] = input("Enter SSN (10 digits): ").strip()
-        if employee_details["ssn"].lower() == 'b':
-            return
-        if not validate_ssn(employee_details["ssn"]):
-            print("Invalid SSN. It should be exactly 10 digits.")
-            input("\nPress Enter to try again.")
+        while True:
+            employee_details["ssn"] = input("Enter SSN (10 digits): ").strip()
+            if employee_details["ssn"].lower() == 'b':
+                return
+            if not validate_ssn(employee_details["ssn"]):
+                print("Invalid SSN. It should be exactly 10 digits.")
+                input("\nPress Enter to try again.")
+            else:
+                break
+                
+        while True:
+            employee_details["full_name"] = input("Enter Full Name: ").strip()
+            if employee_details["full_name"].lower() == 'b':
+                return
+            if not validate_full_name(employee_details["full_name"]):
+                print("Invalid Full Name. It should not exceed 100 characters.")
+                input("\nPress Enter to try again.")
+            else:
+                break
+
+        for field in ["address", "phone", "gsm", "location"]:
+            value = input(f"Enter {field.capitalize()}: ").strip()
+            if value.lower() == 'b':
+                return
+            employee_details[field] = value
+
+        while True:
+            is_manager_input = input("Is Manager (True/False): ").strip().lower()
+            if is_manager_input == 'b':
+                return
+            if is_manager_input in ['true', 'false']:
+                employee_details["is_manager"] = is_manager_input == 'true'
+                break
+            else:
+                print("Invalid input. Please enter 'True' or 'False'.")
+                input("\nPress Enter to try again.")
+
+        while True:
+            employee_details["email"] = input("Enter Email: ").strip()
+            if employee_details["email"].lower() == 'b':
+                return
+            if not validate_email(employee_details["email"]):
+                print("Invalid Email. It should contain '@' and '.' and not exceed 100 characters.")
+                input("\nPress Enter to try again.")
+            else:
+                break
+                
+        result = self.logic_wrapper.register_employee(employee_details)
+        if result:
+            print("\nEmployee registered successfully.")
         else:
-            break
-            
-    while True:
-        employee_details["full_name"] = input("Enter Full Name: ").strip()
-        if employee_details["full_name"].lower() == 'b':
-            return
-        if not validate_full_name(employee_details["full_name"]):
-            print("Invalid Full Name. It should not exceed 100 characters.")
-            input("\nPress Enter to try again.")
-        else:
-            break
+            print("\nAn error occurred while registering the employee.")
 
-    for field in ["address", "phone", "gsm", "location"]:
-        value = input(f"Enter {field.capitalize()}: ").strip()
-        if value.lower() == 'b':
-            return
-        employee_details[field] = value
-
-    while True:
-        is_manager_input = input("Is Manager (True/False): ").strip().lower()
-        if is_manager_input == 'b':
-            return
-        if is_manager_input in ['true', 'false']:
-            employee_details["is_manager"] = is_manager_input == 'true'
-            break
-        else:
-            print("Invalid input. Please enter 'True' or 'False'.")
-            input("\nPress Enter to try again.")
-
-    while True:
-        employee_details["email"] = input("Enter Email: ").strip()
-        if employee_details["email"].lower() == 'b':
-            return
-        if not validate_email(employee_details["email"]):
-            print("Invalid Email. It should contain '@' and '.' and not exceed 100 characters.")
-            input("\nPress Enter to try again.")
-        else:
-            break
-            
-    result = self.logic_wrapper.register_employee(employee_details)
-    if result:
-        print("\nEmployee registered successfully.")
-    else:
-        print("\nAn error occurred while registering the employee.")
-
-    input("\nPress Enter to return to the menu.")
+        input("\nPress Enter to return to the menu.")
 
 
     def update_employee_info(self):
