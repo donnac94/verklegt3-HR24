@@ -282,7 +282,7 @@ class MaintenanceReportUI:
         self.clear_terminal()
         print("Close Maintenance Report")
         report_id = input("Enter Report ID: ").strip()
-        result = self.logic_wrapper.close_report(report_id)
+        result = self.logic_wrapper.close_maintenance_report(report_id)
         print(result)
         input("\nPress Enter to return to the menu.")
 

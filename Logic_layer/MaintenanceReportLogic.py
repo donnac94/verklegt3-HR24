@@ -56,7 +56,12 @@ class MaintenanceReportLogic:
         :param int maintenance_report_id: The ID of the maintenance report to be closed.
         """
         self.change_maintenance_report_info(maintenance_report_id, "report_closed", "True")
-        return "Maintenance report closed successfully."
+        maintenance_reports = self.data_wrapper.get_all_maintenance_reports()
+        for maintenance_report in maintenance_reports:
+            if maintenance_report.maintenance_report_id == maintenance_report_id:
+                connected_work_order_id = maintenance_report.connected_work_order_id
+                self.data_wrapper.change_work_order_info(connected_work_order_id,'work_order_status',"Closed")
+        return "Maintenance report and connected work order closed successfully."
 
     def reopen_maintenance_report(self, maintenance_report_id: int) -> str:
         """
