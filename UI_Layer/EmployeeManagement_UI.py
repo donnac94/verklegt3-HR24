@@ -68,52 +68,70 @@ class EmployeeManagementUI:
         input("\nPress Enter to return to the menu.")
 
     def register_employee(self):
+        self.clear_terminal()
+        columns, _ = self.get_terminal_size()
+        print("+".ljust(columns - 1, '-') + "+")
+        print("|" + " Register New Employee ".center(columns - 2) + "|")
+        print("+".ljust(columns - 1, '-') + "+")
+        print("Enter 'b' at any prompt to cancel and go back to the previous menu.\n")
+        
+        employee_details = {}
+
         while True:
-            self.clear_terminal()
-            columns, _ = self.get_terminal_size()
-            print("+".ljust(columns - 1, '-') + "+")
-            print("|" + " Register New Employee ".center(columns - 2) + "|")
-            print("+".ljust(columns - 1, '-') + "+")
-            print("Enter 'b' at any prompt to cancel and go back to the previous menu.\n")
-            while True:
-                employee_details = {
-                    "ssn": input("Enter SSN: ").strip()
-                }
-                if employee_details["ssn"].lower() == 'b':
-                    return
-                if not validate_ssn(employee_details["ssn"]):
-                    print("Invalid SSN. It should be exactly 10 digits.")
-                    input("\nPress Enter to try again.")
-                else:
-                    break
-            employee_details.update({
-                "full_name": input("Enter Full Name: ").strip(),
-                "address": input("Enter Address: ").strip(),
-                "phone": input("Enter Phone: ").strip(),
-                "gsm": input("Enter GSM: ").strip(),
-                "location": input("Enter Location: ").strip(),
-                "is_manager": input("Is Manager (True/False): ").strip().lower() == 'true'
-            })
-            if any(value.lower() == 'b' for key, value in employee_details.items() if key != "is_manager"):
+            employee_details["ssn"] = input("Enter SSN: ").strip()
+            if employee_details["ssn"].lower() == 'b':
                 return
-            if not validate_full_name(employee_details["full_name"]):
-                print("Invalid Full Name. It should not be longer than 100 characters.")
+            if not validate_ssn(employee_details["ssn"]):
+                print("Invalid SSN. It should be exactly 10 digits.")
                 input("\nPress Enter to try again.")
-                continue
-            while True:
-                employee_details["email"] = input("Enter Email: ").strip()
-                if employee_details["email"].lower() == 'b':
-                    return
-                if not validate_email(employee_details["email"]):
-                    print("Invalid Email. It should contain '@' and '.' and not be longer than 100 characters.")
-                    input("\nPress Enter to try again.")
-                else:
-                    break
-            result = self.logic_wrapper.register_employee(employee_details)
-            print(result)
-            print("\nEmployee registered successfully.")
-            self.list_all_employees()
-            break
+            else:
+                break
+
+        employee_details["full_name"] = input("Enter Full Name: ").strip()
+        if employee_details["full_name"].lower() == 'b':
+            return
+
+        employee_details["address"] = input("Enter Address: ").strip()
+        if employee_details["address"].lower() == 'b':
+            return
+
+        employee_details["phone"] = input("Enter Phone: ").strip()
+        if employee_details["phone"].lower() == 'b':
+            return
+
+        employee_details["gsm"] = input("Enter GSM: ").strip()
+        if employee_details["gsm"].lower() == 'b':
+            return
+
+        employee_details["location"] = input("Enter Location: ").strip()
+        if employee_details["location"].lower() == 'b':
+            return
+
+        employee_details["is_manager"] = input("Is Manager (True/False): ").strip().lower() == 'true'
+
+        if any(value.lower() == 'b' for key, value in employee_details.items() if key != "is_manager"):
+            return
+
+        if not validate_full_name(employee_details["full_name"]):
+            print("Invalid Full Name. It should not be longer than 100 characters.")
+            input("\nPress Enter to try again.")
+            return
+
+        while True:
+            employee_details["email"] = input("Enter Email: ").strip()
+            if employee_details["email"].lower() == 'b':
+                return
+            if not validate_email(employee_details["email"]):
+                print("Invalid Email. It should contain '@' and '.' and not be longer than 100 characters.")
+                input("\nPress Enter to try again.")
+            else:
+                break
+
+        result = self.logic_wrapper.register_employee(employee_details)
+        print(result)
+        print("\nEmployee registered successfully.")
+        self.list_all_employees()
+
 
     def update_employee_info(self):
         self.clear_terminal()
