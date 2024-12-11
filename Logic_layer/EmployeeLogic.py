@@ -14,7 +14,7 @@ class EmployeeLogic:
             gsm=employee_details["gsm"],
             email=employee_details["email"],
             location=employee_details["location"],
-            is_manager=employee_details["is_manager"]
+            is_supervisor=employee_details["is_supervisor"]
         )
         self.data_wrapper.add_employee(new_employee)
         return "Employee registered successfully."

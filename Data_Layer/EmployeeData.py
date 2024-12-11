@@ -12,7 +12,7 @@ class EmployeeData:
 
     def register_employee(self, employee: Employee):
         with open(self.file_name, 'a', newline='', encoding="utf-8") as csvfile:
-            fieldnames = ["ssn","full_name","address","phone","gsm","email","location","is_manager"]
+            fieldnames = ["ssn","full_name","address","phone","gsm","email","location","is_supervisor"]
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
             if csvfile.tell() == 0:  
@@ -34,7 +34,7 @@ class EmployeeData:
             raise ValueError(f"Employee with SSN {ssn} not found.")
 
         with open(self.file_name, 'w', newline='', encoding="utf-8") as csvfile:
-            fieldnames = ["ssn", "full_name", "address", "phone", "gsm", "email", "location", "is_manager"]
+            fieldnames = ["ssn", "full_name", "address", "phone", "gsm", "email", "location", "is_supervisor"]
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writeheader()
             for employee in employees:
