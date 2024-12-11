@@ -27,8 +27,8 @@ class MaintenanceReportUI:
             print(c + " Maintenance Report Portal ".center(columns - 2, h) + c)
             print(d + " Welcome to the Maintenance Menu ".center(columns - 2) + d)
             print(c + h * (columns - 2) + c)
-            print(d + " 1. Submit New Maintenance Report ".ljust(columns - 2) + d)
-            print(d + " 2. List All Maintenance Reports ".ljust(columns - 2) + d)
+            print(d + " 1. List All Maintenance Reports".ljust(columns - 2) + d)
+            print(d + " 2. Submit New Maintenance Report  ".ljust(columns - 2) + d)
             print(d + " 3. Update Maintenance Report Information ".ljust(columns - 2) + d)
             print(d + " 4. Mark Report as Finished ".ljust(columns - 2) + d)
             print(d + " 5. Close Maintenance Report ".ljust(columns - 2) + d)
@@ -40,9 +40,9 @@ class MaintenanceReportUI:
             choice = input("\nChoose an option: ").strip().lower()
 
             if choice == "1":
-                self.submit_maintenance_report()
-            elif choice == "2":
                 self.list_all_reports()
+            elif choice == "2":
+                self.submit_maintenance_report()
             elif choice == "3":
                 self.update_report_info()
             elif choice == "4":
@@ -59,26 +59,7 @@ class MaintenanceReportUI:
             else:
                 print("Invalid choice. Please try again.")
                 input("\nPress Enter to return to the menu.")
-
-    def submit_maintenance_report(self):
-        self.clear_terminal()
-        print("Submit New Maintenance Report")
-        #Todo: Add input validation
-        #Todo: Add error handling
-        #Todo: report_id should be generated automatically
-        report_details = {
-            "report_id": input("Enter Report ID: ").strip(),
-            "title": input("Enter Title: ").strip(),
-            "description": input("Enter Description: ").strip(),
-            "reported_by": input("Reported By: ").strip(),
-            "assigned_to": input("Assigned To: ").strip(),
-            "priority": input("Priority (High/Medium/Low): ").strip(),
-            "date_created": input("Date Created (YYYY-MM-DD): ").strip()
-        }
-        result = self.logic_wrapper.submit_maintenance_report(report_details)
-        print(result)
-        input("\nPress Enter to return to the menu.")
-
+                
     def list_all_reports(self):
         self.clear_terminal()
         print("List All Maintenance Reports")
@@ -100,6 +81,26 @@ class MaintenanceReportUI:
                     report.assigned_to, report.status, report.priority, report.date_created
                 ))
         input("\nPress Enter to return to the menu.")
+
+    def submit_maintenance_report(self):
+        self.clear_terminal()
+        print("Submit New Maintenance Report")
+        #Todo: Add input validation
+        #Todo: Add error handling
+        #Todo: report_id should be generated automatically
+        report_details = {
+            "report_id": input("Enter Report ID: ").strip(),
+            "title": input("Enter Title: ").strip(),
+            "description": input("Enter Description: ").strip(),
+            "reported_by": input("Reported By: ").strip(),
+            "assigned_to": input("Assigned To: ").strip(),
+            "priority": input("Priority (High/Medium/Low): ").strip(),
+            "date_created": input("Date Created (YYYY-MM-DD): ").strip()
+        }
+        result = self.logic_wrapper.submit_maintenance_report(report_details)
+        print(result)
+        input("\nPress Enter to return to the menu.")
+
 
     def update_report_info(self):
         self.clear_terminal()
