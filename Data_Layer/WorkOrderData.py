@@ -12,13 +12,13 @@ class WorkOrderData():
         :param WorkOrder work_order_obj: The WorkOrder object to save.
         """
         with open(self.file_name, 'a', newline='', encoding="utf-8") as csvfile:
-                fieldnames = ["work_order_id","work_to_be_done","property","submitting_supervisor","date","priority","work_order_status"]
-                writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            fieldnames = ["work_order_id", "work_to_be_done", "property", "submitting_supervisor", "date", "priority", "work_order_status"]
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
-                if csvfile.tell() == 0:
-                    writer.writeheader()
+            if csvfile.tell() == 0:
+                writer.writeheader()
 
-                writer.writerow(work_order_obj.to_dict())
+            writer.writerow(work_order_obj.to_dict())
 
     def get_all_work_orders(self) -> list[WorkOrder]:
         """
@@ -28,7 +28,7 @@ class WorkOrderData():
         with open(self.file_name, 'r', newline='', encoding="utf-8") as csvfile:
             reader = csv.DictReader(csvfile)
             return [WorkOrder.from_dict(row) for row in reader]
-        
+
     def change_work_order_info(self, work_order_id, field, new_value):
         """
         Change the information of a work order.
@@ -45,17 +45,8 @@ class WorkOrderData():
             raise ValueError(f"Work order with ID {work_order_id} not found.")
 
         with open(self.file_name, 'w', newline='', encoding="utf-8") as csvfile:
-            fieldnames = ["work_order_id","work_to_be_done","property","submitting_supervisor","date","priority","work_order_status"]
+            fieldnames = ["work_order_id", "work_to_be_done", "property", "submitting_supervisor", "date", "priority", "work_order_status"]
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writeheader()
             for work_order in work_orders:
                 writer.writerow(work_order.to_dict())
-
-
-# Nota ChangeWorkOrderInfo í UI til að breyta status.
-# Þarf raun ekki sín eigin function held ég
-    # def CloseWorkOrder():
-    #     pass
-
-    # def ReopenWorkOrder():
-    #     pass

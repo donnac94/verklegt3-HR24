@@ -25,4 +25,8 @@ class PropertyLogic:
         return "Property updated successfully."
 
     def get_property_by_id(self, property_id):
-        return self.data_wrapper.get_property_by_id(property_id)
+        properties = self.data_wrapper.list_properties()
+        for property in properties:
+            if property.property_id == property_id:
+                return property
+        raise ValueError(f"Property with ID {property_id} not found.")

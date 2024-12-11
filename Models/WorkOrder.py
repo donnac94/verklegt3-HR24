@@ -1,28 +1,5 @@
-from datetime import datetime
-
 class WorkOrder:
-    """
-    Model that contains information about the Work Order.
-    """
-    def __init__(
-            self,
-            work_order_id: int,
-            work_to_be_done: str,
-            property: str,
-            submitting_supervisor: str,
-            date: datetime,
-            priority: str,
-            work_order_status: str
-    ) -> None:
-        """
-        :param int work_order_id: The unique id of the work order.
-        :param str work_to_be_done: Work that needs to be done.
-        :param str property: The property of the work order.
-        :param str submitting_supervisor: The supervisor submitting the work order.
-        :param str date: The time when work order was made.
-        :param str priority: The priority order of the work to be done.
-        :param work_order_status: The status on the work order.
-        """
+    def __init__(self, work_order_id, work_to_be_done, property, submitting_supervisor, date, priority, work_order_status):
         self.work_order_id = work_order_id
         self.work_to_be_done = work_to_be_done
         self.property = property
@@ -31,7 +8,7 @@ class WorkOrder:
         self.priority = priority
         self.work_order_status = work_order_status
 
-    def to_dict(self) -> dict:
+    def to_dict(self):
         return {
             "work_order_id": self.work_order_id,
             "work_to_be_done": self.work_to_be_done,
@@ -41,15 +18,15 @@ class WorkOrder:
             "priority": self.priority,
             "work_order_status": self.work_order_status
         }
-    
+
     @classmethod
-    def from_dict(cls, data: dict):
+    def from_dict(cls, dict_obj):
         return cls(
-            work_order_id=data["work_order_id"],
-            work_to_be_done=data["work_to_be_done"],
-            property=data["property"],
-            submitting_supervisor=data["submitting_supervisor"],
-            date=data["date"],
-            priority=data["priority"],
-            work_order_status=data["work_order_status"]
+            dict_obj["work_order_id"],
+            dict_obj["work_to_be_done"],
+            dict_obj["property"],
+            dict_obj["submitting_supervisor"],
+            dict_obj["date"],
+            dict_obj["priority"],
+            dict_obj["work_order_status"]
         )
