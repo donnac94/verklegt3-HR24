@@ -3,8 +3,6 @@ from UI_Layer.Validation import validate_phone_number, validate_not_empty
 
 import os
 import shutil
-import sys
-
 
 class ContractorUI():
     def __init__(self, logic_wrapper: LogicWrapper):
@@ -32,7 +30,6 @@ class ContractorUI():
             print(d + " 2. Add New Contractor ".ljust(columns - 2) + d)
             print(d + " 3. Update Contractor Information ".ljust(columns - 2) + d)
             print(d + " b. Back to Login Menu ".ljust(columns - 2) + d)
-            print(d + " q. Quit ".ljust(columns - 2) + d)
             print(c + h * (columns - 2) + c)
 
             choice = input("\nChoose an option: ").strip().lower()
@@ -45,9 +42,6 @@ class ContractorUI():
                 self.change_contractor_info()
             elif choice == "b":
                 return
-            elif choice == "q":
-                print("Exiting Contractor Menu. Goodbye!")
-                sys.exit()
             else:
                 print("Invalid choice. Please try again.")
                 input("\nPress Enter to return to the menu.")
@@ -81,7 +75,7 @@ class ContractorUI():
         print("+".ljust(columns - 1, '-') + "+")
         print("Enter 'b' at any prompt to cancel and go back to the previous menu.\n")
         
-        contractor_id = self.logic_wrapper.automatic_contractor_id()
+        contractor_id = self.logic_wrapper.logic_wrapper.automatic_contractor_id()
         contractor_details = {
             "contractor_id": contractor_id
         }
@@ -158,91 +152,49 @@ class ContractorUI():
         input("\nPress Enter to return to the menu.")
 
     def change_contractor_info(self):
-        """ Change a contractor's information. """
-        while True:
-            self.clear_terminal()
-            columns, _ = self.get_terminal_size()
-            print("+".ljust(columns - 1, '-') + "+")
-            print("|" + " Update Contractor Information ".center(columns - 2) + "|")
-            print("+".ljust(columns - 1, '-') + "+")
-            print("Enter 'b' at any prompt to cancel and go back to the previous menu.\n")
-
-            contractor_id = input("Enter Contractor ID to update: ").strip()
-            if contractor_id.lower() == 'b':
-                return
-
-            self.clear_terminal()
-            print("+".ljust(columns - 1, '-') + "+")
-            print("|" + " Update Contractor Information ".center(columns - 2) + "|")
-            print("+".ljust(columns - 1, '-') + "+")
-    
-            try:
-                contractor = self.logic_wrapper.get_contractor_by_id(contractor_id)
-                if not contractor: 
-                    print("Contractor not found.")
-                    input("\nPress Enter to try again.")
-                    continue
-
-                headers = ["Contractor ID", "Company", "Contact Name", "Phone number", "Opening Time", "Location", "Satisfaction With Previous Work"]
-                col_widths = [max(len(header), len(str(getattr(contractor, attr)))) for header, attr in zip(headers, ["contractor_id", "name", "contact_name", "phone_nr", "opening_time", "location", "satisfaction_with_previous_work"])]
-                row_format = "  |  ".join([f"{{:<{width}}}" for width in col_widths])
-                print("\nCurrent Information:")
-                print(row_format.format(*headers))
-                print("-" * (columns - 2))
-                print(row_format.format(contractor.contractor_id, contractor.name, contractor.contact_name, contractor.phone_nr, contractor.opening_time, contractor.location, contractor.satisfaction_with_previous_work))
-
-                selected_field = input("\nEnter the field to update: \n1. Company \n2. Contact Name \n3. Phone Number \n4. Opening Time \n5. Location \n6. Satisfaction With Previous Work ").strip()
-                while True:    
-                    if selected_field.lower() == 'b':
-                        return
-                    elif selected_field == '1':
-                        selected_field = "name"
-                        break
-                    elif selected_field == '2':
-                        selected_field = "contact_name"
-                        break
-                    elif selected_field == '3':
-                        selected_field = "phone_nr"
-                        break
-                    elif selected_field == '4':
-                        selected_field = "opening_time"
-                        break
-                    elif selected_field == '5':
-                        selected_field = "location"
-                        break
-                    elif selected_field == '6':
-                        selected_field = "satisfaction_with_previous_work"
-                        break
-                    else:
-                        selected_field = input("\nYou must choose a number between 1-6, try again.\n")
-
-                while True:
-                    new_value = input(f"\nEnter the new value for {selected_field.replace('_', ' ')}: ").strip()
-                    if new_value.lower() == 'b':
-                        return
-                    if selected_field == "phone_nr" and not validate_phone_number(new_value):
-                        print("Invalid phone number. Please enter digits only.")
-                        input("\nPress Enter to try again.")
-                        continue
-                    break
-
-                updated_details = {selected_field: new_value}
-                result = self.logic_wrapper.change_contractor_info(contractor_id, updated_details)
-                print(result)
-
-                self.clear_terminal()
-                print("+".ljust(columns - 1, '-') + "+")
-                print("|" + " Update Contractor Information ".center(columns - 2) + "|")
-                print("+".ljust(columns - 1, '-') + "+")
-                updated_contractor = self.logic_wrapper.get_contractor_by_id(contractor_id)
-                print("\nUpdated Information:")
-                print(row_format.format(*headers))
-                print("-" * (columns - 2))
-                print(row_format.format(updated_contractor.contractor_id, updated_contractor.name, updated_contractor.contact_name, updated_contractor.phone_nr, updated_contractor.opening_time, updated_contractor.location, updated_contractor.satisfaction_with_previous_work))
-
-                input("\nPress Enter to return to the menu.")
-                return
-            except ValueError as e: 
-                print(e)
-                input("\nPress Enter to try again.")
-
+        """ Change a contractors information. """
+        self.clear_terminal()
+        columns, _ = self.get_terminal_size()
+        print("+".ljust(columns - 1, '-') + "+")
+        print("|" + " Update Contractor Information ".center(columns - 2) + "|")
+        print("+".ljust(columns - 1, '-') + "+")
+        print("Enter 'b' at any prompt to cancel and go back to the previous menu.\n")
+        contractor_id = input("Enter Contractor ID to update: ").strip()
+        if contractor_id.lower() == 'b':
+            return
+        updated_details = {}
+        name = input("Enter new Name (leave blank to keep current): ").strip()
+        if name.lower() == 'b':
+            return
+        if name:
+            updated_details["name"] = name
+        contact_name = input("Enter Contact Name (leave blank to keep current): ").strip()
+        if contact_name.lower() == 'b':
+            return
+        if contact_name:
+            updated_details["contact_name"] = contact_name
+        phone_nr = input("Enter Phone Number (leave blank to keep current): ").strip()
+        if phone_nr.lower() == 'b':
+            return
+        if phone_nr:
+            updated_details["phone_nr"] = phone_nr
+        opening_time = input("Enter the opening time (leave blank to keep current): ").strip()
+        if opening_time.lower() == 'b':
+            return
+        if opening_time:
+            updated_details["opening_time"] = opening_time
+        location = input("Enter the Location (leave blank to keep current): ").strip()
+        if location.lower() == 'b':
+            return
+        if location:
+            updated_details["location"] = location
+        satisfaction_with_previous_work = input("Enter Satisfaction With Previous Work (leave blank to keep current): ").strip()
+        if satisfaction_with_previous_work.lower() == 'b':
+            return
+        if satisfaction_with_previous_work:
+            updated_details["satisfaction_with_previous_work"] = satisfaction_with_previous_work
+        
+        result = self.logic_wrapper.change_contractor_info(contractor_id, updated_details)
+        print(result)
+        input("\nPress Enter to return to the menu.")
+        

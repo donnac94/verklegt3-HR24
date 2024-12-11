@@ -40,7 +40,6 @@ class SupervisorUI:
             print(d + " 4. Work Order Management ".ljust(columns - 2) + d)
             print(d + " 5. Contractor Management ".ljust(columns - 2) + d)
             print(d + " b. Back to Login Menu ".ljust(columns - 2) + d)
-            print(d + " q. Quit ".ljust(columns - 2) + d)
             print(c + h * (columns - 2) + c)
 
             choice = input("\nChoose an option: ").strip().lower()
@@ -57,9 +56,6 @@ class SupervisorUI:
                 self.contractor_ui.display_menu()
             elif choice == "b":
                 return
-            elif choice == "q":
-                print("Exiting Supervisor Menu. Goodbye!")
-                sys.exit()
             else:
                 print("Invalid choice. Please try again.")
                 input("\nPress Enter to return to the menu.")

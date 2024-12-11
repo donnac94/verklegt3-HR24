@@ -49,3 +49,12 @@ class PropertyLogic:
             if property.address == address:
                 return True
         return False
+    
+    def automatic_property_id(self):
+        """
+        Gets the latest property ID and give it plus 1.
+        """
+        properties = self.list_properties()
+        latest_property = properties[-1]
+        latest_id = int(latest_property.property_id)
+        return latest_id + 1

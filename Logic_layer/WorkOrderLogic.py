@@ -76,4 +76,15 @@ class WorkOrderLogic:
             return "Work order not found."
 
         self.change_work_order_info(work_order_id, "work_order_status", "Open")
-        return "Work order reopened successfully."
+        maintenance_reports = self.data_wrapper.get_all_maintenance_reports()
+        for maintenance_report in maintenance_reports:
+            if maintenance_report.connected_work_order_id == work_order_id:
+                self.data_wrapper.change_maintenance_report_info(maintenance_report.maintenance_report_id, 'report_closed', False)
+        return "Work order and connected maintenance report reopened successfully."
+    
+    def automatic_work_order_id(self):
+        work_orders = self.get_all_work_orders()
+        if not work_orders:
+            return 1
+        latest_work_order = work_orders[-1]
+        return int(latest_work_order.work_order_id) + 1
