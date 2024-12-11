@@ -37,3 +37,9 @@ def validate_boolean(value):
 
 def validate_contractors_used(contractors_used):
     return all(len(contractor.strip()) > 0 for contractor in contractors_used.split(','))
+
+def validate_phone_number(phone_number):
+    return phone_number.isdigit()
+
+def validate_not_empty(value):
+    return len(value.strip()) > 0

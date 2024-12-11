@@ -1,11 +1,11 @@
 from Data_Layer.DataWrapper import DataWrapper
 from Models.Contractor import Contractor
+import csv
 
 
 class ContractorLogic:
     def __init__(self):
         self.data_wrapper = DataWrapper()
-
 
     def create_contractor(self, contractor_details: dict) -> str:
         '''
@@ -20,6 +20,7 @@ class ContractorLogic:
                 return "Contractor is already registered in system"
 
         contractor_id = self.automatic_contractor_id()
+        contractor_details["contractor_id"] = contractor_id  # Ensure contractor_id is set
         new_contractor = Contractor(
             contractor_id=contractor_id,
             name=contractor_details["name"],
@@ -44,11 +45,18 @@ class ContractorLogic:
         return contractors
 
 
-    def change_contractor_info(self, contractor_id, field, updated_contractor) -> str:
-        '''
-        Change contractors information.
-        '''
-        return self.data_wrapper.change_contractor_info(contractor_id, field, updated_contractor)
+    def change_contractor_info(self, contractor_id, updated_details: dict) -> str:
+        contractors = self.data_wrapper.get_all_contractors()
+        contractor_found = False
+        for contractor in contractors:
+            if contractor.contractor_id == contractor_id:
+                contractor_found = True
+                for field, new_value in updated_details.items():
+                    setattr(contractor, field, new_value)
+                self.update_contractor(contractor)
+                return "Contractor information updated successfully."
+        if not contractor_found:
+            raise ValueError(f"Contractor with ID {contractor_id} not found.")
     
 
     def get_contractor_by_id(self, contractor_id):
@@ -68,6 +76,20 @@ class ContractorLogic:
         Gets the latest contractor ID and give it plus 1.
         """
         contractors = self.list_contractors()
+        if not contractors:
+            return 1
         latest_contractor = contractors[-1]
         latest_id = int(latest_contractor.contractor_id)
         return latest_id + 1
+
+    def update_contractor(self, updated_contractor: Contractor) -> None:
+        contractors = self.data_wrapper.get_all_contractors()
+        with open(self.data_wrapper.contractor_data.filename, "w", newline="", encoding="utf-8") as csvfile:
+            fieldnames = ["contractor_id", "name", "contact_name", "phone_nr", "opening_time", "location", "satisfaction_with_previous_work"]
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            writer.writeheader()
+            for contractor in contractors:
+                if contractor.contractor_id == updated_contractor.contractor_id:
+                    writer.writerow(updated_contractor.to_dict())
+                else:
+                    writer.writerow(contractor.to_dict())
