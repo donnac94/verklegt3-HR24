@@ -33,3 +33,12 @@ class PropertyLogic:
             if property.property_id == property_id:
                 return property
         raise ValueError(f"Property with ID {property_id} not found.")
+    
+    def automatic_property_id(self):
+        """
+        Gets the latest property ID and give it plus 1.
+        """
+        properties = self.list_properties()
+        latest_property = properties[-1]
+        latest_id = int(latest_property.property_id)
+        return latest_id + 1

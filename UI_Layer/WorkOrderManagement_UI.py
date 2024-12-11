@@ -75,7 +75,7 @@ class WorkOrderUI:
         print("Submit New Work Order")
         print("Press 'b' to go back to the Work Order Management Menu.")
 
-        work_order_id = self.automatic_work_order_id()
+        work_order_id = self.logic_wrapper.automatic_work_order_id()
         work_order_details = {
             "work_order_id": work_order_id
         }
@@ -271,10 +271,3 @@ class WorkOrderUI:
                 work_order.priority,
                 work_order.work_order_status
             ))
-
-    def automatic_work_order_id(self):
-        work_orders = self.logic_wrapper.get_all_work_orders()
-        if not work_orders:
-            return 1
-        latest_work_order = work_orders[-1]
-        return int(latest_work_order.work_order_id) + 1

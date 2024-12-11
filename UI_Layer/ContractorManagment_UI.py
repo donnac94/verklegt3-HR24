@@ -73,12 +73,12 @@ class ContractorUI():
         print("+".ljust(columns - 1, '-') + "+")
         print("Enter 'b' at any prompt to cancel and go back to the previous menu.\n")
         
-        contractor_id = self.automatic_contractor_id()
+        contractor_id = self.logic_wrapper.automatic_contractor_id()
         contractor_details = {
             "contractor_id": contractor_id
         }
         
-        if contractor_details["contractor_id"].lower() == 'b':
+        if contractor_details["contractor_id"] == 'b':
             return
         
         contractor_details.update({
@@ -89,7 +89,7 @@ class ContractorUI():
             "location": input("Enter Location: ").strip(),
             "satisfaction_with_previous_work": input("Enter Satisfaction With Previous Work: ").strip()
         })
-        if any(value.lower() == 'b' for value in contractor_details.values()):
+        if any(value == 'b' for value in contractor_details.values()):
             return
         result = self.logic_wrapper.create_contractor(contractor_details)
         print(result)
@@ -141,13 +141,4 @@ class ContractorUI():
         result = self.logic_wrapper.change_contractor_info(contractor_id, updated_details)
         print(result)
         input("\nPress Enter to return to the menu.")
-
-    def automatic_contractor_id(self):
-        """
-        Gets the latest contractor ID and give it plus 1.
-        """
-        contractors = self.logic_wrapper.list_contractors()
-        latest_contractor = contractors[-1]
-        latest_id = int(latest_contractor.contractor_id)
-        return latest_id + 1
         

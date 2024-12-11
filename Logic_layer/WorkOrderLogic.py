@@ -81,3 +81,10 @@ class WorkOrderLogic:
             if maintenance_report.connected_work_order_id == work_order_id:
                 self.data_wrapper.change_maintenance_report_info(maintenance_report.maintenance_report_id, 'report_closed', False)
         return "Work order and connected maintenance report reopened successfully."
+    
+    def automatic_work_order_id(self):
+        work_orders = self.get_all_work_orders()
+        if not work_orders:
+            return 1
+        latest_work_order = work_orders[-1]
+        return int(latest_work_order.work_order_id) + 1

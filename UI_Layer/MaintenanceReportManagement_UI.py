@@ -108,6 +108,7 @@ class MaintenanceReportUI:
             if connected_work_order_id == 'b':
                 return
             else:
+                report_details["connected_work_order_id"] = connected_work_order_id
                 break
 
         while True:
