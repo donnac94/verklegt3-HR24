@@ -11,7 +11,7 @@ class MaintenanceReportData:
         :param MaintenanceReport maintenance_report: The maintenance report to be saved.
         """
         with open(self.file_name, 'a', newline='', encoding="utf-8") as csvfile:
-            fieldnames = ["maintenance_report_id", "property", "work_done", "upkeep_status", "employee", "total_costs", "marked_as_finished", "report_closed", "contractors_used"]
+            fieldnames = ["maintenance_report_id", "connected_work_order_id", "property", "work_done", "upkeep_status", "employee", "total_costs", "marked_as_finished", "report_closed", "contractors_used"]
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
             if csvfile.tell() == 0:  
@@ -47,7 +47,7 @@ class MaintenanceReportData:
             raise ValueError(f"Maintenance report with ID {maintenance_report_id} not found.")
 
         with open(self.file_name, 'w', newline='', encoding="utf-8") as csvfile:
-            fieldnames = ["maintenance_report_id", "property", "work_done", "upkeep_status", "employee", "total_costs", "marked_as_finished", "report_closed", "contractors_used"]
+            fieldnames = ["maintenance_report_id", "connected_work_order_id", "property", "work_done", "upkeep_status", "employee", "total_costs", "marked_as_finished", "report_closed", "contractors_used"]
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writeheader()
             for maintenance_report in maintenance_reports:
