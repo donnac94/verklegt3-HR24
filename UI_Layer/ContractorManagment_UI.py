@@ -1,5 +1,6 @@
 from Logic_layer.LogicWrapper import LogicWrapper
-from UI_Layer.Validation import validate_phone_number, validate_not_empty
+from UI_Layer.Validation import validate_not_empty, validate_phone_number
+
 
 import os
 import shutil
@@ -197,4 +198,4 @@ class ContractorUI():
         result = self.logic_wrapper.change_contractor_info(contractor_id, updated_details)
         print(result)
         input("\nPress Enter to return to the menu.")
-        
+
