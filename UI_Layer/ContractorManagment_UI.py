@@ -83,40 +83,69 @@ class ContractorUI():
         contractor_details = {
             "contractor_id": contractor_id
         }
-
-        name = input("Enter Company name: ").strip()
-        if name.lower() == 'b':
+        
+        if contractor_details["contractor_id"].lower() == 'b':
             return
-        contractor_details["name"] = name
-
-        contact_name = input("Enter Contact name: ").strip()
-        if contact_name.lower() == 'b':
+        
+        contractor_details.update({
+            "name": input("Enter name: ").strip(),
+            "contact_name": input("Enter Contact name: ").strip(),
+            "phone_nr": input("Enter Phone Number: ").strip(),
+            "opening_time": input("Enter Opening Time: ").strip(),
+            "location": input("Enter Location: ").strip(),
+            "satisfaction_with_previous_work": input("Enter Satisfaction With Previous Work: ").strip()
+        })
+        if any(value.lower() == 'b' for value in contractor_details.values()):
             return
-        contractor_details["contact_name"] = contact_name
-
-        phone_nr = input("Enter Phone Number: ").strip()
-        if phone_nr.lower() == 'b':
-            return
-        contractor_details["phone_nr"] = phone_nr
-
-        opening_time = input("Enter Opening Time: ").strip()
-        if opening_time.lower() == 'b':
-            return
-        contractor_details["opening_time"] = opening_time
-
-        location = input("Enter Location: ").strip()
-        if location.lower() == 'b':
-            return
-        contractor_details["location"] = location
-
-        satisfaction_with_previous_work = input("Enter Satisfaction with Previous Work: ").strip()
-        if satisfaction_with_previous_work.lower() == 'b':
-            return
-        contractor_details["satisfaction_with_previous_work"] = satisfaction_with_previous_work
-
         result = self.logic_wrapper.create_contractor(contractor_details)
         print(result)
-        print("\nContractor added successfully.")
+        input("\nPress Enter to return to the menu.")
+
+    def change_contractor_info(self):
+        """ Change a contractors information. """
+        self.clear_terminal()
+        columns, _ = self.get_terminal_size()
+        print("+".ljust(columns - 1, '-') + "+")
+        print("|" + " Update Contractor Information ".center(columns - 2) + "|")
+        print("+".ljust(columns - 1, '-') + "+")
+        print("Enter 'b' at any prompt to cancel and go back to the previous menu.\n")
+        contractor_id = input("Enter Contractor ID to update: ").strip()
+        if contractor_id.lower() == 'b':
+            return
+        updated_details = {}
+        name = input("Enter new Name (leave blank to keep current): ").strip()
+        if name.lower() == 'b':
+            return
+        if name:
+            updated_details["name"] = name
+        contact_name = input("Enter Contact Name (leave blank to keep current): ").strip()
+        if contact_name.lower() == 'b':
+            return
+        if contact_name:
+            updated_details["contact_name"] = contact_name
+        phone_nr = input("Enter Phone Number (leave blank to keep current): ").strip()
+        if phone_nr.lower() == 'b':
+            return
+        if phone_nr:
+            updated_details["phone_nr"] = phone_nr
+        opening_time = input("Enter the opening time (leave blank to keep current): ").strip()
+        if opening_time.lower() == 'b':
+            return
+        if opening_time:
+            updated_details["opening_time"] = opening_time
+        location = input("Enter the Location (leave blank to keep current): ").strip()
+        if location.lower() == 'b':
+            return
+        if location:
+            updated_details["location"] = location
+        satisfaction_with_previous_work = input("Enter Satisfaction With Previous Work (leave blank to keep current): ").strip()
+        if satisfaction_with_previous_work.lower() == 'b':
+            return
+        if satisfaction_with_previous_work:
+            updated_details["satisfaction_with_previous_work"] = satisfaction_with_previous_work
+        
+        result = self.logic_wrapper.change_contractor_info(contractor_id, updated_details)
+        print(result)
         input("\nPress Enter to return to the menu.")
 
     def automatic_contractor_id(self):
