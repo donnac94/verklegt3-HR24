@@ -17,7 +17,7 @@ def validate_property(property):
     return len(property) > 0 and len(property) <= 100
 
 def validate_work_done(work_done):
-    return len(work_done) > 0 and len(work_done) <= 255
+    return len(work_done) > 0
 
 def validate_upkeep_status(upkeep_status):
     return upkeep_status in ["Regular Maintenance", "Emergency Repair"]

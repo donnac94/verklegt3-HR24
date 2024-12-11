@@ -116,7 +116,7 @@ class MaintenanceReportUI:
                 report_details["work_done"] = work_done
                 break
             else:
-                print("Invalid work done. Please try again.")
+                print("This field is required, please what work was done.")
 
         while True:
             upkeep_status = input("Enter Upkeep Status (Regular Maintenance/Emergency Repair): ").strip()
