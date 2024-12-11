@@ -76,7 +76,7 @@ class ContractorUI():
         print("+".ljust(columns - 1, '-') + "+")
         print("Enter 'b' at any prompt to cancel and go back to the previous menu.\n")
         
-        contractor_id = self.logic_wrapper.logic_wrapper.automatic_contractor_id()
+        contractor_id = self.logic_wrapper.automatic_contractor_id()
         contractor_details = {
             "contractor_id": contractor_id
         }
