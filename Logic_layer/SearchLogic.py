@@ -1,8 +1,10 @@
+import csv
 from Logic_layer.EmployeeLogic import EmployeeLogic
 from Logic_layer.PropertyLogic import PropertyLogic
 from Logic_layer.ContractorLogic import ContractorLogic
 from Logic_layer.MaintenanceReportLogic import MaintenanceReportLogic
 from Logic_layer.LocationLogic import LocationLogic
+
 
 class SearchLogic:
     
@@ -15,10 +17,11 @@ class SearchLogic:
     
     
     def search_by_location(self, location_id):
-        pass
+        while location_id != None or location_id < 0 or location_id > :
+            
     
     def search_employee_by_ssn(self, ssn):
-        pass
+        
     
     def search_property_id(self, property_id):
         pass
