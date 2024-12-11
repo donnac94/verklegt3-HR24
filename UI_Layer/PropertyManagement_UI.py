@@ -62,14 +62,14 @@ class PropertyUI:
         if not properties:
             print("No properties found.")
         else:
-            headers = ["Property ID", "Address", "Location", "Condition", "Manager", "Requires Maintenance"]
-            col_widths = [max(len(str(getattr(prop, attr))) for prop in properties) for attr in ["property_id", "address", "location", "property_condition", "manager", "requires_maintenance"]]
+            headers = ["Property ID", "Address", "Location", "Condition", "Supervisor", "Requires Maintenance"]
+            col_widths = [max(len(str(getattr(prop, attr))) for prop in properties) for attr in ["property_id", "address", "location", "property_condition", "supervisor", "requires_maintenance"]]
             col_widths = [max(len(header), width) for header, width in zip(headers, col_widths)]
             row_format = "  |  ".join([f"{{:<{width}}}" for width in col_widths])
             print(row_format.format(*headers))
             print("-" * (columns - 2))
             for prop in properties:
-                print(row_format.format(prop.property_id, prop.address, prop.location, prop.property_condition, prop.manager, ", ".join(prop.requires_maintenance)))
+                print(row_format.format(prop.property_id, prop.address, prop.location, prop.property_condition, prop.supervisor, ", ".join(prop.requires_maintenance)))
         input("\nPress Enter to return to the menu.")
 
     def add_new_property(self):
@@ -99,10 +99,10 @@ class PropertyUI:
             return
         property_details["property_condition"] = property_condition
 
-        manager = input("Enter Manager: ").strip()
-        if manager == 'b':
+        supervisor = input("Enter supervisor: ").strip()
+        if supervisor == 'b':
             return
-        property_details["manager"] = manager
+        property_details["supervisor"] = supervisor
 
         requires_maintenance = input("Enter Requires Maintenance (comma-separated): ").strip()
         if requires_maintenance == 'b':
@@ -127,14 +127,14 @@ class PropertyUI:
             input("\nPress Enter to return to the menu.")
             return
 
-        headers = ["Property ID", "Address", "Location", "Condition", "Manager", "Requires Maintenance"]
-        col_widths = [max(len(str(getattr(prop, attr))) for prop in properties) for attr in ["property_id", "address", "location", "property_condition", "manager", "requires_maintenance"]]
+        headers = ["Property ID", "Address", "Location", "Condition", "Supervisor", "Requires Maintenance"]
+        col_widths = [max(len(str(getattr(prop, attr))) for prop in properties) for attr in ["property_id", "address", "location", "property_condition", "supervisor", "requires_maintenance"]]
         col_widths = [max(len(header), width) for header, width in zip(headers, col_widths)]
         row_format = "  |  ".join([f"{{:<{width}}}" for width in col_widths])
         print(row_format.format(*headers))
         print("-" * (columns - 2))
         for prop in properties:
-            print(row_format.format(prop.property_id, prop.address, prop.location, prop.property_condition, prop.manager, ", ".join(prop.requires_maintenance)))
+            print(row_format.format(prop.property_id, prop.address, prop.location, prop.property_condition, prop.supervisor, ", ".join(prop.requires_maintenance)))
 
         property_id = input("\nEnter Property ID to update: ").strip()
         if property_id.lower() == 'b':
@@ -148,9 +148,9 @@ class PropertyUI:
         print("\nCurrent Information:")
         print(row_format.format(*headers))
         print("-" * (columns - 2))
-        print(row_format.format(property.property_id, property.address, property.location, property.property_condition, property.manager, ", ".join(property.requires_maintenance)))
+        print(row_format.format(property.property_id, property.address, property.location, property.property_condition, property.supervisor, ", ".join(property.requires_maintenance)))
 
-        selected_field = input("\nEnter the field to update: \n1. Address \n2. Location \n3. Property condition \n4. Manager \n5. Requires maintenance ").strip()
+        selected_field = input("\nEnter the field to update: \n1. Address \n2. Location \n3. Property condition \n4. Supervisor \n5. Requires maintenance ").strip()
         while True:    
             if selected_field.lower() == 'b':
                 return
@@ -164,7 +164,7 @@ class PropertyUI:
                 field = "property_condition"
                 break
             elif selected_field == '4':
-                field = "manager"
+                field = "supervisor"
                 break
             elif selected_field == '5':
                 field = "requires_maintenance"
@@ -184,7 +184,7 @@ class PropertyUI:
         print("\nUpdated Information:")
         print(row_format.format(*headers))
         print("-" * (columns - 2))
-        print(row_format.format(updated_property.property_id, updated_property.address, updated_property.location, updated_property.property_condition, updated_property.manager, ", ".join(updated_property.requires_maintenance)))
+        print(row_format.format(updated_property.property_id, updated_property.address, updated_property.location, updated_property.property_condition, updated_property.supervisor, ", ".join(updated_property.requires_maintenance)))
 
         input("\nPress Enter to return to the menu.")
 

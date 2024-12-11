@@ -12,6 +12,7 @@ class MaintenanceReportLogic:
         """
         new_report = MaintenanceReport(
             maintenance_report_id=report_details["maintenance_report_id"],
+            connected_work_order_id=report_details["connected_work_order_id"],
             property=report_details["property"],
             work_done=report_details["work_done"],
             upkeep_status=report_details["upkeep_status"],

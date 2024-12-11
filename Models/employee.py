@@ -12,7 +12,7 @@ class Employee:
         gsm: str,
         email: str,
         location: str,
-        is_manager: bool
+        is_supervisor: bool
     ) -> None:
         self.ssn = ssn
         self.full_name = full_name
@@ -21,7 +21,7 @@ class Employee:
         self.gsm = gsm
         self.email = email
         self.location = location
-        self.is_manager = is_manager
+        self.is_supervisor = is_supervisor
 
     def to_dict(self) -> dict:
         return {
@@ -32,7 +32,7 @@ class Employee:
             "gsm": self.gsm,
             "email": self.email,
             "location": self.location,
-            "is_manager": self.is_manager
+            "is_supervisor": self.is_supervisor
         }
 
     @classmethod
@@ -45,5 +45,5 @@ class Employee:
             gsm=data["gsm"],
             email=data["email"],
             location=data["location"],
-            is_manager=data["is_manager"].lower() == 'true' if isinstance(data["is_manager"], str) else bool(data["is_manager"])
+            is_supervisor=data["is_supervisor"].lower() == 'true' if isinstance(data["is_supervisor"], str) else bool(data["is_supervisor"])
         )

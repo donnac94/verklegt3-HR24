@@ -1,10 +1,10 @@
 class Property:
-    def __init__(self, property_id, address, location, property_condition, manager, requires_maintenance):
+    def __init__(self, property_id, address, location, property_condition, supervisor, requires_maintenance):
         self.property_id = property_id
         self.address = address
         self.location = location
         self.property_condition = property_condition
-        self.manager = manager
+        self.supervisor = supervisor
         self.requires_maintenance = requires_maintenance.split(", ") if isinstance(requires_maintenance, str) else requires_maintenance
 
     def to_dict(self):
@@ -13,7 +13,7 @@ class Property:
             "address": self.address,
             "location": self.location,
             "property_condition": self.property_condition,
-            "manager": self.manager,
+            "supervisor": self.supervisor,
             "requires_maintenance": ", ".join(self.requires_maintenance)
         }
 
@@ -24,6 +24,6 @@ class Property:
             address=data["address"],
             location=data["location"],
             property_condition=data["property_condition"],
-            manager=data["manager"],
+            supervisor=data["supervisor"],
             requires_maintenance=data["requires_maintenance"]
         )
