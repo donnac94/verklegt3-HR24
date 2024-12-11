@@ -3,7 +3,9 @@ from Logic_layer.EmployeeLogic import EmployeeLogic
 from Logic_layer.MaintenanceReportLogic import MaintenanceReportLogic
 from Logic_layer.PropertyLogic import PropertyLogic
 from Logic_layer.WorkOrderLogic import WorkOrderLogic
+from Models.WorkOrder import WorkOrder
 from Models.employee import Employee
+from Models.maintenance_report import MaintenanceReport
 
 class LogicWrapper:
     def __init__(self):
@@ -49,8 +51,17 @@ class LogicWrapper:
     def get_all_work_orders(self) -> list:
         return self.work_order_logic.get_all_work_orders()
     
+    def get_work_order_by_id(self, work_order_id: str) -> WorkOrder:
+        return self.work_order_logic.get_work_order_by_id(work_order_id)
+    
     def change_work_order_info(self, work_order_id, field, new_data):
         return self.work_order_logic.change_work_order_info(work_order_id, field, new_data)
+    
+    def close_work_order(self, work_order_id: str) -> str:
+        return self.work_order_logic.close_work_order(work_order_id)
+    
+    def reopen_work_order(self, work_order_id: str) -> str:
+        return self.work_order_logic.reopen_work_order(work_order_id)
     
     # ContractorLogic
     def create_contractor(self, contractor_details: dict):
@@ -61,3 +72,22 @@ class LogicWrapper:
     
     def change_contractor_info(self, contractor_id, field, updated_contractor):
         return self.contractor_logic.change_contractor_info(contractor_id, field, updated_contractor)
+    
+    # MaintenanceReportLogic
+    def submit_maintenance_report(self, report_details: dict):
+        return self.maintenance_report_logic.submit_maintenance_report(report_details)
+    
+    def get_all_maintenance_reports(self) -> list[MaintenanceReport]:
+        return self.maintenance_report_logic.get_all_maintenance_reports()
+    
+    def change_maintenance_report_info(self, maintenance_report_id, field, new_value):
+        return self.maintenance_report_logic.change_maintenance_report_info(maintenance_report_id, field, new_value)
+    
+    def mark_report_as_finished(self, maintenance_report_id: int) -> str:
+        return self.maintenance_report_logic.mark_report_as_finished(maintenance_report_id)
+    
+    def close_maintenance_report(self, maintenance_report_id: int) -> str:
+        return self.maintenance_report_logic.close_maintenance_report(maintenance_report_id)
+
+    def reopen_maintenance_report(self, maintenance_report_id: int) -> str:
+        return self.maintenance_report_logic.reopen_maintenance_report(maintenance_report_id)

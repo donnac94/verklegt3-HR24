@@ -36,3 +36,30 @@ class MaintenanceReport():
         self.marked_as_finished = marked_as_finished
         self.report_closed = report_closed
         self.contractors_used = contractors_used
+
+    def to_dict(self):
+        return {
+            "maintenance_report_id": self.maintenance_report_id,
+            "property": self.property,
+            "work_done": self.work_done,
+            "upkeep_status": self.upkeep_status,
+            "employee": self.employee,
+            "total_costs": self.total_costs,
+            "marked_as_finished": self.marked_as_finished,
+            "report_closed": self.report_closed,
+            "contractors_used": self.contractors_used
+        }
+
+    @classmethod
+    def from_dict(cls, dict_obj):
+        return cls(
+            dict_obj["maintenance_report_id"],
+            dict_obj["property"],
+            dict_obj["work_done"],
+            dict_obj["upkeep_status"],
+            dict_obj["employee"],
+            dict_obj["total_costs"],
+            dict_obj["marked_as_finished"],
+            dict_obj["report_closed"],
+            dict_obj["contractors_used"]
+        )
