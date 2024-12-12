@@ -16,12 +16,12 @@ class PropertyLogic:
                 return "Error: Property with this address already exists in the system."
 
         # Validate location
-        locations = self.property_data.load_locations()
-        if property_details["location"] not in locations:
-            return "Error: Invalid location. Please enter a valid location from the locations list."
+        # locations = self.property_data.load_locations()
+        # if property_details["location"] not in locations:
+        #     return "Error: Invalid location. Please enter a valid location from the locations list."
 
-        # Automatically assign supervisor based on location
-        property_details["supervisor"] = locations[property_details["location"]]
+        # # Automatically assign supervisor based on location
+        # property_details["supervisor"] = locations[property_details["location"]]
 
         new_property = Property(
             property_id=property_details["property_id"],

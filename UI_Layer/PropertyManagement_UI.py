@@ -118,6 +118,11 @@ class PropertyUI:
             property_details["property_condition"] = property_condition
             break
 
+        supervisor = input("Enter Supervisor for property location").strip()
+        if supervisor.lower() == 'b':
+            return
+        property_details["supervisor"] = supervisor
+
         # Input for maintenance requirements
         while True:
             requires_maintenance = input("Enter Requires Maintenance (comma-separated, can be empty): ").strip()
