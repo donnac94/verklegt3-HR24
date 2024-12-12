@@ -31,9 +31,12 @@ class ContractorData():
             reader = csv.DictReader(csvfile)
             return [Contractor.from_dict(row) for row in reader]
 
-    def change_contractor_info(self, contractor_id, field, new_value):
+    def change_contractor_info(self, contractor_id: int, field: str, new_value: str):
         '''
         Change a contractors information. 
+        :param int contractor id: The ID of the contractors info you want to change.
+        :param str field: The field you want to change.
+        :param str new_value: The new value to replace the chosen field.
         '''
 
         contractors = self.get_all_contractors()

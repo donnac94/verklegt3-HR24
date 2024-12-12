@@ -8,6 +8,10 @@ class LocationData:
     
     
     def get_all_locations(self) -> list[Location]:
+        """
+        Retrieve all locations from the CSV file.
+        :return: A list of location objects.
+        """
         locations = []
         try:
             with open(self.file_name, 'r', ) as csvfile:
