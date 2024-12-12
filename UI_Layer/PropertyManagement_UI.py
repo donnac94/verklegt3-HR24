@@ -3,6 +3,7 @@ import shutil
 from Logic_layer.LogicWrapper import LogicWrapper
 from UI_Layer.Validation import validate_not_empty
 
+
 class PropertyUI:
     def __init__(self, logic_wrapper: LogicWrapper):
         self.logic_wrapper = logic_wrapper
@@ -55,13 +56,15 @@ class PropertyUI:
             print("No properties found.")
         else:
             headers = ["Property ID", "Address", "Location", "Condition", "Supervisor", "Requires Regular Maintenance"]
-            col_widths = [max(len(str(getattr(prop, attr))) for prop in properties) for attr in ["property_id", "address", "location", "property_condition", "supervisor", "requires_maintenance"]]
+            col_widths = [max(len(str(getattr(prop, attr))) for prop in properties) for attr in
+                          ["property_id", "address", "location", "property_condition", "supervisor", "requires_maintenance"]]
             col_widths = [max(len(header), width) for header, width in zip(headers, col_widths)]
             row_format = "  |  ".join([f"{{:<{width}}}" for width in col_widths])
             print(row_format.format(*headers))
             print("-" * (columns - 2))
             for prop in properties:
-                print(row_format.format(prop.property_id, prop.address, prop.location, prop.property_condition, prop.supervisor, ", ".join(prop.requires_maintenance)))
+                print(row_format.format(prop.property_id, prop.address, prop.location, prop.property_condition,
+                                        prop.supervisor, ", ".join(prop.requires_maintenance)))
         input("\nPress Enter to return to the menu.")
 
     def add_new_property(self):
@@ -71,14 +74,15 @@ class PropertyUI:
         print("|" + " Add New Property ".center(columns - 2) + "|")
         print("+".ljust(columns - 1, '-') + "+")
         print("Enter 'b' at any prompt to cancel and go back to the previous menu.\n")
-        property_id = self.logic_wrapper.automatic_property_id()
-        property_details = {
-            "property_id": property_id
-        }
 
+        # Automatically generate a property ID
+        property_id = self.logic_wrapper.automatic_property_id()
+        property_details = {"property_id": property_id}
+
+        # Input for property address
         while True:
             address = input("Enter Address: ").strip()
-            if address == 'b':
+            if address.lower() == 'b':
                 return
             if not validate_not_empty(address):
                 print("Address cannot be empty.")
@@ -90,9 +94,10 @@ class PropertyUI:
                 property_details["address"] = address
                 break
 
+        # Input for property location
         while True:
             location = input("Enter Location: ").strip()
-            if location == 'b':
+            if location.lower() == 'b':
                 return
             if not validate_not_empty(location):
                 print("Location cannot be empty.")
@@ -101,9 +106,10 @@ class PropertyUI:
             property_details["location"] = location
             break
 
+        # Input for property condition
         while True:
             property_condition = input("Enter Property Condition: ").strip()
-            if property_condition == 'b':
+            if property_condition.lower() == 'b':
                 return
             if not validate_not_empty(property_condition):
                 print("Property Condition cannot be empty.")
@@ -112,16 +118,24 @@ class PropertyUI:
             property_details["property_condition"] = property_condition
             break
 
+        # Input for maintenance requirements
         while True:
             requires_maintenance = input("Enter Requires Maintenance (comma-separated, can be empty): ").strip()
-            if requires_maintenance == 'b':
+            if requires_maintenance.lower() == 'b':
                 return
             property_details["requires_maintenance"] = [item.strip() for item in requires_maintenance.split(",") if item.strip()]
             break
 
+        # Save the new property using LogicWrapper
         result = self.logic_wrapper.add_property(property_details)
-        print(result)
-        print("\nProperty added successfully.")
+        if result == "Property added successfully.":
+            print("\nProperty added successfully!")
+        else:
+            print("\n" + result)
+            input("\nPress Enter to return to the menu.")
+            return
+
+        # Confirm the new property has been added
         self.list_all_properties()
 
     def update_property_info(self):
