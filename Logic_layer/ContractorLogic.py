@@ -53,7 +53,7 @@ class ContractorLogic:
                 contractor_found = True
                 for field, new_value in updated_details.items():
                     setattr(contractor, field, new_value)
-                self.update_contractor(contractor)
+                self.data_wrapper.update_contractor(contractor)
                 return "Contractor information updated successfully."
         if not contractor_found:
             raise ValueError(f"Contractor with ID {contractor_id} not found.")
@@ -81,15 +81,3 @@ class ContractorLogic:
         latest_contractor = contractors[-1]
         latest_id = int(latest_contractor.contractor_id)
         return latest_id + 1
-
-    def update_contractor(self, updated_contractor: Contractor) -> None:
-        contractors = self.data_wrapper.get_all_contractors()
-        with open(self.data_wrapper.contractor_data.filename, "w", newline="", encoding="utf-8") as csvfile:
-            fieldnames = ["contractor_id", "name", "contact_name", "phone_nr", "opening_time", "location", "satisfaction_with_previous_work"]
-            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-            writer.writeheader()
-            for contractor in contractors:
-                if contractor.contractor_id == updated_contractor.contractor_id:
-                    writer.writerow(updated_contractor.to_dict())
-                else:
-                    writer.writerow(contractor.to_dict())

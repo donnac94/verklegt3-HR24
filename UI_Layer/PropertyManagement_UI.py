@@ -1,7 +1,7 @@
 import os
 import shutil
 from Logic_layer.LogicWrapper import LogicWrapper
-from UI_Layer.Validation import validate_not_empty
+from UI_Layer.Validation import InputValidation
 
 
 class PropertyUI:
@@ -92,7 +92,7 @@ class PropertyUI:
             address = input("Enter Address: ").strip()
             if address.lower() == 'b':
                 return
-            if not validate_not_empty(address):
+            if not InputValidation.validate_not_empty(address):
                 print("Address cannot be empty.")
                 input("\nPress Enter to try again.")
                 continue
@@ -107,7 +107,7 @@ class PropertyUI:
             location = input("Enter Location: ").strip()
             if location.lower() == 'b':
                 return
-            if not validate_not_empty(location):
+            if not InputValidation.validate_not_empty(location):
                 print("Location cannot be empty.")
                 input("\nPress Enter to try again.")
                 continue
@@ -119,7 +119,7 @@ class PropertyUI:
             property_condition = input("Enter Property Condition: ").strip()
             if property_condition.lower() == 'b':
                 return
-            if not validate_not_empty(property_condition):
+            if not InputValidation.validate_not_empty(property_condition):
                 print("Property Condition cannot be empty.")
                 input("\nPress Enter to try again.")
                 continue
