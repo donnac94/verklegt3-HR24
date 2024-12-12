@@ -18,3 +18,5 @@ contractor_id,name,contact_name,phone_nr,opening_time,location,satisfaction_with
 10,LoVerk,Lárus Long,7764747,10:00-17:00,Reykjavík,High
 11,Pipur Pipur,Piparsveinn Lárusson,8881717,09:00-16:00,Reykjavík,Low
 12,Lárus og Co,Lárus Lárusson,8884532,12:00-22:00,Reykjavík,Low
+13,Skógar,Jóhann Páll,5452589,6-20,Reykjavík,very good
+14,Vélar og verkfæri,Jón Gunnar,6168888,4-9,Reykjavík,Exellent
