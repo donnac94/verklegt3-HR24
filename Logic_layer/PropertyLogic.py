@@ -62,9 +62,13 @@ class PropertyLogic:
     
     def automatic_property_id(self):
         """
-        Gets the latest property ID and give it plus 1.
-        """
-        properties = self.list_properties()
-        latest_property = properties[-1]
-        latest_id = int(latest_property.property_id)
-        return latest_id + 1
+    Generate the next property ID by incrementing the highest existing ID.
+    If no properties exist, start with ID 1.
+    """
+        properties = self.list_properties()  # Fetch all properties
+        if not properties:  # Check if the list is empty
+            return 1  # Start IDs from 1 if the list is empty
+        latest_property = properties[-1]  # Get the last property
+        latest_id = int(latest_property.property_id)  # Extract its ID
+        return latest_id + 1  # Increment and return the new ID
+
