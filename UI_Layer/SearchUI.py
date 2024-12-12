@@ -130,19 +130,18 @@ class SearchUI:
         if not filtered_properties:
             print("No Properties at location")
         else:
-             headers = ["property_id", "address", "location", "property_condition", "supervisor"]
+             headers = ["property_id", "address", "location", "property_condition", "supervisor", "requires_maintenance"]
              col_widths = [max(len(str(getattr(property, attr))) for property in filtered_properties) for attr in
-                          ["property_id", "address", "location", "property_condition", "supervisor"]]
+                          ["property_id", "address", "location", "property_condition", "supervisor", "requires_maintenance"]]
              col_widths = [max(len(header), width) for header, width in zip(headers, col_widths)]
              row_format = "  |  ".join([f"{{:<{width}}}" for width in col_widths])
              print(row_format.format(*headers))
              print("-" * (columns - 2))
              for property in filtered_properties:
-                print(row_format.format(property.property_id, property.address, property.location, property.property_condition, 
-                                         "True" if property.supervisor else "False"))
+                print(row_format.format(property.property_id, property.address, property.location, property.property_condition, property.supervisor, property.requires_maintenance,  
+                                         ))
         input("\nPress Enter to return to the menu.")
         
-        #property.requires_maintenance
 
         def list_property_by_id():
             pass
