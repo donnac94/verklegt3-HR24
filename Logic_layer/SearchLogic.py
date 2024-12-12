@@ -1,65 +1,69 @@
-import csv
-from Data_Layer.LocationData import LocationData
-from Data_Layer.EmployeeData import EmployeeData
-from Data_Layer.PropertyData import PropertyData
-from Data_Layer.WorkOrderData import WorkOrderData
-from Data_Layer.ContractorData import ContractorData
-from Data_Layer.MaintenanceReportData import MaintenanceReportData
+
 from Data_Layer.DataWrapper import DataWrapper
+from Data_Layer.EmployeeData import EmployeeData
 
 class SearchLogic:
     
     def __init__(self):
-        self.file_name_location = ('Files/locations.csv')
-        self.file_name_employees = ('Files/employees.csv')
-        self.file_name_properties = ('Files/properties.csv')
-        self.file_name_workorder = ('Files/work_orders.csv')
+        self.data_wrapper = DataWrapper
+        self.employee_data = EmployeeData
+        
         
     def search_by_location(self, location):
         """Search employees by location"""
-        results = []
         try:
-            with open(self.file_name_employees, mode='r') as file:
-                reader = csv.DictReader(file)
-                for row in reader:
-                    if location.lower() in row.get("location", "").lower():
-                        results.append(row)
+            results = []
+            location_filter = self.data_wrapper.list_employees(self) #þarf að gera lista sem listar upp starfsmenn eftir location 
+            for row in location_filter:
+                    if location.row == row.get("location", ""):
+                        return row.append(results)
             return results
         except FileNotFoundError:
             return "Employee file not found"
-                     
+        except UnicodeDecodeError:
+            return "Error decoding the file. Please check the file encoding."
+
     def search_employee_by_ssn(self, ssn):
         """Search employees by SSN"""
         try:
-            with open(self.file_name_employees, mode='r') as file:
-                reader = csv.DictReader(file)
-                for row in reader:
-                    if ssn == row.get("ssn", ""):
+            ssn_filter = self.employee_data.get_all_employees(self)
+            for row in ssn_filter:
+                    if ssn.row == row.get("ssn", ""):
                         return row
             return "No Employee found with that ssn"
         except FileNotFoundError:
             return "Employee file not found"
-        
+        except UnicodeDecodeError:
+            return "Error decoding the file. Please check the file encoding."
+
     def search_property_id(self, property_id):
         """Search for a property by id"""
         try:
-            with open(self.file_name_properties, mode='r') as file:
-                reader = csv.DictReader(file)
-                for row in reader:
-                    if property_id == row.get("property_id", ""):
-                        return row
+            results = []
+            property_id_filter = self.data_wrapper.list_properties(self)
+            for row in property_id_filter:
+                    if property_id.row == row.get("property_id", ""):
+                        return row.append(results)
             return "No property found"
         except FileNotFoundError:
-            return "Property no found on file"
-        
+            return "Property not found in file"
+        except UnicodeDecodeError:
+            return "Error decoding the file. Please check the file encoding."
+
     def search_workorder_id(self, workorder_id):
         """Search for Workorder id"""
         try:
-            with open(self.file_name_workorder, mode='r') as file:
-                reader = csv.DictReader(file)
-                for row in reader:
+            results = []
+            workorder_id_filter = self.data_wrapper.get_property_by_id(self)
+            for row in workorder_id_filter:
                     if workorder_id == row.get("workorder_id", ""):
-                        return row
+                        return row.append(results)
             return "No workorder found"
         except FileNotFoundError:
             return "File does not exist"
+        except UnicodeDecodeError:
+            return "Error decoding the file. Please check the file encoding."    
+        
+    
+        
+  
