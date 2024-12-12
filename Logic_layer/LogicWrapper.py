@@ -32,13 +32,7 @@ class LogicWrapper:
         return self.property_logic.get_property_by_id(property_id)
     
     def automatic_property_id(self):
-        """
-        Gets the latest property ID and give it plus 1.
-        """
-        properties = self.list_properties()
-        latest_property = properties[-1]
-        latest_id = int(latest_property.property_id)
-        return latest_id + 1
+        return self.property_logic.automatic_property_id()
 
     def property_exists(self, address: str) -> bool:
         return self.property_logic.property_exists(address)
