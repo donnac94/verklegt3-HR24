@@ -89,6 +89,7 @@ class SearchUI:
                 
     
     def search_employee_by_ssn(self, ssn):
+        
         self.clear_terminal()
         columns, _ = self.get_terminal_size()
         print("+".ljust(columns - 1, '-') + "+")
