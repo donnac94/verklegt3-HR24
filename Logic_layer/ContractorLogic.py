@@ -65,7 +65,7 @@ class ContractorLogic:
                 contractor_found = True
                 for field, new_value in updated_details.items():
                     setattr(contractor, field, new_value)
-                self.update_contractor(contractor)
+                self.data_wrapper.update_contractor(contractor)
                 return "Contractor information updated successfully."
         if not contractor_found:
             raise ValueError(f"Contractor with ID {contractor_id} not found.")

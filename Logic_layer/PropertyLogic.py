@@ -1,4 +1,3 @@
-import csv
 from Data_Layer.DataWrapper import DataWrapper
 from Data_Layer.PropertyData import PropertyData
 from Models.property import Property

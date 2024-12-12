@@ -105,14 +105,12 @@ class DataWrapper:
         """
         return self.contractor_data.get_all_contractors()
     
-    def change_contractor_info(self, contractor_id: int, field: str, new_value: str):
-        """
-        Change contractors info.
-        :param contractor_id: The ID of the contractor to update.
-        :param field: The field to update.
-        :param new_value: The new value for the field. 
-        """
-        return self.contractor_data.change_contractor_info(contractor_id, field, new_value)
+    def update_contractor(self, updated_contractor: Contractor):
+        '''
+        Change a contractors information.
+        :param Contractor updated_contractor: the updated contractor to be saved.
+        '''
+        return self.contractor_data.update_contractor(updated_contractor)
 
     def register_contractor(self, contractor_obj: Contractor):
         """

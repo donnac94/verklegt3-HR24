@@ -77,8 +77,7 @@ class PropertyData:
             _type_: _description_
         """
         locations = {}
-        file_path = 'Files/locations.csv'
-        with open(file_path, mode='r') as file:
+        with open(self.file_name, mode='r') as file:
             reader = csv.DictReader(file)
             if 'airport' not in reader.fieldnames or 'supervisor' not in reader.fieldnames:
                 raise KeyError("CSV file is missing required headers: 'airport' and 'supervisor'")
