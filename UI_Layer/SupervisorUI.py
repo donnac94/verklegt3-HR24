@@ -8,6 +8,7 @@ from UI_Layer.EmployeeManagement_UI import EmployeeManagementUI
 from UI_Layer.MaintenanceReportManagement_UI import MaintenanceReportUI
 from UI_Layer.PropertyManagement_UI import PropertyUI
 from UI_Layer.WorkOrderManagement_UI import WorkOrderUI
+from UI_Layer.SearchUI import SearchUI
 
 class SupervisorUI:
     def __init__(self, logic_wrapper: LogicWrapper):
@@ -17,6 +18,7 @@ class SupervisorUI:
         self.maintenance_report_ui = MaintenanceReportUI(logic_wrapper)  
         self.work_order_ui = WorkOrderUI(logic_wrapper)
         self.contractor_ui = ContractorUI(logic_wrapper)
+        self.search_ui = SearchUI(logic_wrapper)
     def clear_terminal(self):
         os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -39,6 +41,7 @@ class SupervisorUI:
             print(d + " 3. Maintenance Report Management ".ljust(columns - 2) + d)
             print(d + " 4. Work Order Management ".ljust(columns - 2) + d)
             print(d + " 5. Contractor Management ".ljust(columns - 2) + d)
+            print(d + " 6. Search ".ljust(columns - 2) + d)
             print(d + " b. Back to Login Menu ".ljust(columns - 2) + d)
             print(c + h * (columns - 2) + c)
 
@@ -54,6 +57,8 @@ class SupervisorUI:
                 self.work_order_ui.display_menu() 
             elif choice == "5":
                 self.contractor_ui.display_menu()
+            elif choice == "6":
+                self.search_ui.display_menu()
             elif choice == "b":
                 return
             else:

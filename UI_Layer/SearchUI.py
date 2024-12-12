@@ -1,24 +1,20 @@
-import sys
-from Logic_layer.ContractorLogic import ContractorLogic
-from Logic_layer.EmployeeLogic import EmployeeLogic
-from Logic_layer.LocationLogic import LocationLogic
-from Logic_layer.MaintenanceReportLogic import MaintenanceReportLogic
-from Logic_layer.PropertyLogic import PropertyLogic
-from Logic_layer.WorkOrderLogic import WorkOrderLogic
-from Logic_layer.SearchLogic import SearchLogic
+from Logic_layer.LogicWrapper import LogicWrapper
+import os
+import shutil
 
 class SearchUI:
     
-    def __init__(self):
-        self.contractor_logic = ContractorLogic
-        self.employee_logic = EmployeeLogic
-        self.location_logic = LocationLogic
-        self.maintenance_report_logic = MaintenanceReportLogic
-        self.property_logic = PropertyLogic
-        self.workorder_logic = WorkOrderLogic 
-        self.search_logic = SearchLogic
+    def __init__(self, logic_wrapper: LogicWrapper):
+        self.logic_wrapper = logic_wrapper
     
-    def display_search_main_menu(self):
+    def clear_terminal(self):
+        os.system('cls' if os.name == 'nt' else 'clear')
+    
+    def get_terminal_size(self):
+        columns, rows = shutil.get_terminal_size(fallback=(80, 24))
+        return columns, rows
+    
+    def display_menu(self):
         while True:
             self.clear_terminal()
             columns, _ = self.get_terminal_size()
@@ -37,17 +33,33 @@ class SearchUI:
             choice = input("\nChoose an option: ").strip().lower()
 
             if choice == '1':
-                location = input("Enter a Location: ")
-                res = self.search_logic.search_by_location(location)
-                return res
+                self.clear_terminal()
+                columns, _ = self.get_terminal_size()
+                h = '-'
+                c = '+'
+                d = '|'
+                print(c + "Air NaN Employee Portal".center(columns - 2, h) + c)
+                print(d + "Welcome to the Search Menu".center(columns - 2) + d)
+                print(c + h * (columns - 2) + c)
+                print(d + " 1. List All Employees by Location ".ljust(columns - 2) + d)
+                print(d + " 2. List All Properties by location ".ljust(columns - 2) + d)
+                print(c + h * (columns - 2) + c)
+                choice = input("\nEnter what list you want to see: ")
+                if choice == '1':
+                    location = input("\n Enter Location: ")
+                    self.list_all_employee_by_loc(location)
+                elif choice == '2':
+                    location_prop = input("\nEnter location: ")
+                    self.list_all_prop_by_loc(location_prop)
+                else:
+                    print("invalid input")
             elif choice == '2':
-                employee = input("\n Enter Social Security number: ")
-                ris = self.search_logic.search_employee_by_ssn(employee)
-                return ris
+                ssn = input("\n Enter Social Security number: ")
+                self.search_employee_by_ssn(ssn)
             elif choice == '3':
-                property_ = input("\nEnter a property id: ")
-                riss = self.search_logic.search_property_id(property_)
-                return riss
+                # return self.property_filter
+                location = input("\nEnter a property id: ")
+                self.list_all_prop_by_loc(location)
             elif choice == '4':
                 workorder = input("\nEnter a workorder id: ")
                 result = self.search_logic.search_workorder_id(workorder)
@@ -55,5 +67,81 @@ class SearchUI:
             else:
                 print("Invalid choice. Please try again.")
                 input("\nPress Enter to return to the menu.")
+                
     
+    def search_employee_by_ssn(self, ssn):
+        self.clear_terminal()
+        columns, _ = self.get_terminal_size()
+        print("+".ljust(columns - 1, '-') + "+")
+        print("|" + " List All Employees ".center(columns - 2) + "|")
+        print("+".ljust(columns - 1, '-') + "+")
+        employee = self.logic_wrapper.search_employee_by_ssn(ssn)
+        if not employee:
+            print("No employee found.")
+        else:
+            headers = ["ssn", "full_name", "address", "phone", "gsm", "email", "location", "is_supervisor"]
+            col_widths = [(max(len(header), len(str( getattr(employee, attr))))) 
+            for header, attr in zip(
+                headers, ["ssn", "full_name", "address", "phone", "gsm", "email", "location", "is_supervisor"]
+            )]
+            row_format = "  |  ".join([f"{{:<{width}}}" for width in col_widths])
+            print(row_format.format(*headers))
+            print("-" * (columns - 2))
+
+            is_supervisor = employee.is_supervisor
+            if is_supervisor == 1:
+                is_supervisor = "True"
+            else:
+                is_supervisor = "False"
+            print(row_format.format(employee.ssn, employee.full_name, employee.address, employee.phone, employee.gsm, employee.email, employee.location, is_supervisor))
+        input("\nPress Enter to return to the menu.")
         
+        
+    def list_all_employee_by_loc(self, location):
+        self.clear_terminal()
+        columns, _ = self.get_terminal_size()
+        print("+".ljust(columns - 1, '-') + "+")
+        print("|" + " List All Employees by Location ".center(columns - 2) + "|")
+        print("+".ljust(columns - 1, '-') + "+")
+        location = self.logic_wrapper.search_employees_by_location(location)
+        if not location:
+            print("No employees at location")
+        else:
+             headers = ["ssn", "full_name", "address", "phone", "gsm", "email", "location", "is_supervisor"]
+             col_widths = [max(len(str(getattr(loc, attr))) for loc in location) for attr in
+                          ["ssn", "full_name", "address", "phone", "gsm", "email", "location", "is_supervisor"]]
+             col_widths = [max(len(header), width) for header, width in zip(headers, col_widths)]
+             row_format = "  |  ".join([f"{{:<{width}}}" for width in col_widths])
+             print(row_format.format(*headers))
+             print("-" * (columns - 2))
+             for loc in location:
+                print(row_format.format(loc.ssn, loc.full_name, loc.address, loc.phone, loc.gsm, loc.email,
+                                        loc.location, "True" if loc.is_supervisor else "False"))
+        input("\nPress Enter to return to the menu.")
+        
+        
+    def list_all_prop_by_loc(self, location):
+        self.clear_terminal()
+        columns, _ = self.get_terminal_size()
+        print("+".ljust(columns - 1, '-') + "+")
+        print("|" + " List All Properties by Location ".center(columns - 2) + "|")
+        print("+".ljust(columns - 1, '-') + "+")
+        filtered_properties = self.logic_wrapper.search_properties_by_location(location)
+        if not filtered_properties:
+            print("No Properties at location")
+        else:
+             headers = ["property_id", "address", "location", "property_condition", "supervisor", "requires_maintenance"]
+             col_widths = [max(len(str(getattr(property, attr))) for property in filtered_properties) for attr in
+                          ["property_id", "address", "location", "property_condition", "supervisor", "requires_maintenance"]]
+             col_widths = [max(len(header), width) for header, width in zip(headers, col_widths)]
+             row_format = "  |  ".join([f"{{:<{width}}}" for width in col_widths])
+             print(row_format.format(*headers))
+             print("-" * (columns - 2))
+             for property in filtered_properties:
+                print(row_format.format(property.property_id, property.address, property.location, property.property_condition, property.supervisor, property.requires_maintenance,  
+                                         ))
+        input("\nPress Enter to return to the menu.")
+        
+
+        def list_property_by_id():
+            pass

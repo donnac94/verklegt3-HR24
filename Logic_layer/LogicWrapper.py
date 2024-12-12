@@ -3,9 +3,11 @@ from Logic_layer.EmployeeLogic import EmployeeLogic
 from Logic_layer.MaintenanceReportLogic import MaintenanceReportLogic
 from Logic_layer.PropertyLogic import PropertyLogic
 from Logic_layer.WorkOrderLogic import WorkOrderLogic
+from Logic_layer.SearchLogic import SearchLogic
 from Models.WorkOrder import WorkOrder
 from Models.employee import Employee
 from Models.maintenance_report import MaintenanceReport
+
 
 class LogicWrapper:
     def __init__(self):
@@ -14,6 +16,7 @@ class LogicWrapper:
         self.maintenance_report_logic = MaintenanceReportLogic()
         self.property_logic = PropertyLogic()
         self.work_order_logic = WorkOrderLogic()
+        self.search_logic = SearchLogic()
 
     # PropertyLogic
     def get_maintenance_history(self, property_id: int) -> list:
@@ -112,3 +115,32 @@ class LogicWrapper:
     
     def get_report_by_id(self, maintenance_report_id: int) -> MaintenanceReport:
         return self.maintenance_report_logic.get_report_by_id(maintenance_report_id)
+    #SearchLogic
+
+    def search_employee_by_ssn(self, ssn):
+        """Search employees by SSN"""
+        return self.search_logic.search_employee_by_ssn(ssn)
+    
+    def search_employees_by_location(self, location):
+        return self.search_logic.search_employee_by_location(location)
+    
+    def search_properties_by_location(self, location):
+        return self.search_logic.search_properties_by_location(location)
+    
+    def search_property_by_id(self, property_id):
+        return self.search_logic.search_property_by_id(property_id)
+    
+    def search_work_order_by_id(self, work_order_id):
+        return self.search_logic.search_work_order_by_id(work_order_id)
+    
+    def search_work_orders_by_property(self, property_name):
+        return self.search_logic.search_work_orders_by_property(property_name)
+    
+    def search_maintenance_reports_by_property(self, property_name):
+        return self.search_logic.search_maintenance_reports_by_property(property_name)
+    
+    def search_work_orders_by_employee(self, employee_ssn):
+        return self.search_logic.search_work_orders_by_employee(employee_ssn)
+    
+    def search_maintenance_reports_by_employee(self, employee_ssn):
+        return self.search_logic.search_maintenance_reports_by_employee(employee_ssn)

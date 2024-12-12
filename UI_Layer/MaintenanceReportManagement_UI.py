@@ -76,7 +76,7 @@ class MaintenanceReportUI:
             for report in reports:
                 print(row_format.format(
                     report.maintenance_report_id, report.connected_work_order_id, report.property, report.work_done, report.upkeep_status,
-                    report.employee, report.total_costs, report.marked_as_finished, report.report_closed, report.contractors_used #"".join(report.contractors_used)
+                    report.employee, report.total_costs, report.marked_as_finished, report.report_closed, report.contractors_used
                 ))
         input("\nPress Enter to return to the menu.")
 
@@ -180,11 +180,9 @@ class MaintenanceReportUI:
             contractors_used = input("Enter Contractors Used (comma-separated): ").strip()
             if contractors_used == 'b':
                 return
-            if validate_contractors_used(contractors_used):
-                report_details["contractors_used"] = set(contractors_used.split(','))
-                break
             else:
-                print("Invalid contractors used. Please enter a comma-separated list.")
+                report_details["contractors_used"] = contractors_used
+                break
 
         result = self.logic_wrapper.submit_maintenance_report(report_details)
         print(result)
@@ -292,7 +290,7 @@ class MaintenanceReportUI:
                     break
                 elif field == 9 and validate_contractors_used(value):
                     field = "contractors_used"
-                    report_details[field] = set(value.split(','))
+                    report_details[field] = value
                     break
                 else:
                     print(f"Invalid value for selected field. Please try again.")

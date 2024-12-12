@@ -1,59 +1,107 @@
-import csv
-from Logic_layer.EmployeeLogic import EmployeeLogic
-from Logic_layer.PropertyLogic import PropertyLogic
-from Logic_layer.ContractorLogic import ContractorLogic
-from Logic_layer.MaintenanceReportLogic import MaintenanceReportLogic
-from Logic_layer.LocationLogic import LocationLogic
+
+from Data_Layer.DataWrapper import DataWrapper
 
 
 class SearchLogic:
     
     def __init__(self):
-        self.employee_logic = EmployeeLogic
-        self.property_logic = PropertyLogic
-        self.contractor_logic = ContractorLogic
-        self.maintenance_report_logic = MaintenanceReportLogic
-        self.location_logic = LocationLogic
+        self.data_wrapper = DataWrapper()
+        
+        
+        
+    def search_employee_by_location(self, location):
+        """Search employees by location"""
+        filtered_list= []
+        employees = self.data_wrapper.list_employees()
+        for employee in employees:
+                if employee.location.lower() == location.lower():
+                    filtered_list.append(employee)
+        return filtered_list
     
-    def search_by_location(self, location_id) -> list:
-        while location_id != None and location_id < 0 and location_id > 100:
-            return []
+    def search_properties_by_location(self, location):
+        """Search properties by location"""
+        filtered_list= []
+        properties = self.data_wrapper.list_properties()
+        for property in properties:
+                if property.location.lower() == location.lower():
+                    filtered_list.append(property)
+        return filtered_list
         
-        employees_at_location = []
+    def search_employees_by_ssn(self, ssn):
+        """Search employees by SSN"""
+
+        employees = self.data_wrapper.list_employees()
+        for employee in employees:
+                if employee.ssn == ssn:
+                    return employee
+        return "No Employee found with that ssn"
+   
+
+    def search_property_by_id(self, property_id):
+        """Search for a property by id"""
+        properties = self.data_wrapper.list_properties()
+        for property in properties:
+                if property.property_id == property_id:
+                    return property
+        return "No property found"
         
-        if location_id in self.location_logic:
-            employees_at_location = self.location_logic[location_id]
-            
-            return employees_at_location
-            # if self.employee_logic and location_id != False:
-            #     value = location_id
-            #     for value in self.location_logic:
-            #         for self.employee_logic in value:
-            #             return value
-                     
-    def search_employee_by_ssn(self, ssn):
-        while ssn != None and ssn < 0 and ssn > 10:
-            print("Employee does not exist in the system try again")
-            return []
-        employee_ssn = []
-        if ssn in self.employee_logic:
-            employee_ssn = self.employee_logic[ssn]
-            return employee_ssn
         
-    def search_property_id(self, property_id):
-        while property_id != None and property_id < 0 and property_id > 100:
-            return []
-        property_search_id = []
-        if property_id in self.property_logic:
-            property_search_id = self.property_logic[property_id]
-            return property_search_id
-        
-    def search_workorder_id(self, workorder_id):
-        while workorder_id != None and workorder_id < 0 and workorder_id > 100:
-            return []
+    def search_work_order_by_id(self, work_order_id):
+        """Search for a work order by id"""
+        work_orders = self.data_wrapper.get_all_work_orders()
+        for work_order in work_orders:
+                if work_order.work_order_id == work_order_id:
+                    return work_order
+        return "No work order found"
     
-        workorder_search_id = []
-        if workorder_search_id in self.maintenance_report_logic:
-            workorder_search_id = self.maintenance_report_logic[workorder_id]
-            
-            return workorder_search_id
+    def search_work_orders_by_property(self, property_name):
+        """Search for work orders by property name"""
+        filtered_list = []
+        work_orders = self.data_wrapper.get_all_work_orders()
+        for work_order in work_orders:
+                if work_order.property == property_name:
+                    filtered_list.append(work_order)
+        return filtered_list
+    
+    def search_maintenance_reports_by_property(self, property_name):
+        """Search for maintenance reports by property name"""
+        filtered_list = []
+        maintenance_reports = self.data_wrapper.get_all_maintenance_reports()
+        for maintenance_report in maintenance_reports:
+                if maintenance_report.property == property_name:
+                    filtered_list.append(maintenance_report)
+        return filtered_list
+    
+    def search_work_orders_by_employee(self, employee_ssn):
+        """Search for work orders by employee ssn"""
+        filtered_list = []
+        work_orders = self.data_wrapper.get_all_work_orders()
+        for work_order in work_orders:
+                if work_order.submitting_supervisor == employee_ssn:
+                    filtered_list.append(work_order)
+        return filtered_list
+    
+    def search_maintenance_reports_by_employee(self, employee_ssn):
+        """Search for maintenance reports by employee ssn"""
+        filtered_list = []
+        maintenance_reports = self.data_wrapper.get_all_maintenance_reports()
+        for maintenance_report in maintenance_reports:
+                if maintenance_report.employee == employee_ssn:
+                    filtered_list.append(maintenance_report)
+        return filtered_list
+    
+    def get_work_plan(self):
+        """Creates a work plan. List of all open work orders, ordered by priority"""
+        work_plan = []
+        work_orders = self.data_wrapper.get_all_work_orders()
+        for work_order in work_orders:
+            if work_order.priority.lower() == "high":
+                work_plan.append(work_order)
+        for work_order in work_orders:
+            if work_order.priority.lower() == "medium":
+                work_plan.append(work_order)
+        for work_order in work_orders:
+            if work_order.priority.lower() == "low":
+                work_plan.append(work_order)
+        return work_plan
+        
