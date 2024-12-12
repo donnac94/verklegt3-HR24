@@ -8,6 +8,11 @@ class LocationLogic:
         
     
     def list_locations(self) -> list[Location]:
+        """_summary_
+
+        Returns:
+            list[Location]: _description_
+        """
         return self.data_wrapper.list_location()
         
     
