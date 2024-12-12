@@ -6,6 +6,14 @@ class EmployeeLogic:
         self.data_wrapper = DataWrapper()
 
     def register_employee(self, employee_details: dict) -> str:
+        """_summary_
+
+        Args:
+            employee_details (dict): _description_
+
+        Returns:
+            str: _description_
+        """
         existing_employees = self.data_wrapper.list_employees()
         if any(emp.ssn == employee_details["ssn"] for emp in existing_employees):
             return "Error: Employee with this SSN already exists."
@@ -31,6 +39,7 @@ class EmployeeLogic:
         return "Employee information updated successfully."
     
     def search_employee_by_ssn(self, ssn):
+        """Search the employee by their Socail Security Number(SSN)"""
         employees = self.data_wrapper.list_employees()
         for employee in employees:
             if employee.ssn == ssn:

@@ -33,6 +33,7 @@ class SearchUI:
             print(d + " 7. Search Workorders by employee".ljust(columns - 2) + d)
             print(d + " 8. Search maintenance reports by employee".ljust(columns - 2) + d)
             print(d + " 9. Get work plan".ljust(columns - 2) + d)
+            print(d + " b. Exit".ljust(columns - 2) + d)
             print(c + h * (columns - 2) + c)
 
             choice = input("\nChoose an option: ").strip().lower()

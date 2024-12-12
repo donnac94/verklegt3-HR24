@@ -6,6 +6,11 @@ class PropertyData:
         self.file_name = "Files/properties.csv"
 
     def add_property(self, property: Property) -> None:
+        """_summary_
+
+        Args:
+            property (Property): _description_
+        """
         with open(self.file_name, 'a', newline='', encoding="utf-8") as csvfile:
             fieldnames = ["property_id", "address", "location", "property_condition", "supervisor", "requires_maintenance"]
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
@@ -16,6 +21,11 @@ class PropertyData:
             writer.writerow(property.to_dict())
 
     def get_all_properties(self) -> list[Property]:
+        """_summary_
+
+        Returns:
+            list[Property]: _description_
+        """
         properties = []
         try:
             with open(self.file_name, 'r', newline='', encoding="utf-8") as csvfile:
@@ -27,6 +37,15 @@ class PropertyData:
         return properties
 
     def update_property(self, property_id, updated_details: dict):
+        """_summary_
+
+        Args:
+            property_id (_type_): _description_
+            updated_details (dict): _description_
+
+        Raises:
+            ValueError: _description_
+        """
         properties = self.get_all_properties()
         property_found = False
 
@@ -49,6 +68,14 @@ class PropertyData:
                 writer.writerow(property.to_dict())
 
     def load_locations(self):
+        """_summary_
+
+        Raises:
+            KeyError: _description_
+
+        Returns:
+            _type_: _description_
+        """
         locations = {}
         file_path = 'Files/locations.csv'
         with open(file_path, mode='r') as file:

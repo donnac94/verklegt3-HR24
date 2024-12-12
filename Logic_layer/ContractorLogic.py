@@ -46,6 +46,18 @@ class ContractorLogic:
 
 
     def change_contractor_info(self, contractor_id, updated_details: dict) -> str:
+        """_summary_
+
+        Args:
+            contractor_id (_type_): _description_
+            updated_details (dict): _description_
+
+        Raises:
+            ValueError: _description_
+
+        Returns:
+            str: _description_
+        """
         contractors = self.data_wrapper.get_all_contractors()
         contractor_found = False
         for contractor in contractors:
@@ -83,6 +95,11 @@ class ContractorLogic:
         return latest_id + 1
 
     def update_contractor(self, updated_contractor: Contractor) -> None:
+        """_summary_
+
+        Args:
+            updated_contractor (Contractor): _description_
+        """
         contractors = self.data_wrapper.get_all_contractors()
         with open(self.data_wrapper.contractor_data.filename, "w", newline="", encoding="utf-8") as csvfile:
             fieldnames = ["contractor_id", "name", "contact_name", "phone_nr", "opening_time", "location", "satisfaction_with_previous_work"]
