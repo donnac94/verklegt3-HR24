@@ -1,17 +1,27 @@
+import csv
 from Data_Layer.DataWrapper import DataWrapper
+from Data_Layer.PropertyData import PropertyData
 from Models.property import Property
 
 class PropertyLogic:
     def __init__(self):
         self.data_wrapper = DataWrapper()
+        self.property_data = PropertyData()
 
     def add_property(self, property_details: dict) -> str:
-
         # Check if property already in system
         existing_properties = self.data_wrapper.list_properties()
         for property in existing_properties:
             if property.address == property_details["address"]:
                 return "Error: Property with this address already exists in the system."
+
+        # Validate location
+        locations = self.property_data.load_locations()
+        if property_details["location"] not in locations:
+            return "Error: Invalid location. Please enter a valid location from the locations list."
+
+        # Automatically assign supervisor based on location
+        property_details["supervisor"] = locations[property_details["location"]]
 
         new_property = Property(
             property_id=property_details["property_id"],

@@ -18,3 +18,4 @@ ssn,full_name,address,phone,gsm,email,location,is_supervisor
 2406941359,Aníta Rut Ólafdóttir,Ásbergsbrekka 55,8889090,8889090,anitarut@nan.is,Reykjavík,False
 2511945959,Anna Lísa Guðjónsdóttir,Austurberg 5,7773434,7773434,annalisaa@nan.is,Reykjavík,False
 1711732218,Auðbergur Þórarins,Arnartangi 22,8881212,8881212,aubbi@nan.is,Reykjavík,False
+2507943479,donut,,,,donut@nan.is,,False

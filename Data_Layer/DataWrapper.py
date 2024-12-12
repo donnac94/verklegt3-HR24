@@ -52,6 +52,13 @@ class DataWrapper:
         :return: A list of property objects or raises an exception.
         """
         return self.property_data.get_all_properties()
+    
+    def load_locations(self) -> dict:
+        """
+        Load locations and their supervisors from the CSV file.
+        :return: A dictionary with locations as keys and supervisors as values.
+        """
+        return self.property_data.load_locations()
 
     def add_property(self, new_property: Property):
         """
@@ -140,6 +147,7 @@ class DataWrapper:
         :param int maintenance_report_id
         """
         return self.maintenance_report_data.change_maintenance_report_info(maintenance_report_id, field, new_value)
+    
     def list_location(self) -> list[Location]:
         """
         Takes all the Locations and returns them 
@@ -147,3 +155,4 @@ class DataWrapper:
             list[Location]: 
         """
         return self.location_data.get_all_locations()
+

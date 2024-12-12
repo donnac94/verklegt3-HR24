@@ -1,6 +1,7 @@
 import os
 import shutil
 from Logic_layer.LogicWrapper import LogicWrapper
+from UI_Layer.Validation import validate_not_empty
 
 class PropertyUI:
     def __init__(self, logic_wrapper: LogicWrapper):
@@ -53,7 +54,7 @@ class PropertyUI:
         if not properties:
             print("No properties found.")
         else:
-            headers = ["Property ID", "Address", "Location", "Condition", "Supervisor", "Requires Maintenance"]
+            headers = ["Property ID", "Address", "Location", "Condition", "Supervisor", "Requires Regular Maintenance"]
             col_widths = [max(len(str(getattr(prop, attr))) for prop in properties) for attr in ["property_id", "address", "location", "property_condition", "supervisor", "requires_maintenance"]]
             col_widths = [max(len(header), width) for header, width in zip(headers, col_widths)]
             row_format = "  |  ".join([f"{{:<{width}}}" for width in col_widths])
@@ -79,31 +80,44 @@ class PropertyUI:
             address = input("Enter Address: ").strip()
             if address == 'b':
                 return
+            if not validate_not_empty(address):
+                print("Address cannot be empty.")
+                input("\nPress Enter to try again.")
+                continue
             if self.logic_wrapper.property_exists(address):
                 print("Error: Property with this address already exists in the system. Please try again.")
             else:
                 property_details["address"] = address
                 break
 
-        location = input("Enter Location: ").strip()
-        if location == 'b':
-            return
-        property_details["location"] = location
+        while True:
+            location = input("Enter Location: ").strip()
+            if location == 'b':
+                return
+            if not validate_not_empty(location):
+                print("Location cannot be empty.")
+                input("\nPress Enter to try again.")
+                continue
+            property_details["location"] = location
+            break
 
-        property_condition = input("Enter Property Condition: ").strip()
-        if property_condition == 'b':
-            return
-        property_details["property_condition"] = property_condition
+        while True:
+            property_condition = input("Enter Property Condition: ").strip()
+            if property_condition == 'b':
+                return
+            if not validate_not_empty(property_condition):
+                print("Property Condition cannot be empty.")
+                input("\nPress Enter to try again.")
+                continue
+            property_details["property_condition"] = property_condition
+            break
 
-        supervisor = input("Enter supervisor: ").strip()
-        if supervisor == 'b':
-            return
-        property_details["supervisor"] = supervisor
-
-        requires_maintenance = input("Enter Requires Maintenance (comma-separated): ").strip()
-        if requires_maintenance == 'b':
-            return
-        property_details["requires_maintenance"] = [item.strip() for item in requires_maintenance.split(",") if item.strip()]
+        while True:
+            requires_maintenance = input("Enter Requires Maintenance (comma-separated, can be empty): ").strip()
+            if requires_maintenance == 'b':
+                return
+            property_details["requires_maintenance"] = [item.strip() for item in requires_maintenance.split(",") if item.strip()]
+            break
 
         result = self.logic_wrapper.add_property(property_details)
         print(result)
@@ -185,14 +199,3 @@ class PropertyUI:
         print(row_format.format(updated_property.property_id, updated_property.address, updated_property.location, updated_property.property_condition, updated_property.supervisor, ", ".join(updated_property.requires_maintenance)))
 
         input("\nPress Enter to return to the menu.")
-
-
-    #Possibly should be in another layer?.
-    def automatic_property_id(self):
-        """
-        Gets the latest property ID and give it plus 1.
-        """
-        properties = self.logic_wrapper.list_properties()
-        latest_property = properties[-1]
-        latest_id = int(latest_property.property_id)
-        return latest_id + 1

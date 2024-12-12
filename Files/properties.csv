@@ -13,4 +13,8 @@ property_id,address,location,property_condition,supervisor,requires_maintenance
 14,Langholt 33,Reykjavík,Excellent,Donna Cruz,
 15,Smáratún 44,Reykjavík,Excellent,Donna Cruz,
 16,Setberg 15,Reykjavík,Good,Donna Cruz,
-17,HRaunbær 16,Reykjavík,Good,Donna Cruz
+17,HRaunbær 16,Reykjavík,Good,Donna Cruz,
+18,Skargsgata 19,Nuuk,Good,Donna,
+19,Skargsgata,Nuuk,Good,Donna,
+20,Fellaberg 19,Reykjavík,Good,Donna Cruz,
+21,Gutenbrurr 19,Longyearbyen,Excellent,Lísa Alfreðs,
