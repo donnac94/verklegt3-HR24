@@ -95,11 +95,7 @@ class DataWrapper:
         Update the information of an employee.
         :param str ssn: The SSN of the employee to update.
         """
-        return self.employee_data.change_employee_info(ssn, field, new_value)
-    
-    def get_property_by_id(self, property_id):
-        return self.property_data.get_property_by_id(property_id)
-    
+        return self.employee_data.change_employee_info(ssn, field, new_value)   
 
     # Contractor methods
     def get_all_contractors(self) -> list[Contractor]:
@@ -109,7 +105,7 @@ class DataWrapper:
         """
         return self.contractor_data.get_all_contractors()
     
-    def change_contractor_info(self, contractor_id, field, new_value):
+    def change_contractor_info(self, contractor_id: int, field: str, new_value: str):
         """
         Change contractors info.
         :param contractor_id: The ID of the contractor to update.
@@ -144,7 +140,9 @@ class DataWrapper:
     def change_maintenance_report_info(self, maintenance_report_id: int, field: str, new_value: str) -> None:
         """
         Change the information of a maintenance report
-        :param int maintenance_report_id
+        :param int maintenance_report_id: The ID of the maintenance report to be changed.
+        :param str field: The field to be changed.
+        :param str new_value: The new value that will replace the old value in specified field.
         """
         return self.maintenance_report_data.change_maintenance_report_info(maintenance_report_id, field, new_value)
     
