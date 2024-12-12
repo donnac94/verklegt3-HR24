@@ -1,3 +1,4 @@
+import csv
 from Data_Layer.EmployeeData import EmployeeData
 from Data_Layer.PropertyData import PropertyData
 from Data_Layer.WorkOrderData import WorkOrderData
@@ -51,6 +52,13 @@ class DataWrapper:
         :return: A list of property objects or raises an exception.
         """
         return self.property_data.get_all_properties()
+    
+    def load_locations(self) -> dict:
+        """
+        Load locations and their supervisors from the CSV file.
+        :return: A dictionary with locations as keys and supervisors as values.
+        """
+        return self.property_data.load_locations()
 
     def add_property(self, new_property: Property):
         """
@@ -87,20 +95,9 @@ class DataWrapper:
         Update the information of an employee.
         :param str ssn: The SSN of the employee to update.
         """
-        return self.employee_data.change_employee_info(ssn, field, new_value)
-    
-    def get_property_by_id(self, property_id):
-        return self.property_data.get_property_by_id(property_id)
-    
+        return self.employee_data.change_employee_info(ssn, field, new_value)   
 
     # Contractor methods
-    def register_contractor(self, contractor_obj: Contractor):
-        """
-        Register a contractor in the CSV file.
-        :param Contractor contractor_obj: The contractor to save.
-        """
-        return self.contractor_data.register_contractor(contractor_obj)
-    
     def get_all_contractors(self) -> list[Contractor]:
         """
         Retrieve all contractors from the CSV file.
@@ -108,7 +105,7 @@ class DataWrapper:
         """
         return self.contractor_data.get_all_contractors()
     
-    def change_contractor_info(self, contractor_id, field, new_value):
+    def change_contractor_info(self, contractor_id: int, field: str, new_value: str):
         """
         Change contractors info.
         :param contractor_id: The ID of the contractor to update.
@@ -116,7 +113,14 @@ class DataWrapper:
         :param new_value: The new value for the field. 
         """
         return self.contractor_data.change_contractor_info(contractor_id, field, new_value)
-    
+
+    def register_contractor(self, contractor_obj: Contractor):
+        """
+        Register a contractor in the CSV file.
+        :param Contractor contractor_obj: The contractor to save.
+        """
+        return self.contractor_data.register_contractor(contractor_obj)
+
     # MaintenanceReport methods
 
     def submit_maintenance_report(self, maintenance_report_obj: MaintenanceReport):
@@ -136,9 +140,12 @@ class DataWrapper:
     def change_maintenance_report_info(self, maintenance_report_id: int, field: str, new_value: str) -> None:
         """
         Change the information of a maintenance report
-        :param int maintenance_report_id
+        :param int maintenance_report_id: The ID of the maintenance report to be changed.
+        :param str field: The field to be changed.
+        :param str new_value: The new value that will replace the old value in specified field.
         """
         return self.maintenance_report_data.change_maintenance_report_info(maintenance_report_id, field, new_value)
+    
     def list_location(self) -> list[Location]:
         """
         Takes all the Locations and returns them 
@@ -146,3 +153,4 @@ class DataWrapper:
             list[Location]: 
         """
         return self.location_data.get_all_locations()
+

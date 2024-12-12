@@ -37,3 +37,11 @@ def validate_boolean(value):
 
 def validate_contractors_used(contractors_used):
     return all(len(contractor.strip()) > 0 for contractor in contractors_used.split(','))
+
+def validate_phone_number(phone_number: str) -> bool:
+    """ Validate that the phone number contains only digits. """
+    return phone_number.isdigit()
+
+def validate_not_empty(value: str) -> bool:
+    """ Validate that the input is not empty. """
+    return bool(value.strip())

@@ -29,7 +29,7 @@ class WorkOrderData():
             reader = csv.DictReader(csvfile)
             return [WorkOrder.from_dict(row) for row in reader]
 
-    def change_work_order_info(self, work_order_id, field, new_value):
+    def change_work_order_info(self, work_order_id: int, field: str, new_value: str):
         """
         Change the information of a work order.
         """

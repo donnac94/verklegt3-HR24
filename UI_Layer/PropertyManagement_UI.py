@@ -1,7 +1,7 @@
 import os
-import sys
 import shutil
 from Logic_layer.LogicWrapper import LogicWrapper
+from UI_Layer.Validation import validate_not_empty
 
 
 class PropertyUI:
@@ -28,9 +28,7 @@ class PropertyUI:
             print(d + " 1. List All Properties ".ljust(columns - 2) + d)
             print(d + " 2. Add New Property ".ljust(columns - 2) + d)
             print(d + " 3. Update Property Information ".ljust(columns - 2) + d)
-            print(d + " 4. Approve Maintenance Reports ".ljust(columns - 2) + d)
             print(d + " b. Back to Supervisor Menu ".ljust(columns - 2) + d)
-            print(d + " q. Quit ".ljust(columns - 2) + d)
             print(c + h * (columns - 2) + c)
 
             choice = input("\nChoose an option: ").strip().lower()
@@ -41,13 +39,8 @@ class PropertyUI:
                 self.add_new_property()
             elif choice == "3":
                 self.update_property_info()
-            elif choice == "4":
-                self.approve_maintenance_reports()
             elif choice == "b":
                 return
-            elif choice == "q":
-                print("Exiting Property Menu. Goodbye!")
-                sys.exit()
             else:
                 print("Invalid choice. Please try again.")
                 input("\nPress Enter to return to the menu.")
@@ -62,14 +55,16 @@ class PropertyUI:
         if not properties:
             print("No properties found.")
         else:
-            headers = ["Property ID", "Address", "Location", "Condition", "Supervisor", "Requires Maintenance"]
-            col_widths = [max(len(str(getattr(prop, attr))) for prop in properties) for attr in ["property_id", "address", "location", "property_condition", "supervisor", "requires_maintenance"]]
+            headers = ["Property ID", "Address", "Location", "Condition", "Supervisor", "Requires Regular Maintenance"]
+            col_widths = [max(len(str(getattr(prop, attr))) for prop in properties) for attr in
+                          ["property_id", "address", "location", "property_condition", "supervisor", "requires_maintenance"]]
             col_widths = [max(len(header), width) for header, width in zip(headers, col_widths)]
             row_format = "  |  ".join([f"{{:<{width}}}" for width in col_widths])
             print(row_format.format(*headers))
             print("-" * (columns - 2))
             for prop in properties:
-                print(row_format.format(prop.property_id, prop.address, prop.location, prop.property_condition, prop.supervisor, ", ".join(prop.requires_maintenance)))
+                print(row_format.format(prop.property_id, prop.address, prop.location, prop.property_condition,
+                                        prop.supervisor, ", ".join(prop.requires_maintenance)))
         input("\nPress Enter to return to the menu.")
 
     def add_new_property(self):
@@ -79,39 +74,68 @@ class PropertyUI:
         print("|" + " Add New Property ".center(columns - 2) + "|")
         print("+".ljust(columns - 1, '-') + "+")
         print("Enter 'b' at any prompt to cancel and go back to the previous menu.\n")
-        property_id = self.automatic_property_id()
-        property_details = {
-            "property_id": property_id
-        }
 
-        address = input("Enter Address: ").strip()
-        if address == 'b':
-            return
-        property_details["address"] = address
+        # Automatically generate a property ID
+        property_id = self.logic_wrapper.automatic_property_id()
+        property_details = {"property_id": property_id}
 
-        location = input("Enter Location: ").strip()
-        if location == 'b':
-            return
-        property_details["location"] = location
+        # Input for property address
+        while True:
+            address = input("Enter Address: ").strip()
+            if address.lower() == 'b':
+                return
+            if not validate_not_empty(address):
+                print("Address cannot be empty.")
+                input("\nPress Enter to try again.")
+                continue
+            if self.logic_wrapper.property_exists(address):
+                print("Error: Property with this address already exists in the system. Please try again.")
+            else:
+                property_details["address"] = address
+                break
 
-        property_condition = input("Enter Property Condition: ").strip()
-        if property_condition == 'b':
-            return
-        property_details["property_condition"] = property_condition
+        # Input for property location
+        while True:
+            location = input("Enter Location: ").strip()
+            if location.lower() == 'b':
+                return
+            if not validate_not_empty(location):
+                print("Location cannot be empty.")
+                input("\nPress Enter to try again.")
+                continue
+            property_details["location"] = location
+            break
 
-        supervisor = input("Enter supervisor: ").strip()
-        if supervisor == 'b':
-            return
-        property_details["supervisor"] = supervisor
+        # Input for property condition
+        while True:
+            property_condition = input("Enter Property Condition: ").strip()
+            if property_condition.lower() == 'b':
+                return
+            if not validate_not_empty(property_condition):
+                print("Property Condition cannot be empty.")
+                input("\nPress Enter to try again.")
+                continue
+            property_details["property_condition"] = property_condition
+            break
 
-        requires_maintenance = input("Enter Requires Maintenance (comma-separated): ").strip()
-        if requires_maintenance == 'b':
-            return
-        property_details["requires_maintenance"] = requires_maintenance
+        # Input for maintenance requirements
+        while True:
+            requires_maintenance = input("Enter Requires Maintenance (comma-separated, can be empty): ").strip()
+            if requires_maintenance.lower() == 'b':
+                return
+            property_details["requires_maintenance"] = [item.strip() for item in requires_maintenance.split(",") if item.strip()]
+            break
 
+        # Save the new property using LogicWrapper
         result = self.logic_wrapper.add_property(property_details)
-        print(result)
-        print("\nProperty added successfully.")
+        if result == "Property added successfully.":
+            print("\nProperty added successfully!")
+        else:
+            print("\n" + result)
+            input("\nPress Enter to return to the menu.")
+            return
+
+        # Confirm the new property has been added
         self.list_all_properties()
 
     def update_property_info(self):
@@ -158,16 +182,16 @@ class PropertyUI:
                 selected_field = "address"
                 break
             elif selected_field == '2':
-                field = "location"
+                selected_field = "location"
                 break
             elif selected_field == '3':
-                field = "property_condition"
+                selected_field = "property_condition"
                 break
             elif selected_field == '4':
-                field = "supervisor"
+                selected_field = "supervisor"
                 break
             elif selected_field == '5':
-                field = "requires_maintenance"
+                selected_field = "requires_maintenance"
                 break
             else:
                 selected_field = input("\nYou must choose a number between 1-5, try again.\n")
@@ -175,11 +199,13 @@ class PropertyUI:
         new_value = input(f"Enter the new value for your chosen field: ").strip()
         if new_value.lower() == 'b':
             return
-        updated_details = {field: new_value}
+        if selected_field == "requires_maintenance":
+            updated_details = {selected_field: [item.strip() for item in new_value.split(",") if item.strip()]}
+        else:
+            updated_details = {selected_field: new_value}
         result = self.logic_wrapper.update_property(property_id, updated_details)
         print(result)
 
-        # Fetch the updated property information
         updated_property = self.logic_wrapper.get_property_by_id(property_id)
         print("\nUpdated Information:")
         print(row_format.format(*headers))
@@ -187,22 +213,3 @@ class PropertyUI:
         print(row_format.format(updated_property.property_id, updated_property.address, updated_property.location, updated_property.property_condition, updated_property.supervisor, ", ".join(updated_property.requires_maintenance)))
 
         input("\nPress Enter to return to the menu.")
-
-    def approve_maintenance_reports(self):
-        self.clear_terminal()
-        columns, _ = self.get_terminal_size()
-        print("+".ljust(columns - 1, '-') + "+")
-        print("|" + " Approve Maintenance Reports ".center(columns - 2) + "|")
-        print("+".ljust(columns - 1, '-') + "+")
-        # Implementation for approving maintenance reports
-        input("\nPress Enter to return to the menu.")
-
-    #Possibly should be in another layer?.
-    def automatic_property_id(self):
-        """
-        Gets the latest property ID and give it plus 1.
-        """
-        properties = self.logic_wrapper.list_properties()
-        latest_property = properties[-1]
-        latest_id = int(latest_property.property_id)
-        return latest_id + 1

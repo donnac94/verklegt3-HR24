@@ -32,7 +32,6 @@ class WorkOrderUI:
             print(d + " 5. Close Work Order ".ljust(columns - 2) + d)
             print(d + " 6. Reopen Work Order ".ljust(columns - 2) + d)
             print(d + " b. Go Back ".ljust(columns - 2) + d)
-            print(d + " q. Quit ".ljust(columns - 2) + d)
             print(c + h * (columns - 2) + c)
 
             choice = input("Enter your choice: ").strip().lower()
@@ -50,9 +49,6 @@ class WorkOrderUI:
                 self.reopen_work_order()
             elif choice == "b":
                 return
-            elif choice == "q":
-                print("Exiting Work Order Menu. Goodbye!")
-                sys.exit()
             else:
                 print("Invalid choice. Please try again.")
                 input("\nPress Enter to return to the menu.")
@@ -79,7 +75,7 @@ class WorkOrderUI:
         print("Submit New Work Order")
         print("Press 'b' to go back to the Work Order Management Menu.")
 
-        work_order_id = self.automatic_work_order_id()
+        work_order_id = self.logic_wrapper.automatic_work_order_id()
         work_order_details = {
             "work_order_id": work_order_id
         }
@@ -275,10 +271,3 @@ class WorkOrderUI:
                 work_order.priority,
                 work_order.work_order_status
             ))
-
-    def automatic_work_order_id(self):
-        work_orders = self.logic_wrapper.get_all_work_orders()
-        if not work_orders:
-            return 1
-        latest_work_order = work_orders[-1]
-        return int(latest_work_order.work_order_id) + 1

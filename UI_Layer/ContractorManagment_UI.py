@@ -1,8 +1,9 @@
 from Logic_layer.LogicWrapper import LogicWrapper
+from UI_Layer.Validation import validate_not_empty, validate_phone_number
+
+
 import os
 import shutil
-import sys
-
 
 class ContractorUI():
     def __init__(self, logic_wrapper: LogicWrapper):
@@ -30,7 +31,6 @@ class ContractorUI():
             print(d + " 2. Add New Contractor ".ljust(columns - 2) + d)
             print(d + " 3. Update Contractor Information ".ljust(columns - 2) + d)
             print(d + " b. Back to Login Menu ".ljust(columns - 2) + d)
-            print(d + " q. Quit ".ljust(columns - 2) + d)
             print(c + h * (columns - 2) + c)
 
             choice = input("\nChoose an option: ").strip().lower()
@@ -43,9 +43,6 @@ class ContractorUI():
                 self.change_contractor_info()
             elif choice == "b":
                 return
-            elif choice == "q":
-                print("Exiting Contractor Menu. Goodbye!")
-                sys.exit()
             else:
                 print("Invalid choice. Please try again.")
                 input("\nPress Enter to return to the menu.")
@@ -61,7 +58,7 @@ class ContractorUI():
         if not contractors:
             print("No contractors found.")
         else:
-            headers = ["Contractor ID", "Name", "Contact Name", "Phone number", "Opening Time", "Location", "Satisfaction With Previous Work"]
+            headers = ["Contractor ID", "Company", "Contact Name", "Phone number", "Opening Time", "Location", "Satisfaction With Previous Work"]
             col_widths = [max(len(str(getattr(cont, attr))) for cont in contractors) for attr in ["contractor_id", "name", "contact_name", "phone_nr", "opening_time", "location", "satisfaction_with_previous_work"]]
             col_widths = [max(len(header), width) for header, width in zip(headers, col_widths)]
             row_format = "  |  ".join([f"{{:<{width}}}" for width in col_widths])
@@ -79,26 +76,80 @@ class ContractorUI():
         print("+".ljust(columns - 1, '-') + "+")
         print("Enter 'b' at any prompt to cancel and go back to the previous menu.\n")
         
-        contractor_id = self.automatic_contractor_id()
+        contractor_id = self.logic_wrapper.automatic_contractor_id()
         contractor_details = {
             "contractor_id": contractor_id
         }
         
-        if contractor_details["contractor_id"].lower() == 'b':
-            return
-        
-        contractor_details.update({
-            "name": input("Enter name: ").strip(),
-            "contact_name": input("Enter Contact name: ").strip(),
-            "phone_nr": input("Enter Phone Number: ").strip(),
-            "opening_time": input("Enter Opening Time: ").strip(),
-            "location": input("Enter Location: ").strip(),
-            "satisfaction_with_previous_work": input("Enter Satisfaction With Previous Work: ").strip()
-        })
-        if any(value.lower() == 'b' for value in contractor_details.values()):
-            return
+        while True:
+            name = input("Enter Company: ").strip()
+            if name.lower() == 'b':
+                return
+            if not validate_not_empty(name):
+                print("Company name cannot be empty.")
+                input("\nPress Enter to try again.")
+                continue
+            contractor_details["name"] = name
+            break
+
+        while True:
+            contact_name = input("Enter Contact name: ").strip()
+            if contact_name.lower() == 'b':
+                return
+            if not validate_not_empty(contact_name):
+                print("Contact name cannot be empty.")
+                input("\nPress Enter to try again.")
+                continue
+            contractor_details["contact_name"] = contact_name
+            break
+
+        while True:
+            phone_nr = input("Enter Phone Number: ").strip()
+            if phone_nr.lower() == 'b':
+                return
+            if not validate_phone_number(phone_nr):
+                print("Invalid phone number. Please enter digits only.")
+                input("\nPress Enter to try again.")
+                continue
+            contractor_details["phone_nr"] = phone_nr
+            break
+
+        while True:
+            opening_time = input("Enter Opening Time: ").strip()
+            if opening_time.lower() == 'b':
+                return
+            if not validate_not_empty(opening_time):
+                print("Opening time cannot be empty.")
+                input("\nPress Enter to try again.")
+                continue
+            contractor_details["opening_time"] = opening_time
+            break
+
+        while True:
+            location = input("Enter Location: ").strip()
+            if location.lower() == 'b':
+                return
+            if not validate_not_empty(location):
+                print("Location cannot be empty.")
+                input("\nPress Enter to try again.")
+                continue
+            contractor_details["location"] = location
+            break
+
+        while True:
+            satisfaction_with_previous_work = input("Enter Satisfaction With Previous Work: ").strip()
+            if satisfaction_with_previous_work.lower() == 'b':
+                return
+            if not validate_not_empty(satisfaction_with_previous_work):
+                print("Satisfaction with previous work cannot be empty.")
+                input("\nPress Enter to try again.")
+                continue
+            contractor_details["satisfaction_with_previous_work"] = satisfaction_with_previous_work
+            break
+
         result = self.logic_wrapper.create_contractor(contractor_details)
         print(result)
+        
         input("\nPress Enter to return to the menu.")
 
     def change_contractor_info(self):
@@ -148,12 +199,3 @@ class ContractorUI():
         print(result)
         input("\nPress Enter to return to the menu.")
 
-    def automatic_contractor_id(self):
-        """
-        Gets the latest contractor ID and give it plus 1.
-        """
-        contractors = self.logic_wrapper.list_contractors()
-        latest_contractor = contractors[-1]
-        latest_id = int(latest_contractor.contractor_id)
-        return latest_id + 1
-        

@@ -1,8 +1,8 @@
 from Logic_layer.LogicWrapper import LogicWrapper
 import os
 import shutil
-import sys
 from UI_Layer.Validation import validate_email, validate_full_name, validate_ssn
+
 
 class EmployeeManagementUI:
     def __init__(self, logic_wrapper: LogicWrapper):
@@ -27,7 +27,6 @@ class EmployeeManagementUI:
             print(d + " 2. Register New Employee ".ljust(columns - 2) + d)
             print(d + " 3. Update Employee Information ".ljust(columns - 2) + d)
             print(d + " b. Back to Supervisor Menu ".ljust(columns - 2) + d)
-            print(d + " q. Quit ".ljust(columns - 2) + d)
             print(c + h * (columns - 2) + c)
 
             choice = input("\nChoose an option: ").strip().lower()
@@ -40,9 +39,6 @@ class EmployeeManagementUI:
                 self.update_employee_info()
             elif choice == "b":
                 return
-            elif choice == "q":
-                print("Exiting Employee Management Menu. Goodbye!")
-                sys.exit()
             else:
                 print("Invalid choice. Please try again.")
                 input("\nPress Enter to return to the menu.")
@@ -58,13 +54,15 @@ class EmployeeManagementUI:
             print("No employees found.")
         else:
             headers = ["SSN", "Full Name", "Address", "Phone", "GSM", "Email", "Location", "Is Supervisor"]
-            col_widths = [max(len(str(getattr(emp, attr))) for emp in employees) for attr in ["ssn", "full_name", "address", "phone", "gsm", "email", "location", "is_supervisor"]]
+            col_widths = [max(len(str(getattr(emp, attr))) for emp in employees) for attr in
+                          ["ssn", "full_name", "address", "phone", "gsm", "email", "location", "is_supervisor"]]
             col_widths = [max(len(header), width) for header, width in zip(headers, col_widths)]
             row_format = "  |  ".join([f"{{:<{width}}}" for width in col_widths])
             print(row_format.format(*headers))
             print("-" * (columns - 2))
             for emp in employees:
-                print(row_format.format(emp.ssn, emp.full_name, emp.address, emp.phone, emp.gsm, emp.email, emp.location, "True" if emp.is_supervisor else "False"))
+                print(row_format.format(emp.ssn, emp.full_name, emp.address, emp.phone, emp.gsm, emp.email,
+                                        emp.location, "True" if emp.is_supervisor else "False"))
         input("\nPress Enter to return to the menu.")
 
     def register_employee(self):
@@ -74,7 +72,7 @@ class EmployeeManagementUI:
         print("|" + " Register New Employee ".center(columns - 2) + "|")
         print("+".ljust(columns - 1, '-') + "+")
         print("Enter 'b' at any prompt to cancel and go back to the previous menu.\n")
-        
+
         employee_details = {}
 
         while True:
@@ -82,11 +80,15 @@ class EmployeeManagementUI:
             if employee_details["ssn"].lower() == 'b':
                 return
             if not validate_ssn(employee_details["ssn"]):
-                print("Invalid SSN. It should be exactly 10 digits.")
+                print("Invalid SSN. Must only contain digits and should be exactly 10 digits.")
                 input("\nPress Enter to try again.")
             else:
-                break
-                
+                if self.logic_wrapper.search_employee_by_ssn(employee_details["ssn"]):
+                    print("Error: Employee with this SSN already exists.")
+                    input("\nPress Enter to try again.")
+                else:
+                    break
+
         while True:
             employee_details["full_name"] = input("Enter Full Name: ").strip()
             if employee_details["full_name"].lower() == 'b':
@@ -104,14 +106,19 @@ class EmployeeManagementUI:
             employee_details[field] = value
 
         while True:
-            is_supervisor_input = input("Is Supervisor (True/False): ").strip().lower()
+            is_supervisor_input = input("Is Supervisor (y/n): ").strip().lower()
+
             if is_supervisor_input == 'b':
                 return
-            if is_supervisor_input in ['true', 'false']:
-                employee_details["is_supervisor"] = is_supervisor_input == 'true'
+
+            if is_supervisor_input == 'y':
+                employee_details["is_supervisor"] = True
+                break
+            elif is_supervisor_input == 'n':
+                employee_details["is_supervisor"] = False
                 break
             else:
-                print("Invalid input. Please enter 'True' or 'False'.")
+                print("Invalid input. Please enter 'y' for Yes or 'n' for No.")
                 input("\nPress Enter to try again.")
 
         while True:
@@ -123,15 +130,17 @@ class EmployeeManagementUI:
                 input("\nPress Enter to try again.")
             else:
                 break
-                
+
         result = self.logic_wrapper.register_employee(employee_details)
-        if result:
+        if result == "Error: Employee with this SSN already exists.":
+            print("\n" + result)
+            input("\nPress Enter to try again.")
+            return self.register_employee()
+        elif result:
             print("\nEmployee registered successfully.")
         else:
             print("\nAn error occurred while registering the employee.")
-
         input("\nPress Enter to return to the menu.")
-
 
     def update_employee_info(self):
         self.clear_terminal()
@@ -147,13 +156,15 @@ class EmployeeManagementUI:
             return
 
         headers = ["SSN", "Full Name", "Address", "Phone", "GSM", "Email", "Location", "Is Supervisor"]
-        col_widths = [max(len(str(getattr(emp, attr))) for emp in employees) for attr in ["ssn", "full_name", "address", "phone", "gsm", "email", "location", "is_supervisor"]]
+        col_widths = [max(len(str(getattr(emp, attr))) for emp in employees) for attr in
+                      ["ssn", "full_name", "address", "phone", "gsm", "email", "location", "is_supervisor"]]
         col_widths = [max(len(header), width) for header, width in zip(headers, col_widths)]
         row_format = "  |  ".join([f"{{:<{width}}}" for width in col_widths])
         print(row_format.format(*headers))
         print("-" * (columns - 2))
         for emp in employees:
-            print(row_format.format(emp.ssn, emp.full_name, emp.address, emp.phone, emp.gsm, emp.email, emp.location, "True" if emp.is_supervisor else "False"))
+            print(row_format.format(emp.ssn, emp.full_name, emp.address, emp.phone, emp.gsm, emp.email,
+                                    emp.location, "True" if emp.is_supervisor else "False"))
 
         ssn = input("\nEnter SSN of the employee to update: ").strip()
         if ssn.lower() == 'b':
@@ -164,42 +175,51 @@ class EmployeeManagementUI:
             input("\nPress Enter to return to the menu.")
             return
 
-        print("\nCurrent Information:")
-        print(row_format.format(*headers))
-        print("-" * (columns - 2))
-        print(row_format.format(employee.ssn, employee.full_name, employee.address, employee.phone, employee.gsm, employee.email, employee.location, "True" if employee.is_supervisor else "False"))
+        print("\nSelect the field to update:")
+        fields = {
+            "1": "full_name",
+            "2": "address",
+            "3": "phone",
+            "4": "gsm",
+            "5": "email",
+            "6": "location",
+            "7": "is_supervisor"
+        }
+        for key, value in fields.items():
+            print(f" {key}. {value.replace('_', ' ').capitalize()}")
 
-        field = input("\nEnter the field to update (full_name, address, phone, gsm, email, location, is_supervisor): ").strip()
-        if field.lower() == 'b':
+        field_choice = input("\nEnter the number corresponding to the field: ").strip()
+        if field_choice not in fields:
+            print("Invalid choice. Please try again.")
+            input("\nPress Enter to continue.")
             return
-        if field == "email":
-            while True:
-                new_value = input(f"Enter new value for {field}: ").strip()
-                if new_value.lower() == 'b':
-                    return
-                if not validate_email(new_value):
-                    print("Invalid Email. It should contain '@' and '.' and not be longer than 100 characters.")
-                    input("\nPress Enter to try again.")
-                else:
-                    break
-        else:
-            new_value = input(f"Enter new value for {field}: ").strip()
+        field = fields[field_choice]
+
+        while True:
+            new_value = input(f"Enter new value for {field.replace('_', ' ').capitalize()}: ").strip()
             if new_value.lower() == 'b':
                 return
-            if field == "ssn" and not validate_ssn(new_value):
-                print("Invalid SSN. It should be 10 digits.")
-                return
-            if field == "full_name" and not validate_full_name(new_value):
-                print("Invalid Full Name. It should not be longer than 100 characters.")
-                return
+            if field == "email" and not validate_email(new_value):
+                print("Invalid Email. It should contain '@' and '.' and not exceed 100 characters.")
+                input("\nPress Enter to try again.")
+            elif field == "ssn" and not validate_ssn(new_value):
+                print("Invalid SSN. It should be exactly 10 digits.")
+                input("\nPress Enter to try again.")
+            elif field == "full_name" and not validate_full_name(new_value):
+                print("Invalid Full Name. It should not exceed 100 characters.")
+                input("\nPress Enter to try again.")
+            else:
+                break
+
         result = self.logic_wrapper.change_employee_info(ssn, field, new_value)
         print(result)
 
-        # Fetch the updated employee information
         updated_employee = self.logic_wrapper.search_employee_by_ssn(ssn)
         print("\nUpdated Information:")
         print(row_format.format(*headers))
         print("-" * (columns - 2))
-        print(row_format.format(updated_employee.ssn, updated_employee.full_name, updated_employee.address, updated_employee.phone, updated_employee.gsm, updated_employee.email, updated_employee.location, "True" if updated_employee.is_supervisor else "False"))
+        print(row_format.format(updated_employee.ssn, updated_employee.full_name, updated_employee.address,
+                                updated_employee.phone, updated_employee.gsm, updated_employee.email,
+                                updated_employee.location, "True" if updated_employee.is_supervisor else "False"))
 
         input("\nPress Enter to return to the menu.")
