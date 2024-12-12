@@ -2,7 +2,7 @@ from Logic_layer.LogicWrapper import LogicWrapper
 import os
 import shutil
 
-from UI_Layer.Validation import validate_boolean, validate_contractors_used, validate_employee, validate_property, validate_total_costs, validate_upkeep_status, validate_work_done
+from UI_Layer.Validation import InputValidation
 
 #TODO: Error handling, input validation
 
@@ -97,7 +97,7 @@ class MaintenanceReportUI:
             property = input("Enter Property: ").strip()
             if property == 'b':
                 return
-            if validate_property(property):
+            if InputValidation.validate_property(property):
                 report_details["property"] = property
                 break
             else:
@@ -115,7 +115,7 @@ class MaintenanceReportUI:
             work_done = input("Enter Work Done: ").strip()
             if work_done == 'b':
                 return
-            if validate_work_done(work_done):
+            if InputValidation.validate_work_done(work_done):
                 report_details["work_done"] = work_done
                 break
             else:
@@ -125,7 +125,7 @@ class MaintenanceReportUI:
             upkeep_status = input("Enter Upkeep Status (Regular Maintenance / Emergency Repair): ").strip()
             if upkeep_status == 'b':
                 return
-            if validate_upkeep_status(upkeep_status):
+            if InputValidation.validate_upkeep_status(upkeep_status):
                 report_details["upkeep_status"] = upkeep_status
                 break
             else:
@@ -135,7 +135,7 @@ class MaintenanceReportUI:
             employee = input("Enter Employee: ").strip()
             if employee == 'b':
                 return
-            if validate_employee(employee):
+            if InputValidation.validate_employee(employee):
                 report_details["employee"] = employee
                 break
             else:
@@ -145,7 +145,7 @@ class MaintenanceReportUI:
             total_costs = input("Enter Total Costs: ").strip()
             if total_costs == 'b':
                 return
-            if validate_total_costs(total_costs):
+            if InputValidation.validate_total_costs(total_costs):
                 report_details["total_costs"] = int(total_costs)
                 break
             else:
@@ -260,35 +260,35 @@ class MaintenanceReportUI:
                     field = "connected_work_order_id"
                     report_details[field] = value
                     break
-                elif field == 2 and validate_property(value):
+                elif field == 2 and InputValidation.validate_property(value):
                     field = "property"
                     report_details[field] = value
                     break
-                elif field == 3 and validate_work_done(value):
+                elif field == 3 and InputValidation.validate_work_done(value):
                     field = "work_done"
                     report_details[field] = value
                     break
-                elif field == 4 and validate_upkeep_status(value):
+                elif field == 4 and InputValidation.validate_upkeep_status(value):
                     field = "upkeep_status"
                     report_details[field] = value
                     break
-                elif field == 5 and validate_employee(value):
+                elif field == 5 and InputValidation.validate_employee(value):
                     field = "employee"
                     report_details[field] = value
                     break
-                elif field == 6 and validate_total_costs(value):
+                elif field == 6 and InputValidation.validate_total_costs(value):
                     field = "total_cost"
                     report_details[field] = int(value)
                     break
-                elif field == 7 and validate_boolean(value):
+                elif field == 7 and InputValidation.validate_boolean(value):
                     field = "marked_as_finished"
                     report_details[field] = value.lower() == 'true'
                     break
-                elif field == 8 and validate_boolean(value):
+                elif field == 8 and InputValidation.validate_boolean(value):
                     field = "report_closed"
                     report_details[field] = value.lower() == 'true'
                     break
-                elif field == 9 and validate_contractors_used(value):
+                elif field == 9 and InputValidation.validate_contractors_used(value):
                     field = "contractors_used"
                     report_details[field] = value
                     break

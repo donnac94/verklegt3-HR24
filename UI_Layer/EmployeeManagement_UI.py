@@ -1,8 +1,7 @@
 from Logic_layer.LogicWrapper import LogicWrapper
 import os
 import shutil
-from UI_Layer.Validation import validate_email, validate_full_name, validate_ssn
-
+from UI_Layer.Validation import InputValidation
 
 class EmployeeManagementUI:
     def __init__(self, logic_wrapper: LogicWrapper):
@@ -79,7 +78,7 @@ class EmployeeManagementUI:
             employee_details["ssn"] = input("Enter SSN (10 digits): ").strip()
             if employee_details["ssn"].lower() == 'b':
                 return
-            if not validate_ssn(employee_details["ssn"]):
+            if not InputValidation.validate_ssn(employee_details["ssn"]):
                 print("Invalid SSN. Must only contain digits and should be exactly 10 digits.")
                 input("\nPress Enter to try again.")
             else:
@@ -93,7 +92,7 @@ class EmployeeManagementUI:
             employee_details["full_name"] = input("Enter Full Name: ").strip()
             if employee_details["full_name"].lower() == 'b':
                 return
-            if not validate_full_name(employee_details["full_name"]):
+            if not InputValidation.validate_full_name(employee_details["full_name"]):
                 print("Invalid Full Name. It should not exceed 100 characters.")
                 input("\nPress Enter to try again.")
             else:
@@ -125,7 +124,7 @@ class EmployeeManagementUI:
             employee_details["email"] = input("Enter Email: ").strip()
             if employee_details["email"].lower() == 'b':
                 return
-            if not validate_email(employee_details["email"]):
+            if not InputValidation.validate_email(employee_details["email"]):
                 print("Invalid Email. It should contain '@' and '.' and not exceed 100 characters.")
                 input("\nPress Enter to try again.")
             else:
@@ -199,13 +198,13 @@ class EmployeeManagementUI:
             new_value = input(f"Enter new value for {field.replace('_', ' ').capitalize()}: ").strip()
             if new_value.lower() == 'b':
                 return
-            if field == "email" and not validate_email(new_value):
+            if field == "email" and not InputValidation.validate_email(new_value):
                 print("Invalid Email. It should contain '@' and '.' and not exceed 100 characters.")
                 input("\nPress Enter to try again.")
-            elif field == "ssn" and not validate_ssn(new_value):
+            elif field == "ssn" and not InputValidation.validate_ssn(new_value):
                 print("Invalid SSN. It should be exactly 10 digits.")
                 input("\nPress Enter to try again.")
-            elif field == "full_name" and not validate_full_name(new_value):
+            elif field == "full_name" and not InputValidation.validate_full_name(new_value):
                 print("Invalid Full Name. It should not exceed 100 characters.")
                 input("\nPress Enter to try again.")
             else:

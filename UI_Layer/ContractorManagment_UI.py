@@ -1,5 +1,5 @@
 from Logic_layer.LogicWrapper import LogicWrapper
-from UI_Layer.Validation import validate_not_empty, validate_phone_number
+from UI_Layer.Validation import InputValidation
 
 
 import os
@@ -85,7 +85,7 @@ class ContractorUI():
             name = input("Enter Company: ").strip()
             if name.lower() == 'b':
                 return
-            if not validate_not_empty(name):
+            if not InputValidation.validate_not_empty(name):
                 print("Company name cannot be empty.")
                 input("\nPress Enter to try again.")
                 continue
@@ -96,7 +96,7 @@ class ContractorUI():
             contact_name = input("Enter Contact name: ").strip()
             if contact_name.lower() == 'b':
                 return
-            if not validate_not_empty(contact_name):
+            if not InputValidation.validate_not_empty(contact_name):
                 print("Contact name cannot be empty.")
                 input("\nPress Enter to try again.")
                 continue
@@ -107,7 +107,7 @@ class ContractorUI():
             phone_nr = input("Enter Phone Number: ").strip()
             if phone_nr.lower() == 'b':
                 return
-            if not validate_phone_number(phone_nr):
+            if not InputValidation.validate_phone_number(phone_nr):
                 print("Invalid phone number. Please enter digits only.")
                 input("\nPress Enter to try again.")
                 continue
@@ -118,7 +118,7 @@ class ContractorUI():
             opening_time = input("Enter Opening Time: ").strip()
             if opening_time.lower() == 'b':
                 return
-            if not validate_not_empty(opening_time):
+            if not InputValidation.validate_not_empty(opening_time):
                 print("Opening time cannot be empty.")
                 input("\nPress Enter to try again.")
                 continue
@@ -129,7 +129,7 @@ class ContractorUI():
             location = input("Enter Location: ").strip()
             if location.lower() == 'b':
                 return
-            if not validate_not_empty(location):
+            if not InputValidation.validate_not_empty(location):
                 print("Location cannot be empty.")
                 input("\nPress Enter to try again.")
                 continue
@@ -140,7 +140,7 @@ class ContractorUI():
             satisfaction_with_previous_work = input("Enter Satisfaction With Previous Work: ").strip()
             if satisfaction_with_previous_work.lower() == 'b':
                 return
-            if not validate_not_empty(satisfaction_with_previous_work):
+            if not InputValidation.validate_not_empty(satisfaction_with_previous_work):
                 print("Satisfaction with previous work cannot be empty.")
                 input("\nPress Enter to try again.")
                 continue

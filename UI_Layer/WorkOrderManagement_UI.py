@@ -1,7 +1,6 @@
 from Logic_layer.LogicWrapper import LogicWrapper
 import os
 import shutil
-import sys
 
 class WorkOrderUI:
     def __init__(self, logic_wrapper: LogicWrapper):
