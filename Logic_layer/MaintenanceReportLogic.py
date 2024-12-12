@@ -76,3 +76,15 @@ class MaintenanceReportLogic:
         """
         self.change_maintenance_report_info(maintenance_report_id, "report_closed", "False")
         return "Maintenance report reopened successfully."
+
+    def get_report_by_id(self, maintenance_report_id):
+        """
+        Gets specific report by their ID.
+        :param maintenance_report_id: The report ID to look for.
+        :return: A maintenance report and the information or raise an error if not found.
+        """
+        reports = self.data_wrapper.get_all_maintenance_reports()
+        for report in reports:
+            if report.maintenance_report_id == maintenance_report_id:
+                return report
+        raise ValueError(f"Report with ID {maintenance_report_id} not found.")

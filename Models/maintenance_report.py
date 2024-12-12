@@ -14,7 +14,7 @@ class MaintenanceReport():
             total_costs: int,
             marked_as_finished: bool,
             report_closed: bool,
-            contractors_used: set[str] = []
+            contractors_used: list
     ) -> None:
         """
         :param int maintenance_report_id: The unique id for the maintenance report.
