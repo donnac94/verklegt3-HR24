@@ -7,3 +7,4 @@ maintenance_report_id,connected_work_order_id,property,work_done,upkeep_status,e
 6,2,303 Birch St,Fixed bathroom tile,Emergency Repair,Lísa Alfreðs,3500,False,False,Contractor F
 7,1,Langholt 33,fix hottub,Emergency Repair,Snorri Snorrasson,500,False,False,{'Contractor D'}
 8,7,Langholt 33,Fix hottub,Regular Maintenance,Donna,0,False,False,{'1'}
+9,4,asf,asdf,Regular Maintenance,asdf,234,True,True,{'sasdf'}
