@@ -3,9 +3,11 @@ from Logic_layer.EmployeeLogic import EmployeeLogic
 from Logic_layer.MaintenanceReportLogic import MaintenanceReportLogic
 from Logic_layer.PropertyLogic import PropertyLogic
 from Logic_layer.WorkOrderLogic import WorkOrderLogic
+from Logic_layer.SearchLogic import SearchLogic
 from Models.WorkOrder import WorkOrder
 from Models.employee import Employee
 from Models.maintenance_report import MaintenanceReport
+
 
 class LogicWrapper:
     def __init__(self):
@@ -14,6 +16,7 @@ class LogicWrapper:
         self.maintenance_report_logic = MaintenanceReportLogic()
         self.property_logic = PropertyLogic()
         self.work_order_logic = WorkOrderLogic()
+        self.search_logic = SearchLogic()
 
     # PropertyLogic
     def get_maintenance_history(self, property_id: int) -> list:
@@ -91,3 +94,6 @@ class LogicWrapper:
 
     def reopen_maintenance_report(self, maintenance_report_id: int) -> str:
         return self.maintenance_report_logic.reopen_maintenance_report(maintenance_report_id)
+    
+    #SearchLogic
+    

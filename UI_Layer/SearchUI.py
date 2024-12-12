@@ -1,24 +1,24 @@
+from Logic_layer.LogicWrapper import LogicWrapper
+import os
+import shutil
 import sys
-from Logic_layer.ContractorLogic import ContractorLogic
-from Logic_layer.EmployeeLogic import EmployeeLogic
-from Logic_layer.LocationLogic import LocationLogic
-from Logic_layer.MaintenanceReportLogic import MaintenanceReportLogic
-from Logic_layer.PropertyLogic import PropertyLogic
-from Logic_layer.WorkOrderLogic import WorkOrderLogic
-from Logic_layer.SearchLogic import SearchLogic
 
+from Logic_layer.SearchLogic import SearchLogic
+from Logic_layer.LogicWrapper import LogicWrapper
 class SearchUI:
     
     def __init__(self):
-        self.contractor_logic = ContractorLogic
-        self.employee_logic = EmployeeLogic
-        self.location_logic = LocationLogic
-        self.maintenance_report_logic = MaintenanceReportLogic
-        self.property_logic = PropertyLogic
-        self.workorder_logic = WorkOrderLogic 
-        self.search_logic = SearchLogic
+        self.search_logic = SearchLogic()
+        self.logic_wrapper = LogicWrapper
     
-    def display_search_main_menu(self):
+    def clear_terminal(self):
+        os.system('cls' if os.name == 'nt' else 'clear')
+    
+    def get_terminal_size(self):
+        columns, rows = shutil.get_terminal_size(fallback=(80, 24))
+        return columns, rows
+    
+    def display_menu(self):
         while True:
             self.clear_terminal()
             columns, _ = self.get_terminal_size()
@@ -38,25 +38,57 @@ class SearchUI:
             choice = input("\nChoose an option: ").strip().lower()
 
             if choice == '1':
-                location = input("Enter a Location: ")
-                res = self.search_logic.search_by_location(location)
-                return res
+                # return self.location_filter
+                location_input = input("\nEnter location: ")
+                results = self.search_logic.search_by_location(location_input)
+                print("\nResults: ",results)
             elif choice == '2':
-                employee = input("\n Enter Social Security number: ")
-                ris = self.search_logic.search_employee_by_ssn(employee)
-                return ris
+                # return self.ssn_filter
+                employee_input = input("\n Enter Social Security number: ")
+                results = self.search_logic.search_employee_by_ssn(employee_input)
+                print("\nResults: ", results)
             elif choice == '3':
-                property_ = input("\nEnter a property id: ")
-                riss = self.search_logic.search_property_id(property_)
-                return riss
+                # return self.property_filter
+                property_input = input("\nEnter a property id: ")
+                results = self.search_logic.search_property_id(property_input)
+                print("\nResults: ", results)
             elif choice == '4':
-                workorder = input("\nEnter a workorder id: ")
-                result = self.search_logic.search_workorder_id(workorder)
-                return result
+                # self.workid_filter
+                workorder_input = input("\nEnter a workorder id: ")
+                results = self.search_logic.search_workorder_id(workorder_input)
+                print("\nResults: ", results)
             elif choice == "q":
                 print("Exiting Employee Menu. Goodbye!")
             else:
                 print("Invalid choice. Please try again.")
                 input("\nPress Enter to return to the menu.")
+    
+    # def location_filter(self):
+    #     location = input("\nEnter a location: ")
+    #     if location != None: 
+    #         result = self.search_logic.search_by_location(location)
+    #     return result
+        
+    
+    # def ssn_filter(self):
+    #     ssn = input("\nEnter a SSN: ")
+    #     if ssn != None:
+    #         result = self.search_logic.search_employee_by_ssn(ssn)
+    #     return result 
+        
+    
+    # def property_filter(self):
+    #     property_id = input("\nEnter a Property id: ")
+    #     if property_id != None:
+    #         result = self.search_logic.search_property_id(property_id)
+    #     return result
+    
+    # def workid_filter(self):
+    #     work_id = input("\nEnter a work id: ")
+    #     if work_id != None:
+    #         result = self.search_logic.search_workorder_id(work_id)
+    #     return result
+    
+        
     
         

@@ -1,59 +1,65 @@
 import csv
-from Logic_layer.EmployeeLogic import EmployeeLogic
-from Logic_layer.PropertyLogic import PropertyLogic
-from Logic_layer.ContractorLogic import ContractorLogic
-from Logic_layer.MaintenanceReportLogic import MaintenanceReportLogic
-from Logic_layer.LocationLogic import LocationLogic
-
+from Data_Layer.LocationData import LocationData
+from Data_Layer.EmployeeData import EmployeeData
+from Data_Layer.PropertyData import PropertyData
+from Data_Layer.WorkOrderData import WorkOrderData
+from Data_Layer.ContractorData import ContractorData
+from Data_Layer.MaintenanceReportData import MaintenanceReportData
+from Data_Layer.DataWrapper import DataWrapper
 
 class SearchLogic:
     
     def __init__(self):
-        self.employee_logic = EmployeeLogic
-        self.property_logic = PropertyLogic
-        self.contractor_logic = ContractorLogic
-        self.maintenance_report_logic = MaintenanceReportLogic
-        self.location_logic = LocationLogic
-    
-    def search_by_location(self, location_id) -> list:
-        while location_id != None and location_id < 0 and location_id > 100:
-            return []
+        self.file_name_location = ('Files/locations.csv')
+        self.file_name_employees = ('Files/employees.csv')
+        self.file_name_properties = ('Files/properties.csv')
+        self.file_name_workorder = ('Files/work_orders.csv')
         
-        employees_at_location = []
-        
-        if location_id in self.location_logic:
-            employees_at_location = self.location_logic[location_id]
-            
-            return employees_at_location
-            # if self.employee_logic and location_id != False:
-            #     value = location_id
-            #     for value in self.location_logic:
-            #         for self.employee_logic in value:
-            #             return value
+    def search_by_location(self, location):
+        """Search employees by location"""
+        results = []
+        try:
+            with open(self.file_name_employees, mode='r') as file:
+                reader = csv.DictReader(file)
+                for row in reader:
+                    if location.lower() in row.get("location", "").lower():
+                        results.append(row)
+            return results
+        except FileNotFoundError:
+            return "Employee file not found"
                      
     def search_employee_by_ssn(self, ssn):
-        while ssn != None and ssn < 0 and ssn > 10:
-            print("Employee does not exist in the system try again")
-            return []
-        employee_ssn = []
-        if ssn in self.employee_logic:
-            employee_ssn = self.employee_logic[ssn]
-            return employee_ssn
+        """Search employees by SSN"""
+        try:
+            with open(self.file_name_employees, mode='r') as file:
+                reader = csv.DictReader(file)
+                for row in reader:
+                    if ssn == row.get("ssn", ""):
+                        return row
+            return "No Employee found with that ssn"
+        except FileNotFoundError:
+            return "Employee file not found"
         
     def search_property_id(self, property_id):
-        while property_id != None and property_id < 0 and property_id > 100:
-            return []
-        property_search_id = []
-        if property_id in self.property_logic:
-            property_search_id = self.property_logic[property_id]
-            return property_search_id
+        """Search for a property by id"""
+        try:
+            with open(self.file_name_properties, mode='r') as file:
+                reader = csv.DictReader(file)
+                for row in reader:
+                    if property_id == row.get("property_id", ""):
+                        return row
+            return "No property found"
+        except FileNotFoundError:
+            return "Property no found on file"
         
     def search_workorder_id(self, workorder_id):
-        while workorder_id != None and workorder_id < 0 and workorder_id > 100:
-            return []
-    
-        workorder_search_id = []
-        if workorder_search_id in self.maintenance_report_logic:
-            workorder_search_id = self.maintenance_report_logic[workorder_id]
-            
-            return workorder_search_id
+        """Search for Workorder id"""
+        try:
+            with open(self.file_name_workorder, mode='r') as file:
+                reader = csv.DictReader(file)
+                for row in reader:
+                    if workorder_id == row.get("workorder_id", ""):
+                        return row
+            return "No workorder found"
+        except FileNotFoundError:
+            return "File does not exist"
