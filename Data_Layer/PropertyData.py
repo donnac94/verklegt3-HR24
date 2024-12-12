@@ -47,3 +47,14 @@ class PropertyData:
             writer.writeheader()
             for property in properties:
                 writer.writerow(property.to_dict())
+
+    def load_locations(self):
+        locations = {}
+        file_path = 'Files/locations.csv'
+        with open(file_path, mode='r') as file:
+            reader = csv.DictReader(file)
+            if 'airport' not in reader.fieldnames or 'supervisor' not in reader.fieldnames:
+                raise KeyError("CSV file is missing required headers: 'airport' and 'supervisor'")
+            for row in reader:
+                locations[row['airport']] = row['supervisor']
+        return locations
