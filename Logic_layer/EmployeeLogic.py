@@ -36,3 +36,23 @@ class EmployeeLogic:
             if employee.ssn == ssn:
                 return employee
         return None
+    
+    def get_work_plan(self):
+        """Creates a work plan. List of all open work orders, ordered by priority"""
+        work_plan = []
+        open_work_orders = []
+        work_orders = self.data_wrapper.get_all_work_orders()
+        for work_order in work_orders:
+            if work_order.work_order_status.lower() == "open":
+                open_work_orders.append(work_order)
+
+        for work_order in open_work_orders:
+            if work_order.priority.lower() == "high":
+                work_plan.append(work_order)
+        for work_order in open_work_orders:
+            if work_order.priority.lower() == "medium":
+                work_plan.append(work_order)
+        for work_order in open_work_orders:
+            if work_order.priority.lower() == "low":
+                work_plan.append(work_order)
+        return work_plan

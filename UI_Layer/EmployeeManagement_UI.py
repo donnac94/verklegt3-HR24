@@ -15,7 +15,7 @@ class EmployeeManagementUI:
         columns, rows = shutil.get_terminal_size(fallback=(80, 24))
         return columns, rows
 
-    def display_menu(self):
+    def display_menu(self, employee_status: str):
         while True:
             self.clear_terminal()
             columns, _ = self.get_terminal_size()
@@ -24,8 +24,10 @@ class EmployeeManagementUI:
             d = '|'
             print(c + "Air NaN Employee Management".center(columns - 2, h) + c)
             print(d + " 1. List All Employees ".ljust(columns - 2) + d)
-            print(d + " 2. Register New Employee ".ljust(columns - 2) + d)
-            print(d + " 3. Update Employee Information ".ljust(columns - 2) + d)
+            print(d + " 2. Show work plan ".ljust(columns - 2) + d)
+            if employee_status == "supervisor":
+                print(d + " 3. Update Employee Information ".ljust(columns - 2) + d)
+                print(d + " 4. Register New Employee ".ljust(columns - 2) + d)
             print(d + " b. Back to Supervisor Menu ".ljust(columns - 2) + d)
             print(c + h * (columns - 2) + c)
 
@@ -33,11 +35,14 @@ class EmployeeManagementUI:
 
             if choice == "1":
                 self.list_all_employees()
-            elif choice == "2":
-                self.register_employee()
-            elif choice == "3":
-                self.update_employee_info()
-            elif choice == "b":
+            elif choice == "2":    
+                self.get_work_plan()
+            if employee_status == "supervisor":
+                if choice == "3":
+                    self.update_employee_info()
+                elif choice == "4":
+                    self.register_employee()
+            if choice == "b":
                 return
             else:
                 print("Invalid choice. Please try again.")
@@ -222,4 +227,26 @@ class EmployeeManagementUI:
                                 updated_employee.phone, updated_employee.gsm, updated_employee.email,
                                 updated_employee.location, "True" if updated_employee.is_supervisor else "False"))
 
+        input("\nPress Enter to return to the menu.")
+
+    def get_work_plan(self):
+        self.clear_terminal()
+        columns, _ = self.get_terminal_size()
+        print("+".ljust(columns - 1, '-') + "+")
+        print("|" + " Show Work Plan ".center(columns - 2) + "|")
+        print("+".ljust(columns - 1, '-') + "+")
+        filtered_work_orders = self.logic_wrapper.get_work_plan()
+        if not filtered_work_orders:
+            print("No work orders are available")
+        else:
+             headers = ["work_order_id", "work_to_be_done", "property", "submitting_supervisor", "date", "priority", "work_order_status"]
+             col_widths = [max(len(str(getattr(work_order, attr))) for work_order in filtered_work_orders) for attr in
+                          ["work_order_id", "work_to_be_done", "property", "submitting_supervisor", "date", "priority", "work_order_status"]]
+             col_widths = [max(len(header), width) for header, width in zip(headers, col_widths)]
+             row_format = "  |  ".join([f"{{:<{width}}}" for width in col_widths])
+             print(row_format.format(*headers))
+             print("-" * (columns - 2))
+             for work_order in filtered_work_orders:
+                print(row_format.format(work_order.work_order_id, work_order.work_to_be_done, work_order.property, work_order.submitting_supervisor, work_order.date, 
+                                        work_order.priority, work_order.work_order_status))
         input("\nPress Enter to return to the menu.")

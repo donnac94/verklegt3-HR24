@@ -5,12 +5,13 @@ class Property:
         self.location = location
         self.property_condition = property_condition
         self.supervisor = supervisor
-        if isinstance(requires_maintenance, str):
-            self.requires_maintenance = [item.strip() for item in requires_maintenance.split(",") if item.strip()]
-        elif isinstance(requires_maintenance, list):
-            self.requires_maintenance = [str(item).strip() for item in requires_maintenance if item]
-        else:
-            self.requires_maintenance = []
+        # if isinstance(requires_maintenance, str):
+        #     self.requires_maintenance = [item.strip() for item in requires_maintenance.split(",") if item.strip()]
+        # elif isinstance(requires_maintenance, str):
+        #     self.requires_maintenance = [str(item).strip() for item in requires_maintenance if item]
+        # else:
+        #     self.requires_maintenance = []
+        self.requires_maintenance = requires_maintenance
 
     def to_dict(self):
         return {
@@ -19,7 +20,7 @@ class Property:
             "location": self.location,
             "property_condition": self.property_condition,
             "supervisor": self.supervisor,
-            "requires_maintenance": ", ".join(self.requires_maintenance)
+            "requires_maintenance": self.requires_maintenance
         }
 
     @classmethod
