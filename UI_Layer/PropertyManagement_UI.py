@@ -76,7 +76,13 @@ class PropertyUI:
         print("Enter 'b' at any prompt to cancel and go back to the previous menu.\n")
 
         # Automatically generate a property ID
-        property_id = self.logic_wrapper.automatic_property_id()
+        try:
+            property_id = self.logic_wrapper.automatic_property_id()
+        except Exception as e:
+            print(f"Error generating property ID: {e}")
+            input("\nPress Enter to return to the menu.")
+            return
+
         property_details = {"property_id": property_id}
 
         # Input for property address
@@ -142,7 +148,7 @@ class PropertyUI:
 
         # Confirm the new property has been added
         self.list_all_properties()
-
+        
     def update_property_info(self):
         self.clear_terminal()
         columns, _ = self.get_terminal_size()
