@@ -126,7 +126,7 @@ class PropertyUI:
             property_details["property_condition"] = property_condition
             break
 
-        supervisor = input("Enter Supervisor for property location").strip()
+        supervisor = input("Enter Supervisor for property location: ").strip()
         if supervisor.lower() == 'b':
             return
         property_details["supervisor"] = supervisor
@@ -187,7 +187,7 @@ class PropertyUI:
         print("-" * (columns - 2))
         print(row_format.format(property.property_id, property.address, property.location, property.property_condition, property.supervisor, ", ".join(property.requires_maintenance)))
 
-        selected_field = input("\nEnter the field to update: \n1. Address \n2. Location \n3. Property condition \n4. Supervisor \n5. Requires maintenance ").strip()
+        selected_field = input("\nFields to update: \n1. Address \n2. Location \n3. Property condition \n4. Supervisor \n5. Requires maintenance \nEnter a number with the corresponding field to update: ").strip()
         while True:    
             if selected_field.lower() == 'b':
                 return

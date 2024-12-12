@@ -53,29 +53,38 @@ class MaintenanceReportLogic:
         Marks a maintenance report as finished.
         :param int maintenance_report_id: The ID of the maintenance report to be marked as finished.
         """
-        self.change_maintenance_report_info(maintenance_report_id, "marked_as_finished", "True")
-        return "Maintenance report marked as finished."
+        try: 
+            self.change_maintenance_report_info(maintenance_report_id, "marked_as_finished", "True")
+            return "Maintenance report marked as finished."
+        except ValueError:
+            return False
 
     def close_maintenance_report(self, maintenance_report_id: int) -> str:
         """
         Closes a maintenance report.
         :param int maintenance_report_id: The ID of the maintenance report to be closed.
         """
-        self.change_maintenance_report_info(maintenance_report_id, "report_closed", "True")
-        maintenance_reports = self.data_wrapper.get_all_maintenance_reports()
-        for maintenance_report in maintenance_reports:
-            if maintenance_report.maintenance_report_id == maintenance_report_id:
-                connected_work_order_id = maintenance_report.connected_work_order_id
-                self.data_wrapper.change_work_order_info(connected_work_order_id,'work_order_status',"Closed")
-        return "Maintenance report and connected work order closed successfully."
+        try:
+            self.change_maintenance_report_info(maintenance_report_id, "report_closed", "True")
+            maintenance_reports = self.data_wrapper.get_all_maintenance_reports()
+            for maintenance_report in maintenance_reports:
+                if maintenance_report.maintenance_report_id == maintenance_report_id:
+                    connected_work_order_id = maintenance_report.connected_work_order_id
+                    self.data_wrapper.change_work_order_info(connected_work_order_id,'work_order_status',"Closed")
+            return "Maintenance report and connected work order closed successfully."
+        except ValueError:
+            return False
 
     def reopen_maintenance_report(self, maintenance_report_id: int) -> str:
         """
         Reopens a previously closed maintenance report.
         :param int maintenance_report_id: The ID of the maintenance report to be reopened.
         """
-        self.change_maintenance_report_info(maintenance_report_id, "report_closed", "False")
-        return "Maintenance report reopened successfully."
+        try:
+            self.change_maintenance_report_info(maintenance_report_id, "report_closed", "False")
+            return "Maintenance report reopened successfully."
+        except ValueError:
+            return False
 
     def get_report_by_id(self, maintenance_report_id):
         """
@@ -87,4 +96,6 @@ class MaintenanceReportLogic:
         for report in reports:
             if report.maintenance_report_id == maintenance_report_id:
                 return report
-        raise ValueError(f"Report with ID {maintenance_report_id} not found.")
+            
+        return False
+        #raise ValueError(f"Report with ID {maintenance_report_id} not found.")
