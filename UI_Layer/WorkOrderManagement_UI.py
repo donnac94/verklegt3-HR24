@@ -25,25 +25,28 @@ class WorkOrderUI:
             print(d + " Welcome to the Work Order Management Menu ".center(columns - 2) + d)
             print(c + h * (columns - 2) + c)
             print(d + " 1. List All Work Orders ".ljust(columns - 2) + d)
+            print(d + " 2. Mark Work Order as Finished ".ljust(columns - 2) + d)
             if employee_status == "supervisor":
-                print(d + " 2. Submit New Work Order ".ljust(columns - 2) + d)
-                print(d + " 3. Update Work Order Information ".ljust(columns - 2) + d)
-                print(d + " 4. Close Work Order ".ljust(columns - 2) + d)
-                print(d + " 5. Reopen Work Order ".ljust(columns - 2) + d)
+                print(d + " 3. Submit New Work Order ".ljust(columns - 2) + d)
+                print(d + " 4. Update Work Order Information ".ljust(columns - 2) + d)
+                print(d + " 5. Close Work Order ".ljust(columns - 2) + d)
+                print(d + " 6. Reopen Work Order ".ljust(columns - 2) + d)
             print(d + " b. Go Back ".ljust(columns - 2) + d)
             print(c + h * (columns - 2) + c)
 
             choice = input("Enter your choice: ").strip().lower()
             if choice == "1":
                 self.list_all_work_orders()
+            elif choice == "2":
+                self.mark_work_order_finished()
             if employee_status == "supervisor":
-                if choice == "2":
+                if choice == "3":
                     self.submit_work_order()
-                elif choice == "3":
-                    self.update_work_order_info()
                 elif choice == "4":
-                    self.close_work_order()
+                    self.update_work_order_info()
                 elif choice == "5":
+                    self.close_work_order()
+                elif choice == "6":
                     self.reopen_work_order()
             elif choice == "b":
                 return
@@ -105,6 +108,8 @@ class WorkOrderUI:
 
         work_order_details["work_order_status"] = "Open"
 
+        work_order_details["marked_as_finished"] = False
+
         result = self.logic_wrapper.create_work_order(work_order_details)
         print(result)
         input("\nPress Enter to return to the menu.")
@@ -122,14 +127,14 @@ class WorkOrderUI:
             input("\nPress Enter to return to the menu.")
             return
 
-        headers = ["Work Order ID", "Work to be Done", "Property", "Supervisor", "Date", "Priority", "Status"]
-        col_widths = [max(len(str(getattr(order, attr))) for order in work_orders) for attr in ["work_order_id", "work_to_be_done", "property", "submitting_supervisor", "date", "priority", "work_order_status"]]
+        headers = ["Work Order ID", "Work to be Done", "Property", "Supervisor", "Date", "Priority", "Status", "Marked as finished"]
+        col_widths = [max(len(str(getattr(order, attr))) for order in work_orders) for attr in ["work_order_id", "work_to_be_done", "property", "submitting_supervisor", "date", "priority", "work_order_status", "marked_as_finished"]]
         col_widths = [max(len(header), width) for header, width in zip(headers, col_widths)]
         row_format = "  |  ".join([f"{{:<{width}}}" for width in col_widths])
         print(row_format.format(*headers))
         print("-" * (columns - 2))
         for order in work_orders:
-            print(row_format.format(order.work_order_id, order.work_to_be_done, order.property, order.submitting_supervisor, order.date, order.priority, order.work_order_status))
+            print(row_format.format(order.work_order_id, order.work_to_be_done, order.property, order.submitting_supervisor, order.date, order.priority, order.work_order_status, order.marked_as_finished))
 
         work_order_id = input("\nEnter the Work Order ID to update: ").strip()
         if work_order_id.lower() == 'b':
@@ -228,11 +233,11 @@ class WorkOrderUI:
                 print("Invalid choice. Please try again.")
 
     def display_work_orders(self, work_orders):
-        headers = ["Work Order ID", "Work to be Done", "Property", "Submitting Supervisor", "Date", "Priority", "Status"]
+        headers = ["Work Order ID", "Work to be Done", "Property", "Submitting Supervisor", "Date", "Priority", "Status", "Marked as Finished"]
         col_widths = [len(header) for header in headers]
         for work_order in work_orders:
             col_widths = [max(len(str(getattr(work_order, attr))), width) for attr, width in zip(
-                ["work_order_id", "work_to_be_done", "property", "submitting_supervisor", "date", "priority", "work_order_status"], col_widths)]
+                ["work_order_id", "work_to_be_done", "property", "submitting_supervisor", "date", "priority", "work_order_status", "marked_as_finished"], col_widths)]
         row_format = "  |  ".join([f"{{:<{width}}}" for width in col_widths])
         print(row_format.format(*headers))
         print("-" * sum(col_widths))
@@ -244,5 +249,14 @@ class WorkOrderUI:
                 work_order.submitting_supervisor,
                 work_order.date,
                 work_order.priority,
-                work_order.work_order_status
+                work_order.work_order_status,
+                work_order.marked_as_finished
             ))
+
+    def mark_work_order_finished(self):
+        self.clear_terminal()
+        print("Mark work order as Finished")
+        work_order_id = input("Enter work order ID: ").strip()
+        result = self.logic_wrapper.mark_work_order_finished(work_order_id)
+        print(result)
+        input("\nPress Enter to return to the menu.")

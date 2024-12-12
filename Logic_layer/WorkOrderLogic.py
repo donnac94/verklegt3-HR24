@@ -18,7 +18,8 @@ class WorkOrderLogic:
             submitting_supervisor=work_order_details["submitting_supervisor"],
             date=work_order_details["date"],
             priority=work_order_details["priority"],
-            work_order_status=work_order_details["work_order_status"]
+            work_order_status=work_order_details["work_order_status"],
+            marked_as_finished=work_order_details["marked_as_finished"]
         )
         self.data_wrapper.create_work_order(new_work_order)
         return "Work order registered successfully."
@@ -88,3 +89,11 @@ class WorkOrderLogic:
             return 1
         latest_work_order = work_orders[-1]
         return int(latest_work_order.work_order_id) + 1
+    
+    def mark_work_order_finished(self, work_order_id: int) -> str:
+        """
+        Marks a work order as finished.
+        :param int work_order_id: The ID of the work order to be marked as finished.
+        """
+        self.change_work_order_info(work_order_id, "marked_as_finished", "True")
+        return "Work order marked as finished."
