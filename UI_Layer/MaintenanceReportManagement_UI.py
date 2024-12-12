@@ -76,7 +76,7 @@ class MaintenanceReportUI:
             for report in reports:
                 print(row_format.format(
                     report.maintenance_report_id, report.connected_work_order_id, report.property, report.work_done, report.upkeep_status,
-                    report.employee, report.total_costs, report.marked_as_finished, report.report_closed, ", ".join(report.contractors_used)
+                    report.employee, report.total_costs, report.marked_as_finished, report.report_closed, report.contractors_used #"".join(report.contractors_used)
                 ))
         input("\nPress Enter to return to the menu.")
 
@@ -205,6 +205,7 @@ class MaintenanceReportUI:
             print("No maintenance reports found.")
             input("\nPress Enter to return to the menu.")
             return
+        
 
         headers = ["Report ID", "connected_work_order_id", "Property", "Work Done", "Upkeep Status", "Employee", "Total Costs", "Marked as Finished", "Report Closed", "Contractors Used"]
         col_widths = [len(header) for header in headers]
@@ -214,60 +215,87 @@ class MaintenanceReportUI:
         row_format = "  |  ".join([f"{{:<{width}}}" for width in col_widths])
         print(row_format.format(*headers))
         print("-" * sum(col_widths))
+
         for report in reports:
             print(row_format.format(
-                report.maintenance_report_id, report.connected_work_order_id, report.property, report.work_done, report.upkeep_status,
-                report.employee, report.total_costs, report.marked_as_finished, report.report_closed, ", ".join(report.contractors_used)
+                report.maintenance_report_id, 
+                report.connected_work_order_id, 
+                report.property, report.work_done, 
+                report.upkeep_status,
+                report.employee, 
+                report.total_costs, 
+                report.marked_as_finished, 
+                report.report_closed, 
+                report.contractors_used
             ))
 
         while True:
             report_id = input("\nEnter the Report ID of the maintenance report you want to update: ").strip()
             if report_id == 'b':
                 return
-            if report_id.isdigit() and any(report.maintenance_report_id == int(report_id) for report in reports):
-                report_id = int(report_id)
-                break
-            else:
+            elif report_id == "":
+                print("Please enter a valid report ID.")
+                input("Press Enter to try again.")
+                continue
+            report_with_the_id = self.logic_wrapper.get_report_by_id(report_id)
+            if not report_with_the_id:
                 print("Invalid Report ID. Please try again.")
+                input("Press Enter to try again. ")
+                continue
+            
+            else:
+                report = report_with_the_id
+                break
+
 
         report_details = {}
         while True:
-            field = input("Enter the field you want to update (connected_work_order_id, property, work_done, upkeep_status, employee, total_costs, marked_as_finished, report_closed, contractors_used): ").strip()
+            field = int(input("\nEnter the field to update: \n1. Connected Work Order ID \n2. Property \n3. Work Done \n4. Upkeep Status \n5. Employee \n6. Total Cost \n7. Marked as Finished \n8. Report Closed \n9. Contractors Used: ").strip())
+            #field = input("Enter the field you want to update (connected_work_order_id, property, work_done, upkeep_status, employee, total_costs, marked_as_finished, report_closed, contractors_used): ").strip()
             if field == 'b':
                 return
-            if field in ["connected_work_order_id", "property", "work_done", "upkeep_status", "employee", "total_costs", "marked_as_finished", "report_closed", "contractors_used"]:
-                value = input(f"Enter the new value for {field}: ").strip()
+            if field in range(1, 10): #["connected_work_order_id", "property", "work_done", "upkeep_status", "employee", "total_costs", "marked_as_finished", "report_closed", "contractors_used"]:
+                value = input(f"Enter the new value for selected field: ").strip()
                 if value == 'b':
                     return
-                if field == "connected_work_order_id":
+                if field == 1: #"connected_work_order_id":
+                    field = "connected_work_order_id"
                     report_details[field] = value
                     break
-                elif field == "property" and validate_property(value):
+                elif field == 2 and validate_property(value):
+                    field = "property"
                     report_details[field] = value
                     break
-                elif field == "work_done" and validate_work_done(value):
+                elif field == 3 and validate_work_done(value):
+                    field = "work_done"
                     report_details[field] = value
                     break
-                elif field == "upkeep_status" and validate_upkeep_status(value):
+                elif field == 4 and validate_upkeep_status(value):
+                    field = "upkeep_status"
                     report_details[field] = value
                     break
-                elif field == "employee" and validate_employee(value):
+                elif field == 5 and validate_employee(value):
+                    field = "employee"
                     report_details[field] = value
                     break
-                elif field == "total_costs" and validate_total_costs(value):
+                elif field == 6 and validate_total_costs(value):
+                    field = "total_cost"
                     report_details[field] = int(value)
                     break
-                elif field == "marked_as_finished" and validate_boolean(value):
+                elif field == 7 and validate_boolean(value):
+                    field = "marked_as_finished"
                     report_details[field] = value.lower() == 'true'
                     break
-                elif field == "report_closed" and validate_boolean(value):
+                elif field == 8 and validate_boolean(value):
+                    field = "report_closed"
                     report_details[field] = value.lower() == 'true'
                     break
-                elif field == "contractors_used" and validate_contractors_used(value):
+                elif field == 9 and validate_contractors_used(value):
+                    field = "contractors_used"
                     report_details[field] = set(value.split(','))
                     break
                 else:
-                    print(f"Invalid value for {field}. Please try again.")
+                    print(f"Invalid value for selected field. Please try again.")
             else:
                 print("Invalid field. Please try again.")
 

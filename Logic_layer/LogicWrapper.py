@@ -109,3 +109,6 @@ class LogicWrapper:
 
     def reopen_maintenance_report(self, maintenance_report_id: int) -> str:
         return self.maintenance_report_logic.reopen_maintenance_report(maintenance_report_id)
+    
+    def get_report_by_id(self, maintenance_report_id: int) -> MaintenanceReport:
+        return self.maintenance_report_logic.get_report_by_id(maintenance_report_id)
