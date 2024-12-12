@@ -78,6 +78,9 @@ class LogicWrapper:
     def automatic_work_order_id(self):
         return self.work_order_logic.automatic_work_order_id()
     
+    def mark_work_order_finished(self, work_order_id: int):
+        return self.work_order_logic.mark_work_order_finished(work_order_id)
+    
     # ContractorLogic
     def create_contractor(self, contractor_details: dict):
         return self.contractor_logic.create_contractor(contractor_details)

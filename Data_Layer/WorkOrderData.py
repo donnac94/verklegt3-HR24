@@ -12,7 +12,7 @@ class WorkOrderData():
         :param WorkOrder work_order_obj: The WorkOrder object to save.
         """
         with open(self.file_name, 'a', newline='', encoding="utf-8") as csvfile:
-            fieldnames = ["work_order_id", "work_to_be_done", "property", "submitting_supervisor", "date", "priority", "work_order_status"]
+            fieldnames = ["work_order_id", "work_to_be_done", "property", "submitting_supervisor", "date", "priority", "work_order_status", "marked_as_finished"]
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
             if csvfile.tell() == 0:
@@ -45,7 +45,7 @@ class WorkOrderData():
             raise ValueError(f"Work order with ID {work_order_id} not found.")
 
         with open(self.file_name, 'w', newline='', encoding="utf-8") as csvfile:
-            fieldnames = ["work_order_id", "work_to_be_done", "property", "submitting_supervisor", "date", "priority", "work_order_status"]
+            fieldnames = ["work_order_id", "work_to_be_done", "property", "submitting_supervisor", "date", "priority", "work_order_status", "marked_as_finished"]
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writeheader()
             for work_order in work_orders:

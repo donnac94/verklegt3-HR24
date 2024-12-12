@@ -8,7 +8,8 @@ class WorkOrder:
             submitting_supervisor: str, 
             date: datetime, 
             priority: str, 
-            work_order_status: str
+            work_order_status: str,
+            marked_as_finished: bool
             ) -> None:
         """
         :param int work_order_id: The unique id for the work order.
@@ -18,6 +19,7 @@ class WorkOrder:
         :param dateime date: The time when the work order was made.
         :param str priority: The priority of the work order (High, medium, low).
         :param str work_order_status: The status of the work order (Closed or open).
+        :param bool marked_as_finished: States whether the work order is marked as finished or not (True or False).
         """
         self.work_order_id = work_order_id
         self.work_to_be_done = work_to_be_done
@@ -26,6 +28,7 @@ class WorkOrder:
         self.date = date
         self.priority = priority
         self.work_order_status = work_order_status
+        self.marked_as_finished = marked_as_finished
 
     def to_dict(self):
         return {
@@ -35,7 +38,8 @@ class WorkOrder:
             "submitting_supervisor": self.submitting_supervisor,
             "date": self.date,
             "priority": self.priority,
-            "work_order_status": self.work_order_status
+            "work_order_status": self.work_order_status,
+            "marked_as_finished": self.marked_as_finished
         }
 
     @classmethod
@@ -47,5 +51,6 @@ class WorkOrder:
             dict_obj["submitting_supervisor"],
             dict_obj["date"],
             dict_obj["priority"],
-            dict_obj["work_order_status"]
+            dict_obj["work_order_status"],
+            dict_obj["marked_as_finished"]
         )

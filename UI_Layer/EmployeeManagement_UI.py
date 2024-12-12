@@ -238,14 +238,14 @@ class EmployeeManagementUI:
         if not filtered_work_orders:
             print("No work orders are available")
         else:
-             headers = ["work_order_id", "work_to_be_done", "property", "submitting_supervisor", "date", "priority", "work_order_status"]
+             headers = ["work_order_id", "work_to_be_done", "property", "submitting_supervisor", "date", "priority", "work_order_status", "marked_as_finished"]
              col_widths = [max(len(str(getattr(work_order, attr))) for work_order in filtered_work_orders) for attr in
-                          ["work_order_id", "work_to_be_done", "property", "submitting_supervisor", "date", "priority", "work_order_status"]]
+                          ["work_order_id", "work_to_be_done", "property", "submitting_supervisor", "date", "priority", "work_order_status", "marked_as_finished"]]
              col_widths = [max(len(header), width) for header, width in zip(headers, col_widths)]
              row_format = "  |  ".join([f"{{:<{width}}}" for width in col_widths])
              print(row_format.format(*headers))
              print("-" * (columns - 2))
              for work_order in filtered_work_orders:
                 print(row_format.format(work_order.work_order_id, work_order.work_to_be_done, work_order.property, work_order.submitting_supervisor, work_order.date, 
-                                        work_order.priority, work_order.work_order_status))
+                                        work_order.priority, work_order.work_order_status, work_order.marked_as_finished))
         input("\nPress Enter to return to the menu.")
