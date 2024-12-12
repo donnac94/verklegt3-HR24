@@ -90,7 +90,7 @@ class WorkOrderUI:
             return
         work_order_details["property"] = property
 
-        submitting_supervisor = input("Enter Submitting Supervisor: ").strip()
+        submitting_supervisor = input("Enter SSN of submitting supervisor: ").strip()
         if submitting_supervisor.lower() == 'b':
             return
         work_order_details["submitting_supervisor"] = submitting_supervisor
@@ -155,7 +155,7 @@ class WorkOrderUI:
         if property:
             self.logic_wrapper.change_work_order_info(work_order_id, "property", property)
 
-        submitting_supervisor = input(f"Enter Submitting Supervisor [{work_order.submitting_supervisor}]: ").strip()
+        submitting_supervisor = input(f"Enter SSN of Submitting Supervisor [{work_order.submitting_supervisor}]: ").strip()
         if submitting_supervisor.lower() == 'b':
             return
         if submitting_supervisor:

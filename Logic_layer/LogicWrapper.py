@@ -114,4 +114,31 @@ class LogicWrapper:
         return self.maintenance_report_logic.reopen_maintenance_report(maintenance_report_id)
     
     #SearchLogic
+
+    def search_employee_by_ssn(self, ssn):
+        """Search employees by SSN"""
+        return self.search_logic.search_employee_by_ssn(ssn)
     
+    def search_employees_by_location(self, location):
+        return self.search_logic.search_employee_by_location(location)
+    
+    def search_properties_by_location(self, location):
+        return self.search_logic.search_properties_by_location(location)
+    
+    def search_property_by_id(self, property_id):
+        return self.search_logic.search_property_by_id(property_id)
+    
+    def search_work_order_by_id(self, work_order_id):
+        return self.search_logic.search_work_order_by_id(work_order_id)
+    
+    def search_work_orders_by_property(self, property_name):
+        return self.search_logic.search_work_orders_by_property(property_name)
+    
+    def search_maintenance_reports_by_property(self, property_name):
+        return self.search_logic.search_maintenance_reports_by_property(property_name)
+    
+    def search_work_orders_by_employee(self, employee_ssn):
+        return self.search_logic.search_work_orders_by_employee(employee_ssn)
+    
+    def search_maintenance_reports_by_employee(self, employee_ssn):
+        return self.search_logic.search_maintenance_reports_by_employee(employee_ssn)

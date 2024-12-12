@@ -18,7 +18,7 @@ class SupervisorUI:
         self.maintenance_report_ui = MaintenanceReportUI(logic_wrapper)  
         self.work_order_ui = WorkOrderUI(logic_wrapper)
         self.contractor_ui = ContractorUI(logic_wrapper)
-        self.search_ui = SearchUI()
+        self.search_ui = SearchUI(logic_wrapper)
     def clear_terminal(self):
         os.system('cls' if os.name == 'nt' else 'clear')
 

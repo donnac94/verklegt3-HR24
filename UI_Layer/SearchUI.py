@@ -1,15 +1,11 @@
 from Logic_layer.LogicWrapper import LogicWrapper
 import os
 import shutil
-import sys
 
-from Logic_layer.SearchLogic import SearchLogic
-from Logic_layer.LogicWrapper import LogicWrapper
 class SearchUI:
     
-    def __init__(self):
-        self.search_logic = SearchLogic()
-        self.logic_wrapper = LogicWrapper
+    def __init__(self, logic_wrapper: LogicWrapper):
+        self.logic_wrapper = logic_wrapper
     
     def clear_terminal(self):
         os.system('cls' if os.name == 'nt' else 'clear')
@@ -37,20 +33,33 @@ class SearchUI:
             choice = input("\nChoose an option: ").strip().lower()
 
             if choice == '1':
-                # return self.location_filter
-                location_input = input("\nEnter location: ")
-                results = self.search_logic.search_by_location(location_input)
-                print("\nResults: ",results)
+                self.clear_terminal()
+                columns, _ = self.get_terminal_size()
+                h = '-'
+                c = '+'
+                d = '|'
+                print(c + "Air NaN Employee Portal".center(columns - 2, h) + c)
+                print(d + "Welcome to the Search Menu".center(columns - 2) + d)
+                print(c + h * (columns - 2) + c)
+                print(d + " 1. List All Employees by Location ".ljust(columns - 2) + d)
+                print(d + " 2. List All Properties by location ".ljust(columns - 2) + d)
+                print(c + h * (columns - 2) + c)
+                choice = input("\nEnter what list you want to see: ")
+                if choice == '1':
+                    location = input("\n Enter Location: ")
+                    self.list_all_employee_by_loc(location)
+                elif choice == '2':
+                    location_prop = input("\nEnter location: ")
+                    self.list_all_prop_by_loc(location_prop)
+                else:
+                    print("invalid input")
             elif choice == '2':
-                # return self.ssn_filter
-                employee_input = input("\n Enter Social Security number: ")
-                results = self.search_logic.search_employee_by_ssn(employee_input)
-                print("\nResults: ", results)
+                ssn = input("\n Enter Social Security number: ")
+                self.search_employee_by_ssn(ssn)
             elif choice == '3':
                 # return self.property_filter
-                property_input = input("\nEnter a property id: ")
-                results = self.search_logic.search_property_id(property_input)
-                print("\nResults: ", results)
+                location = input("\nEnter a property id: ")
+                self.list_all_prop_by_loc(location)
             elif choice == '4':
                 workorder = input("\nEnter a workorder id: ")
                 result = self.search_logic.search_workorder_id(workorder)
@@ -58,33 +67,82 @@ class SearchUI:
             else:
                 print("Invalid choice. Please try again.")
                 input("\nPress Enter to return to the menu.")
+                
     
-    # def location_filter(self):
-    #     location = input("\nEnter a location: ")
-    #     if location != None: 
-    #         result = self.search_logic.search_by_location(location)
-    #     return result
+    def search_employee_by_ssn(self, ssn):
+        self.clear_terminal()
+        columns, _ = self.get_terminal_size()
+        print("+".ljust(columns - 1, '-') + "+")
+        print("|" + " List All Employees ".center(columns - 2) + "|")
+        print("+".ljust(columns - 1, '-') + "+")
+        employee = self.logic_wrapper.search_employee_by_ssn(ssn)
+        if not employee:
+            print("No employee found.")
+        else:
+            headers = ["ssn", "full_name", "address", "phone", "gsm", "email", "location", "is_supervisor"]
+            col_widths = [(max(len(header), len(str( getattr(employee, attr))))) 
+            for header, attr in zip(
+                headers, ["ssn", "full_name", "address", "phone", "gsm", "email", "location", "is_supervisor"]
+            )]
+            row_format = "  |  ".join([f"{{:<{width}}}" for width in col_widths])
+            print(row_format.format(*headers))
+            print("-" * (columns - 2))
+
+            is_supervisor = employee.is_supervisor
+            if is_supervisor == 1:
+                is_supervisor = "True"
+            else:
+                is_supervisor = "False"
+            print(row_format.format(employee.ssn, employee.full_name, employee.address, employee.phone, employee.gsm, employee.email, employee.location, is_supervisor))
+        input("\nPress Enter to return to the menu.")
         
-    
-    # def ssn_filter(self):
-    #     ssn = input("\nEnter a SSN: ")
-    #     if ssn != None:
-    #         result = self.search_logic.search_employee_by_ssn(ssn)
-    #     return result 
         
-    
-    # def property_filter(self):
-    #     property_id = input("\nEnter a Property id: ")
-    #     if property_id != None:
-    #         result = self.search_logic.search_property_id(property_id)
-    #     return result
-    
-    # def workid_filter(self):
-    #     work_id = input("\nEnter a work id: ")
-    #     if work_id != None:
-    #         result = self.search_logic.search_workorder_id(work_id)
-    #     return result
-    
+    def list_all_employee_by_loc(self, location):
+        self.clear_terminal()
+        columns, _ = self.get_terminal_size()
+        print("+".ljust(columns - 1, '-') + "+")
+        print("|" + " List All Employees by Location ".center(columns - 2) + "|")
+        print("+".ljust(columns - 1, '-') + "+")
+        location = self.logic_wrapper.search_employees_by_location(location)
+        if not location:
+            print("No employees at location")
+        else:
+             headers = ["ssn", "full_name", "address", "phone", "gsm", "email", "location", "is_supervisor"]
+             col_widths = [max(len(str(getattr(loc, attr))) for loc in location) for attr in
+                          ["ssn", "full_name", "address", "phone", "gsm", "email", "location", "is_supervisor"]]
+             col_widths = [max(len(header), width) for header, width in zip(headers, col_widths)]
+             row_format = "  |  ".join([f"{{:<{width}}}" for width in col_widths])
+             print(row_format.format(*headers))
+             print("-" * (columns - 2))
+             for loc in location:
+                print(row_format.format(loc.ssn, loc.full_name, loc.address, loc.phone, loc.gsm, loc.email,
+                                        loc.location, "True" if loc.is_supervisor else "False"))
+        input("\nPress Enter to return to the menu.")
         
-    
         
+    def list_all_prop_by_loc(self, location):
+        self.clear_terminal()
+        columns, _ = self.get_terminal_size()
+        print("+".ljust(columns - 1, '-') + "+")
+        print("|" + " List All Properties by Location ".center(columns - 2) + "|")
+        print("+".ljust(columns - 1, '-') + "+")
+        filtered_properties = self.logic_wrapper.search_properties_by_location(location)
+        if not filtered_properties:
+            print("No Properties at location")
+        else:
+             headers = ["property_id", "address", "location", "property_condition", "supervisor"]
+             col_widths = [max(len(str(getattr(property, attr))) for property in filtered_properties) for attr in
+                          ["property_id", "address", "location", "property_condition", "supervisor"]]
+             col_widths = [max(len(header), width) for header, width in zip(headers, col_widths)]
+             row_format = "  |  ".join([f"{{:<{width}}}" for width in col_widths])
+             print(row_format.format(*headers))
+             print("-" * (columns - 2))
+             for property in filtered_properties:
+                print(row_format.format(property.property_id, property.address, property.location, property.property_condition, 
+                                         "True" if property.supervisor else "False"))
+        input("\nPress Enter to return to the menu.")
+        
+        #property.requires_maintenance
+
+        def list_property_by_id():
+            pass

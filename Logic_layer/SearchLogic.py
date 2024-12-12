@@ -1,69 +1,107 @@
 
 from Data_Layer.DataWrapper import DataWrapper
-from Data_Layer.EmployeeData import EmployeeData
+
 
 class SearchLogic:
     
     def __init__(self):
-        self.data_wrapper = DataWrapper
-        self.employee_data = EmployeeData
+        self.data_wrapper = DataWrapper()
         
         
-    def search_by_location(self, location):
+        
+    def search_employee_by_location(self, location):
         """Search employees by location"""
-        try:
-            results = []
-            location_filter = self.data_wrapper.list_employees(self) #þarf að gera lista sem listar upp starfsmenn eftir location 
-            for row in location_filter:
-                    if location.row == row.get("location", ""):
-                        return row.append(results)
-            return results
-        except FileNotFoundError:
-            return "Employee file not found"
-        except UnicodeDecodeError:
-            return "Error decoding the file. Please check the file encoding."
-
-    def search_employee_by_ssn(self, ssn):
-        """Search employees by SSN"""
-        try:
-            ssn_filter = self.employee_data.get_all_employees(self)
-            for row in ssn_filter:
-                    if ssn.row == row.get("ssn", ""):
-                        return row
-            return "No Employee found with that ssn"
-        except FileNotFoundError:
-            return "Employee file not found"
-        except UnicodeDecodeError:
-            return "Error decoding the file. Please check the file encoding."
-
-    def search_property_id(self, property_id):
-        """Search for a property by id"""
-        try:
-            results = []
-            property_id_filter = self.data_wrapper.list_properties(self)
-            for row in property_id_filter:
-                    if property_id.row == row.get("property_id", ""):
-                        return row.append(results)
-            return "No property found"
-        except FileNotFoundError:
-            return "Property not found in file"
-        except UnicodeDecodeError:
-            return "Error decoding the file. Please check the file encoding."
-
-    def search_workorder_id(self, workorder_id):
-        """Search for Workorder id"""
-        try:
-            results = []
-            workorder_id_filter = self.data_wrapper.get_property_by_id(self)
-            for row in workorder_id_filter:
-                    if workorder_id == row.get("workorder_id", ""):
-                        return row.append(results)
-            return "No workorder found"
-        except FileNotFoundError:
-            return "File does not exist"
-        except UnicodeDecodeError:
-            return "Error decoding the file. Please check the file encoding."    
-        
+        filtered_list= []
+        employees = self.data_wrapper.list_employees()
+        for employee in employees:
+                if employee.location.lower() == location.lower():
+                    filtered_list.append(employee)
+        return filtered_list
     
+    def search_properties_by_location(self, location):
+        """Search properties by location"""
+        filtered_list= []
+        properties = self.data_wrapper.list_properties()
+        for property in properties:
+                if property.location.lower() == location.lower():
+                    filtered_list.append(property)
+        return filtered_list
         
-  
+    def search_employees_by_ssn(self, ssn):
+        """Search employees by SSN"""
+
+        employees = self.data_wrapper.list_employees()
+        for employee in employees:
+                if employee.ssn == ssn:
+                    return employee
+        return "No Employee found with that ssn"
+   
+
+    def search_property_by_id(self, property_id):
+        """Search for a property by id"""
+        properties = self.data_wrapper.list_properties()
+        for property in properties:
+                if property.property_id == property_id:
+                    return property
+        return "No property found"
+        
+        
+    def search_work_order_by_id(self, work_order_id):
+        """Search for a work order by id"""
+        work_orders = self.data_wrapper.get_all_work_orders()
+        for work_order in work_orders:
+                if work_order.work_order_id == work_order_id:
+                    return work_order
+        return "No work order found"
+    
+    def search_work_orders_by_property(self, property_name):
+        """Search for work orders by property name"""
+        filtered_list = []
+        work_orders = self.data_wrapper.get_all_work_orders()
+        for work_order in work_orders:
+                if work_order.property == property_name:
+                    filtered_list.append(work_order)
+        return filtered_list
+    
+    def search_maintenance_reports_by_property(self, property_name):
+        """Search for maintenance reports by property name"""
+        filtered_list = []
+        maintenance_reports = self.data_wrapper.get_all_maintenance_reports()
+        for maintenance_report in maintenance_reports:
+                if maintenance_report.property == property_name:
+                    filtered_list.append(maintenance_report)
+        return filtered_list
+    
+    def search_work_orders_by_employee(self, employee_ssn):
+        """Search for work orders by employee ssn"""
+        filtered_list = []
+        work_orders = self.data_wrapper.get_all_work_orders()
+        for work_order in work_orders:
+                if work_order.submitting_supervisor == employee_ssn:
+                    filtered_list.append(work_order)
+        return filtered_list
+    
+    def search_maintenance_reports_by_employee(self, employee_ssn):
+        """Search for maintenance reports by employee ssn"""
+        filtered_list = []
+        maintenance_reports = self.data_wrapper.get_all_maintenance_reports()
+        for maintenance_report in maintenance_reports:
+                if maintenance_report.employee == employee_ssn:
+                    filtered_list.append(maintenance_report)
+        return filtered_list
+    
+    def get_work_plan(self):
+        """Creates a work plan. List of all open work orders, ordered by priority"""
+        work_plan = []
+        work_orders = self.data_wrapper.get_all_work_orders()
+        for work_order in work_orders:
+            if work_order.priority.lower() == "high":
+                work_plan.append(work_order)
+        for work_order in work_orders:
+            if work_order.priority.lower() == "medium":
+                work_plan.append(work_order)
+        for work_order in work_orders:
+            if work_order.priority.lower() == "low":
+                work_plan.append(work_order)
+        return work_plan
+        
