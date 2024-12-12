@@ -63,7 +63,6 @@ class SearchUI:
                 
                 self.search_employee_by_ssn(ssn)
             elif choice == '3':
-                # return self.property_filter
                 location = input("\nEnter a property id: ")
                 self.list_all_prop_by_loc(location)
             elif choice == '4':

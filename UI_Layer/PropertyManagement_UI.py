@@ -15,7 +15,7 @@ class PropertyUI:
         columns, rows = shutil.get_terminal_size(fallback=(80, 24))
         return columns, rows
 
-    def display_menu(self):
+    def display_menu(self, employee_status):
         while True:
             self.clear_terminal()
             columns, _ = self.get_terminal_size()
@@ -26,8 +26,9 @@ class PropertyUI:
             print(d + "Welcome to the Property Management Menu".center(columns - 2) + d)
             print(c + h * (columns - 2) + c)
             print(d + " 1. List All Properties ".ljust(columns - 2) + d)
-            print(d + " 2. Add New Property ".ljust(columns - 2) + d)
-            print(d + " 3. Update Property Information ".ljust(columns - 2) + d)
+            if employee_status == "supervisor":
+                print(d + " 2. Add New Property ".ljust(columns - 2) + d)
+                print(d + " 3. Update Property Information ".ljust(columns - 2) + d)
             print(d + " b. Back to Supervisor Menu ".ljust(columns - 2) + d)
             print(c + h * (columns - 2) + c)
 
@@ -35,10 +36,11 @@ class PropertyUI:
 
             if choice == "1":
                 self.list_all_properties()
-            elif choice == "2":
-                self.add_new_property()
-            elif choice == "3":
-                self.update_property_info()
+            if employee_status == "supervisor":
+                if choice == "2":
+                    self.add_new_property()
+                elif choice == "3":
+                    self.update_property_info()
             elif choice == "b":
                 return
             else:
