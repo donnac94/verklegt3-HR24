@@ -59,7 +59,7 @@ class SearchLogic:
         filtered_list = []
         work_orders = self.data_wrapper.get_all_work_orders()
         for work_order in work_orders:
-                if work_order.property == property_name:
+                if work_order.property.lower() == property_name.lower():
                     filtered_list.append(work_order)
         return filtered_list
     
@@ -68,7 +68,7 @@ class SearchLogic:
         filtered_list = []
         maintenance_reports = self.data_wrapper.get_all_maintenance_reports()
         for maintenance_report in maintenance_reports:
-                if maintenance_report.property == property_name:
+                if maintenance_report.property.lower() == property_name.lower():
                     filtered_list.append(maintenance_report)
         return filtered_list
     
@@ -89,19 +89,3 @@ class SearchLogic:
                 if maintenance_report.employee == employee_ssn:
                     filtered_list.append(maintenance_report)
         return filtered_list
-    
-    def get_work_plan(self):
-        """Creates a work plan. List of all open work orders, ordered by priority"""
-        work_plan = []
-        work_orders = self.data_wrapper.get_all_work_orders()
-        for work_order in work_orders:
-            if work_order.priority.lower() == "high":
-                work_plan.append(work_order)
-        for work_order in work_orders:
-            if work_order.priority.lower() == "medium":
-                work_plan.append(work_order)
-        for work_order in work_orders:
-            if work_order.priority.lower() == "low":
-                work_plan.append(work_order)
-        return work_plan
-        

@@ -4,6 +4,7 @@ import shutil
 
 from UI_Layer.Validation import validate_boolean, validate_contractors_used, validate_employee, validate_property, validate_total_costs, validate_upkeep_status, validate_work_done
 
+
 #TODO: Error handling, input validation
 
 class MaintenanceReportUI:
@@ -18,7 +19,7 @@ class MaintenanceReportUI:
         columns, rows = shutil.get_terminal_size(fallback=(80, 24))
         return columns, rows
 
-    def display_menu(self):
+    def display_menu(self, employee_status: str):
         while True:
             self.clear_terminal()
             columns, _ = self.get_terminal_size()
@@ -32,8 +33,9 @@ class MaintenanceReportUI:
             print(d + " 2. Submit New Maintenance Report  ".ljust(columns - 2) + d)
             print(d + " 3. Update Maintenance Report Information ".ljust(columns - 2) + d)
             print(d + " 4. Mark Report as Finished ".ljust(columns - 2) + d)
-            print(d + " 5. Close Maintenance Report ".ljust(columns - 2) + d)
-            print(d + " 6. Reopen Maintenance Report ".ljust(columns - 2) + d)
+            if employee_status == "supervisor":  
+                print(d + " 5. Close Maintenance Report ".ljust(columns - 2) + d)
+                print(d + " 6. Reopen Maintenance Report ".ljust(columns - 2) + d)
             print(d + " b. Back to Login Menu ".ljust(columns - 2) + d)
             print(c + h * (columns - 2) + c)
 

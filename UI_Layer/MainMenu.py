@@ -26,15 +26,15 @@ class SupervisorUI:
         columns, rows = shutil.get_terminal_size(fallback=(80, 24))
         return columns, rows
 
-    def display_menu(self):
+    def display_menu(self, employee_status):
         while True:
             self.clear_terminal()
             columns, _ = self.get_terminal_size()
             h = '-'
             c = '+'
             d = '|'
-            print(c + "Air NaN Supervisor Portal".center(columns - 2, h) + c)
-            print(d + "Welcome to the Supervisor Menu".center(columns - 2) + d)
+            print(c + "Air NaN Portal".center(columns - 2, h) + c)
+            print(d + "Welcome to the Main Menu".center(columns - 2) + d)
             print(c + h * (columns - 2) + c)
             print(d + " 1. Employee Management ".ljust(columns - 2) + d)
             print(d + " 2. Property Management ".ljust(columns - 2) + d)
@@ -48,17 +48,17 @@ class SupervisorUI:
             choice = input("\nChoose an option: ").strip().lower()
 
             if choice == "1":
-                self.employee_management_ui.display_menu()
+                self.employee_management_ui.display_menu(employee_status)
             elif choice == "2":
-                self.property_management_ui.display_menu()
+                self.property_management_ui.display_menu(employee_status)
             elif choice == "3":
-                self.maintenance_report_ui.display_menu()
+                self.maintenance_report_ui.display_menu(employee_status)
             elif choice == "4":
-                self.work_order_ui.display_menu() 
+                self.work_order_ui.display_menu(employee_status) 
             elif choice == "5":
-                self.contractor_ui.display_menu()
+                self.contractor_ui.display_menu(employee_status)
             elif choice == "6":
-                self.search_ui.display_menu()
+                self.search_ui.display_menu(employee_status)
             elif choice == "b":
                 return
             else:

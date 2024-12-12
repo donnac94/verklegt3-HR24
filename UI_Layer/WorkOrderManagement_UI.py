@@ -15,7 +15,7 @@ class WorkOrderUI:
         columns, rows = shutil.get_terminal_size(fallback=(80, 24))
         return columns, rows
 
-    def display_menu(self):
+    def display_menu(self, employee_status):
         while True:
             self.clear_terminal()
             columns, _ = self.get_terminal_size()
@@ -26,24 +26,26 @@ class WorkOrderUI:
             print(d + " Welcome to the Work Order Management Menu ".center(columns - 2) + d)
             print(c + h * (columns - 2) + c)
             print(d + " 1. List All Work Orders ".ljust(columns - 2) + d)
-            print(d + " 2. Submit New Work Order ".ljust(columns - 2) + d)
-            print(d + " 3. Update Work Order Information ".ljust(columns - 2) + d)
-            print(d + " 4. Close Work Order ".ljust(columns - 2) + d)
-            print(d + " 5. Reopen Work Order ".ljust(columns - 2) + d)
+            if employee_status == "supervisor":
+                print(d + " 2. Submit New Work Order ".ljust(columns - 2) + d)
+                print(d + " 3. Update Work Order Information ".ljust(columns - 2) + d)
+                print(d + " 4. Close Work Order ".ljust(columns - 2) + d)
+                print(d + " 5. Reopen Work Order ".ljust(columns - 2) + d)
             print(d + " b. Go Back ".ljust(columns - 2) + d)
             print(c + h * (columns - 2) + c)
 
             choice = input("Enter your choice: ").strip().lower()
             if choice == "1":
                 self.list_all_work_orders()
-            elif choice == "2":
-                self.submit_work_order()
-            elif choice == "3":
-                self.update_work_order_info()
-            elif choice == "4":
-                self.close_work_order()
-            elif choice == "5":
-                self.reopen_work_order()
+            if employee_status == "supervisor":
+                if choice == "2":
+                    self.submit_work_order()
+                elif choice == "3":
+                    self.update_work_order_info()
+                elif choice == "4":
+                    self.close_work_order()
+                elif choice == "5":
+                    self.reopen_work_order()
             elif choice == "b":
                 return
             else:

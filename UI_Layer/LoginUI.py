@@ -1,4 +1,4 @@
-from UI_Layer.SupervisorUI import SupervisorUI
+from UI_Layer.MainMenu import SupervisorUI
 from UI_Layer.EmployeeUI import EmployeeUI
 from Logic_layer.LogicWrapper import LogicWrapper
 import os
@@ -20,7 +20,7 @@ class LoginUI:
     def display_menu(self):
         """Display the login menu and handle user input."""
         supervisor_ui = SupervisorUI(self.logic_wrapper)
-        employee_ui = EmployeeUI(self.logic_wrapper)
+        # employee_ui = EmployeeUI(self.logic_wrapper)
         while True:
             self.clear_terminal()
             columns, _ = self.get_terminal_size()
@@ -39,9 +39,9 @@ class LoginUI:
             choice = input("\nChoose an option: ").strip().lower()
 
             if choice == "1":
-                supervisor_ui.display_menu()
+                supervisor_ui.display_menu("supervisor")
             elif choice == "2":
-                employee_ui.display_menu()
+                supervisor_ui.display_menu("employee")
             elif choice == "q":
                 print("\n Exiting. Goodbye!")
                 break
