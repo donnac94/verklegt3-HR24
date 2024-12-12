@@ -151,25 +151,30 @@ class MaintenanceReportUI:
             else:
                 print("Invalid total costs. Please enter a valid integer.")
 
+        # Input for 'marked_as_finished'
         while True:
-            marked_as_finished = input("Enter Marked as Finished (True/False): ").strip()
-            if marked_as_finished == 'b':
+            marked_as_finished_input = input("Enter Marked as Finished (True/False): ").strip().lower()
+            if marked_as_finished_input == 'b':
                 return
-            if validate_boolean(marked_as_finished):
-                report_details["marked_as_finished"] = marked_as_finished.lower() == 'true'
+            if marked_as_finished_input in ['true', 'false']:
+                report_details["marked_as_finished"] = marked_as_finished_input == 'true'
                 break
             else:
-                print("Invalid input. Please enter True or False.")
+                print("Invalid input. Please enter 'True' or 'False'.")
+                input("\nPress Enter to try again.")
 
+        # Input for 'report_closed'
         while True:
-            report_closed = input("Enter Report Closed (True/False): ").strip()
-            if report_closed == 'b':
+            report_closed_input = input("Enter Report Closed (True/False): ").strip().lower()
+            if report_closed_input == 'b':
                 return
-            if validate_boolean(report_closed):
-                report_details["report_closed"] = report_closed.lower() == 'true'
+            if report_closed_input in ['true', 'false']:
+                report_details["report_closed"] = report_closed_input == 'true'
                 break
             else:
-                print("Invalid input. Please enter True or False.")
+                print("Invalid input. Please enter 'True' or 'False'.")
+                input("\nPress Enter to try again.")
+
 
         while True:
             contractors_used = input("Enter Contractors Used (comma-separated): ").strip()
