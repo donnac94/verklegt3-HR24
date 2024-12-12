@@ -28,9 +28,8 @@ class WorkOrderUI:
             print(d + " 1. List All Work Orders ".ljust(columns - 2) + d)
             print(d + " 2. Submit New Work Order ".ljust(columns - 2) + d)
             print(d + " 3. Update Work Order Information ".ljust(columns - 2) + d)
-            print(d + " 4. Mark Work Order Completed ".ljust(columns - 2) + d)
-            print(d + " 5. Close Work Order ".ljust(columns - 2) + d)
-            print(d + " 6. Reopen Work Order ".ljust(columns - 2) + d)
+            print(d + " 4. Close Work Order ".ljust(columns - 2) + d)
+            print(d + " 5. Reopen Work Order ".ljust(columns - 2) + d)
             print(d + " b. Go Back ".ljust(columns - 2) + d)
             print(c + h * (columns - 2) + c)
 
@@ -42,10 +41,8 @@ class WorkOrderUI:
             elif choice == "3":
                 self.update_work_order_info()
             elif choice == "4":
-                self.mark_work_order_completed()
-            elif choice == "5":
                 self.close_work_order()
-            elif choice == "6":
+            elif choice == "5":
                 self.reopen_work_order()
             elif choice == "b":
                 return
@@ -181,29 +178,6 @@ class WorkOrderUI:
 
         print("Work order updated successfully.")
         input("\nPress Enter to return to the menu.")
-
-    def mark_work_order_completed(self):
-        self.clear_terminal()
-        print("Mark Work Order Completed")
-        print("Press 'b' to go back to the Work Order Management Menu.")
-        work_orders = self.logic_wrapper.get_all_work_orders()
-        if not work_orders:
-            print("No work orders found.")
-            input("\nPress Enter to return to the menu.")
-            return
-        else:
-            self.display_work_orders(work_orders)
-            work_order_id = input("Enter the Work Order ID to mark as completed: ").strip()
-            result = self.logic_wrapper.mark_work_order_completed(work_order_id)
-            print(result)
-            input("\nPress Enter to return to the menu.")
-        
-        while True:
-            choice = input("\nEnter 'b' to go back: ").strip().lower()
-            if choice == 'b':
-                return
-            else:
-                print("Invalid choice. Please try again.")
 
     def close_work_order(self):
         self.clear_terminal()

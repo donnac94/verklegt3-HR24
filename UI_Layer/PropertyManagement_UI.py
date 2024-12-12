@@ -148,7 +148,7 @@ class PropertyUI:
 
         # Confirm the new property has been added
         self.list_all_properties()
-        
+
     def update_property_info(self):
         self.clear_terminal()
         columns, _ = self.get_terminal_size()
