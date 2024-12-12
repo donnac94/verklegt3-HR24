@@ -106,7 +106,7 @@ class MaintenanceReportUI:
                 print("Invalid property. Please try again.")
 
         while True:
-            connected_work_order_id = input("Enter the ID of the work order this report is about.").strip()
+            connected_work_order_id = input("Enter the ID of the work order this report is about: ").strip()
             if connected_work_order_id == 'b':
                 return
             else:
@@ -121,7 +121,7 @@ class MaintenanceReportUI:
                 report_details["work_done"] = work_done
                 break
             else:
-                print("This field is required, please what work was done.")
+                print("This field is required, please enter what work was done.")
 
         while True:
             upkeep_status = input("Enter Upkeep Status (Regular Maintenance / Emergency Repair): ").strip()
@@ -250,15 +250,18 @@ class MaintenanceReportUI:
 
         report_details = {}
         while True:
-            field = int(input("\nEnter the field to update: \n1. Connected Work Order ID \n2. Property \n3. Work Done \n4. Upkeep Status \n5. Employee \n6. Total Cost \n7. Marked as Finished \n8. Report Closed \n9. Contractors Used: ").strip())
-            #field = input("Enter the field you want to update (connected_work_order_id, property, work_done, upkeep_status, employee, total_costs, marked_as_finished, report_closed, contractors_used): ").strip()
+            field = input("\nEnter the field to update: \n1. Connected Work Order ID \n2. Property \n3. Work Done \n4. Upkeep Status \n5. Employee \n6. Total Cost \n7. Marked as Finished \n8. Report Closed \n9. Contractors Used: ").strip()
+            
             if field == 'b':
                 return
-            if field in range(1, 10): #["connected_work_order_id", "property", "work_done", "upkeep_status", "employee", "total_costs", "marked_as_finished", "report_closed", "contractors_used"]:
+            if not field.isdigit():
+                input("Invalid field. Please enter an integer: ")
+            field = int(field)
+            if field in range(1, 10): 
                 value = input(f"Enter the new value for selected field: ").strip()
                 if value == 'b':
                     return
-                if field == 1: #"connected_work_order_id":
+                if field == 1: 
                     field = "connected_work_order_id"
                     report_details[field] = value
                     break
@@ -309,24 +312,35 @@ class MaintenanceReportUI:
         print("Mark Maintenance Report as Finished")
         report_id = input("Enter Report ID: ").strip()
         result = self.logic_wrapper.mark_report_as_finished(report_id)
-        print(result)
-        input("\nPress Enter to return to the menu.")
+        if not result:
+            input("Invalid Maintenance Report ID. Press Enter to go back to menu. ")
+        else:
+            print(result)
+            input("\nPress Enter to return to the menu.")
 
     def close_report(self):
+
         self.clear_terminal()
         print("Close Maintenance Report")
         report_id = input("Enter Report ID: ").strip()
         result = self.logic_wrapper.close_maintenance_report(report_id)
-        print(result)
-        input("\nPress Enter to return to the menu.")
+        if not result:
+            input("Invalid Maintenance Report ID. Press Enter to go back to menu. ")
+        else:
+            print(result)
+            input("\nPress Enter to return to the menu.")
+
 
     def reopen_report(self):
         self.clear_terminal()
         print("Reopen Maintenance Report")
         report_id = input("Enter Report ID: ").strip()
         result = self.logic_wrapper.reopen_maintenance_report(report_id)
-        print(result)
-        input("\nPress Enter to return to the menu.")
+        if not result:
+            input("Invalid Maintenance Report ID. Press Enter to go back to menu. ")
+        else:
+            print(result)
+            input("\nPress Enter to return to the menu.")
     
     def automatic_report_id(self):
         """

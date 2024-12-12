@@ -9,13 +9,16 @@ class PropertyUI:
         self.logic_wrapper = logic_wrapper
 
     def clear_terminal(self):
+        """Clears the terminal."""
         os.system('cls' if os.name == 'nt' else 'clear')
 
     def get_terminal_size(self):
+        """Get the current terminal size."""
         columns, rows = shutil.get_terminal_size(fallback=(80, 24))
         return columns, rows
 
     def display_menu(self, employee_status):
+        """Shows display menu for property management"""
         while True:
             self.clear_terminal()
             columns, _ = self.get_terminal_size()
@@ -48,6 +51,9 @@ class PropertyUI:
                 input("\nPress Enter to return to the menu.")
 
     def list_all_properties(self):
+        """
+        Lists all properties in CSV file.
+        """
         self.clear_terminal()
         columns, _ = self.get_terminal_size()
         print("+".ljust(columns - 1, '-') + "+")
@@ -70,6 +76,9 @@ class PropertyUI:
         input("\nPress Enter to return to the menu.")
 
     def add_new_property(self):
+        """
+        Adds a new property to the properties CSV file.
+        """
         self.clear_terminal()
         columns, _ = self.get_terminal_size()
         print("+".ljust(columns - 1, '-') + "+")
@@ -126,7 +135,7 @@ class PropertyUI:
             property_details["property_condition"] = property_condition
             break
 
-        supervisor = input("Enter Supervisor for property location").strip()
+        supervisor = input("Enter Supervisor for property location: ").strip()
         if supervisor.lower() == 'b':
             return
         property_details["supervisor"] = supervisor
@@ -152,6 +161,9 @@ class PropertyUI:
         self.list_all_properties()
 
     def update_property_info(self):
+        """
+        Updates selected property with a new value in the chosen field.
+        """
         self.clear_terminal()
         columns, _ = self.get_terminal_size()
         print("+".ljust(columns - 1, '-') + "+")
@@ -187,7 +199,7 @@ class PropertyUI:
         print("-" * (columns - 2))
         print(row_format.format(property.property_id, property.address, property.location, property.property_condition, property.supervisor, ", ".join(property.requires_maintenance)))
 
-        selected_field = input("\nEnter the field to update: \n1. Address \n2. Location \n3. Property condition \n4. Supervisor \n5. Requires maintenance ").strip()
+        selected_field = input("\nFields to update: \n1. Address \n2. Location \n3. Property condition \n4. Supervisor \n5. Requires maintenance \nEnter a number with the corresponding field to update: ").strip()
         while True:    
             if selected_field.lower() == 'b':
                 return

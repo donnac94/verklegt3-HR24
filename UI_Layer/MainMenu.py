@@ -58,7 +58,7 @@ class SupervisorUI:
             elif choice == "5":
                 self.contractor_ui.display_menu(employee_status)
             elif choice == "6":
-                self.search_ui.display_menu(employee_status)
+                self.search_ui.display_menu()
             elif choice == "b":
                 return
             else:
