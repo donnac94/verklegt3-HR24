@@ -37,15 +37,15 @@ class PropertyUI:
 
             choice = input("\nChoose an option: ").strip().lower()
 
-            if choice == "1":
+            if choice == "b":
+                return
+            elif choice == "1":
                 self.list_all_properties()
-            if employee_status == "supervisor":
+            elif employee_status == "supervisor":
                 if choice == "2":
                     self.add_new_property()
                 elif choice == "3":
                     self.update_property_info()
-            elif choice == "b":
-                return
             else:
                 print("Invalid choice. Please try again.")
                 input("\nPress Enter to return to the menu.")

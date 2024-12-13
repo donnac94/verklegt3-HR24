@@ -96,11 +96,13 @@ class EmployeeManagementUI:
                 print("Invalid SSN. Must only contain digits and should be exactly 10 digits.")
                 input("\nPress Enter to try again.")
             else:
-                if self.logic_wrapper.search_employee_by_ssn(employee_details["ssn"]):
+                employees = self.logic_wrapper.list_employees()  # Fetch all employees
+                if any(emp.ssn == employee_details["ssn"] for emp in employees):  # Check if the SSN exists
                     print("Error: Employee with this SSN already exists.")
                     input("\nPress Enter to try again.")
                 else:
                     break
+
 
         while True:
             employee_details["full_name"] = input("Enter Full Name: ").strip()
