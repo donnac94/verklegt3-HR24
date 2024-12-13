@@ -1,4 +1,4 @@
-from UI_Layer.MainMenu import SupervisorUI
+from UI_Layer.MainMenu import MainMenu
 from Logic_layer.LogicWrapper import LogicWrapper
 import os
 import shutil
@@ -38,9 +38,9 @@ class LoginUI:
             choice = input("\nChoose an option: ").strip().lower()
 
             if choice == "1":
-                supervisor_ui.display_menu("supervisor")
+                MainMenu.display_menu("supervisor")
             elif choice == "2":
-                supervisor_ui.display_menu("employee")
+                MainMenu.display_menu("employee")
             elif choice == "q":
                 print("\n Exiting. Goodbye!")
                 break
