@@ -90,7 +90,7 @@ class SearchUI:
                 self.search_work_orders_by_employee(employee_ssn)
             elif choice == '8':
                 employee_ssn = input("\nEnter Employee Social Security Number to search work order: ")
-                self.search_work_orders_by_employee(employee_ssn)
+                self.search_maintenance_reports_by_employee(employee_ssn)
             elif choice == "b":
                 return
             else:
