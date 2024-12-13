@@ -8,13 +8,16 @@ class EmployeeManagementUI:
         self.logic_wrapper = logic_wrapper
 
     def clear_terminal(self):
+        """Clears the terminal screen"""
         os.system('cls' if os.name == 'nt' else 'clear')
 
     def get_terminal_size(self):
+        """Get the current terminal size."""
         columns, rows = shutil.get_terminal_size(fallback=(80, 24))
         return columns, rows
 
     def display_menu(self, employee_status: str):
+        """Shows display menu for employee management and handle user input"""
         while True:
             self.clear_terminal()
             columns, _ = self.get_terminal_size()
@@ -48,6 +51,9 @@ class EmployeeManagementUI:
                 input("\nPress Enter to return to the menu.")
 
     def list_all_employees(self):
+        """
+        Lists all employees in CSV file.
+        """
         self.clear_terminal()
         columns, _ = self.get_terminal_size()
         print("+".ljust(columns - 1, '-') + "+")
@@ -70,6 +76,9 @@ class EmployeeManagementUI:
         input("\nPress Enter to return to the menu.")
 
     def register_employee(self):
+        """
+        Adds a new employee to the employees CSV file.
+        """
         self.clear_terminal()
         columns, _ = self.get_terminal_size()
         print("+".ljust(columns - 1, '-') + "+")
@@ -80,18 +89,18 @@ class EmployeeManagementUI:
         employee_details = {}
 
         while True:
-            employee_details["ssn"] = input("Enter SSN (10 digits): ").strip()
+            ssn = input("Enter SSN (10 digits): ").strip()
+            employee_check = self.logic_wrapper.check_if_employee_exists(ssn)
+            employee_details["ssn"] = ssn
             if employee_details["ssn"].lower() == 'b':
                 return
             if not InputValidation.validate_ssn(employee_details["ssn"]):
                 print("Invalid SSN. Must only contain digits and should be exactly 10 digits.")
                 input("\nPress Enter to try again.")
+            elif employee_check == "An employee with that SSN already exists":
+                print(employee_check)
             else:
-                if self.logic_wrapper.search_employee_by_ssn(employee_details["ssn"]):
-                    print("Error: Employee with this SSN already exists.")
-                    input("\nPress Enter to try again.")
-                else:
-                    break
+                break
 
         while True:
             employee_details["full_name"] = input("Enter Full Name: ").strip()
@@ -147,6 +156,9 @@ class EmployeeManagementUI:
         input("\nPress Enter to return to the menu.")
 
     def update_employee_info(self):
+        """
+        Updates selected employee with a new value in the chosen field.
+        """
         self.clear_terminal()
         columns, _ = self.get_terminal_size()
         print("+".ljust(columns - 1, '-') + "+")
@@ -229,6 +241,9 @@ class EmployeeManagementUI:
         input("\nPress Enter to return to the menu.")
 
     def get_work_plan(self):
+        """
+        Shows a list of all open work orders, ordered by priority. (High, Medium, Low)
+        """
         self.clear_terminal()
         columns, _ = self.get_terminal_size()
         print("+".ljust(columns - 1, '-') + "+")

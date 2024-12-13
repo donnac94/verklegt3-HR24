@@ -8,13 +8,16 @@ class SearchUI:
         self.logic_wrapper = logic_wrapper
     
     def clear_terminal(self):
+        """Clears the terminal screen"""
         os.system('cls' if os.name == 'nt' else 'clear')
     
     def get_terminal_size(self):
+        """Get the current terminal size."""
         columns, rows = shutil.get_terminal_size(fallback=(80, 24))
         return columns, rows
     
     def display_menu(self):
+        """Shows display menu for searching and handle user input"""
         while True:
             self.clear_terminal()
             columns, _ = self.get_terminal_size()
@@ -88,8 +91,11 @@ class SearchUI:
                 input("\nPress Enter to return to the menu.")
                 
     
-    def search_employee_by_ssn(self, ssn):
-        
+    def search_employee_by_ssn(self, ssn: int):
+        """
+        Shows an employee with given SSN
+        :param int ssn: The SSN of the employee you want to search for.
+        """
         self.clear_terminal()
         columns, _ = self.get_terminal_size()
         print("+".ljust(columns - 1, '-') + "+")
@@ -118,6 +124,10 @@ class SearchUI:
         
         
     def list_all_employee_by_loc(self, location):
+        """
+        Shows a list of all employees in given location
+        :param str location: The given location you want a list of employees for.
+        """
         self.clear_terminal()
         columns, _ = self.get_terminal_size()
         print("+".ljust(columns - 1, '-') + "+")
@@ -141,6 +151,10 @@ class SearchUI:
         
         
     def list_all_prop_by_loc(self, location):
+        """
+        Shows a list of all properties in given location
+        :param str location: The given location you want a list of properties for.
+        """
         self.clear_terminal()
         columns, _ = self.get_terminal_size()
         print("+".ljust(columns - 1, '-') + "+")
@@ -163,7 +177,11 @@ class SearchUI:
         input("\nPress Enter to return to the menu.")
         
 
-    def list_property_by_id(self, property_id):
+    def list_property_by_id(self, property_id: int):
+        """
+        Shows the property with the given ID.
+        :param int property_id: The ID of the property you want to find.
+        """
         self.clear_terminal()
         columns, _ = self.get_terminal_size()
         print("+".ljust(columns - 1, '-') + "+")
@@ -186,7 +204,11 @@ class SearchUI:
                                     property.requires_maintenance))
         input("\nPress Enter to return to the menu.")
 
-    def search_work_order_by_id(self, work_order_id):
+    def search_work_order_by_id(self, work_order_id: int):
+        """
+        Shows the work order with the given ID.
+        :param int work_order_id: The ID of the work order you want to find.
+        """
         self.clear_terminal()
         columns, _ = self.get_terminal_size()
         print("+".ljust(columns - 1, '-') + "+")
@@ -209,7 +231,11 @@ class SearchUI:
                                     work_order.priority, work_order.work_order_status, work_order.marked_as_finished))
         input("\nPress Enter to return to the menu.")
 
-    def search_work_orders_by_property(self, property_name):
+    def search_work_orders_by_property(self, property_name: str):
+        """
+        Shows a list of all work orders connected to given property.
+        :param str property_name: The given property you want a list of work orders for.
+        """
         self.clear_terminal()
         columns, _ = self.get_terminal_size()
         print("+".ljust(columns - 1, '-') + "+")
@@ -231,7 +257,11 @@ class SearchUI:
                                         work_order.priority, work_order.work_order_status, work_order.marked_as_finished))
         input("\nPress Enter to return to the menu.")
 
-    def search_maintenance_reports_by_property(self, property_name):
+    def search_maintenance_reports_by_property(self, property_name: str):
+        """
+        Shows a list of all maintenance reports connected to given property.
+        :param str property_name: The given property you want a list of maintenance reports for.
+        """
         self.clear_terminal()
         columns, _ = self.get_terminal_size()
         print("+".ljust(columns - 1, '-') + "+")
@@ -254,7 +284,11 @@ class SearchUI:
                                         maintenance_report.marked_as_finished, maintenance_report.report_closed, maintenance_report.contractors_used))
         input("\nPress Enter to return to the menu.")
     
-    def search_work_orders_by_employee(self, employee_ssn):
+    def search_work_orders_by_employee(self, employee_ssn: int):
+        """
+        Shows a list of all work orders made by employee.
+        :param int employee_ssn: The given employee SSN you want a list of work orders from.
+        """
         self.clear_terminal()
         columns, _ = self.get_terminal_size()
         print("+".ljust(columns - 1, '-') + "+")
@@ -276,7 +310,11 @@ class SearchUI:
                                         work_order.priority, work_order.work_order_status, work_order.marked_as_finished))
         input("\nPress Enter to return to the menu.")
 
-    def search_maintenance_reports_by_employee(self, employee_ssn):
+    def search_maintenance_reports_by_employee(self, employee_ssn: int):
+        """
+        Shows a list of all maintenance reports made by employee.
+        :param int employee_ssn: The given employee SSN you want a list of maintenance reports from.
+        """
         self.clear_terminal()
         columns, _ = self.get_terminal_size()
         print("+".ljust(columns - 1, '-') + "+")

@@ -84,6 +84,7 @@ class WorkOrderLogic:
         return "Work order and connected maintenance report reopened successfully."
     
     def automatic_work_order_id(self):
+        """"""
         work_orders = self.get_all_work_orders()
         if not work_orders:
             return 1

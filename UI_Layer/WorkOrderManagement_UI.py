@@ -7,6 +7,7 @@ class WorkOrderUI:
         self.logic_wrapper = logic_wrapper
 
     def clear_terminal(self):
+        """Clears the terminal screen"""
         os.system('cls' if os.name == 'nt' else 'clear')
 
     def get_terminal_size(self):
@@ -14,7 +15,11 @@ class WorkOrderUI:
         columns, rows = shutil.get_terminal_size(fallback=(80, 24))
         return columns, rows
 
-    def display_menu(self, employee_status):
+    def display_menu(self, employee_status: str):
+        """
+        Shows display menu for work order management and handle user input.
+        :param str employee_status: Either "employee" or "supervisor" which the display uses to know what options should show.
+        """
         while True:
             self.clear_terminal()
             columns, _ = self.get_terminal_size()
@@ -62,6 +67,9 @@ class WorkOrderUI:
                 input("\nPress Enter to return to the menu.")
 
     def list_all_work_orders(self):
+        """
+        Shows a list of all work orders.
+        """
         self.clear_terminal()
         print("List All Work Orders")
         print("Press 'b' to go back to the Work Order Management Menu.")
@@ -79,6 +87,9 @@ class WorkOrderUI:
                 print("Invalid choice. Please try again.")
 
     def submit_work_order(self):
+        """
+        Add a new work order to the work order CSV file.
+        """
         self.clear_terminal()
         print("Submit New Work Order")
         print("Press 'b' to go back to the Work Order Management Menu.")
@@ -122,6 +133,9 @@ class WorkOrderUI:
         input("\nPress Enter to return to the menu.")
 
     def update_work_order_info(self):
+        """
+        Updates selected work order with a new value in the chosen field.
+        """
         self.clear_terminal()
         columns, _ = self.get_terminal_size()
         print("+".ljust(columns - 1, '-') + "+")
@@ -193,6 +207,9 @@ class WorkOrderUI:
         input("\nPress Enter to return to the menu.")
 
     def close_work_order(self):
+        """
+        Changes work_order_status to closed.
+        """
         self.clear_terminal()
         print("Close Work Order")
         print("Press 'b' to go back to the Work Order Management Menu.")
@@ -217,6 +234,9 @@ class WorkOrderUI:
                 print("Invalid choice. Please try again.")
 
     def reopen_work_order(self):
+        """
+        Changes work_order_status to Open.
+        """
         self.clear_terminal()
         print("Reopen Work Order")
         print("Press 'b' to go back to the Work Order Management Menu.")
@@ -239,7 +259,11 @@ class WorkOrderUI:
             else:
                 print("Invalid choice. Please try again.")
 
-    def display_work_orders(self, work_orders):
+    def display_work_orders(self, work_orders: list):
+        """
+        Lists all work orders in CSV file.
+        :param list work_orders: the list of work orders to display.
+        """
         headers = ["Work Order ID", "Work to be Done", "Property", "Submitting Supervisor", "Date", "Priority", "Status", "Marked as Finished"]
         col_widths = [len(header) for header in headers]
         for work_order in work_orders:
@@ -261,6 +285,9 @@ class WorkOrderUI:
             ))
 
     def mark_work_order_finished(self):
+        """
+        Changes work order mark_as_finished to True.
+        """
         self.clear_terminal()
         print("Mark work order as Finished")
         work_order_id = input("Enter work order ID: ").strip()

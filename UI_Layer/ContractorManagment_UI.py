@@ -10,6 +10,7 @@ class ContractorUI():
         self.logic_wrapper = logic_wrapper
 
     def clear_terminal(self):
+        """Clears the terminal screen"""
         os.system('cls' if os.name == 'nt' else 'clear')
     
     def get_terminal_size(self):
@@ -17,7 +18,11 @@ class ContractorUI():
         columns, rows = shutil.get_terminal_size(fallback=(80, 24))
         return columns, rows
     
-    def display_menu(self, employee_status):
+    def display_menu(self, employee_status: str):
+        """
+        Shows display menu for contractor management and handle user input.
+        :param str employee_status: Either "employee" or "supervisor" which the display uses to know what options should show.
+        """
         while True:
             self.clear_terminal()
             columns, _ = self.get_terminal_size()
@@ -36,6 +41,8 @@ class ContractorUI():
 
             choice = input("\nChoose an option: ").strip().lower()
 
+            if choice == "b":
+                return
             if choice == "1":
                 self.list_contractors()
             if employee_status == "supervisor":
@@ -43,13 +50,14 @@ class ContractorUI():
                     self.create_contractor()
                 elif choice == "3":
                     self.change_contractor_info()
-            elif choice == "b":
-                return
             else:
                 print("Invalid choice. Please try again.")
                 input("\nPress Enter to return to the menu.")
 
     def list_contractors(self):
+        """
+        Lists all contractors in CSV file.
+        """
         self.clear_terminal()
         columns, _ = self.get_terminal_size()
 
@@ -71,6 +79,9 @@ class ContractorUI():
         input("\nPress Enter to return to the menu.")
     
     def create_contractor(self):
+        """
+        Adds a new contractor to the contractors CSV file.
+        """
         self.clear_terminal()
         columns, _ = self.get_terminal_size()
         print("+".ljust(columns - 1, '-') + "+")
@@ -155,18 +166,22 @@ class ContractorUI():
         input("\nPress Enter to return to the menu.")
 
     def change_contractor_info(self):
-        """ Change a contractors information. """
+        """
+        Updates selected contractor with a new value in the chosen field.
+        """
         self.clear_terminal()
         columns, _ = self.get_terminal_size()
         print("+".ljust(columns - 1, '-') + "+")
         print("|" + " Update Contractor Information ".center(columns - 2) + "|")
         print("+".ljust(columns - 1, '-') + "+")
         print("Enter 'b' at any prompt to cancel and go back to the previous menu.\n")
+
         contractors = self.logic_wrapper.list_contractors()
         if not contractors:
             print("No contractors found.")
             input("\nPress Enter to return to the menu.")
             return
+
         headers = ["Contractor ID", "Company", "Contact Name", "Phone number", "Opening Time", "Location", "Satisfaction With Previous Work"]
         col_widths = [max(len(str(getattr(cont, attr))) for cont in contractors) for attr in ["contractor_id", "name", "contact_name", "phone_nr", "opening_time", "location", "satisfaction_with_previous_work"]]
         col_widths = [max(len(header), width) for header, width in zip(headers, col_widths)]
@@ -176,24 +191,36 @@ class ContractorUI():
         for cont in contractors:
             print(row_format.format(cont.contractor_id, cont.name, cont.contact_name, cont.phone_nr, cont.opening_time, cont.location, cont.satisfaction_with_previous_work))
 
+        # Prompt for contractor ID
+        while True:
+            contractor_id = input("\nEnter Contractor ID to update (or 'b' to go back): ").strip()
+            if contractor_id.lower() == 'b':
+                return
+            try:
+                contractor = self.logic_wrapper.get_contractor_by_id(contractor_id)
+                if not contractor:
+                    print("Contractor not found. Please try again.")
+                else:
+                    break
+            except Exception as e:
+                print(f"Error: {e}. Please try again.")
 
-        contractor_id = input("Enter Contractor ID to update: ").strip()
-        if contractor_id.lower() == 'b':
-            return
-        
-        contractor = self.logic_wrapper.get_contractor_by_id(contractor_id)
-        if not contractor: 
-            print("Contractor not found.")
-            input("\nPress Enter to return to the menu.")
-            return
-
+        # Display current information
         print("\nCurrent Information:")
         print(row_format.format(*headers))
         print("-" * (columns - 2))
         print(row_format.format(contractor.contractor_id, contractor.name, contractor.contact_name, contractor.phone_nr, contractor.opening_time, contractor.location, contractor.satisfaction_with_previous_work))
 
-        selected_field = input("\nEnter the field to update: \n1. Company \n2. Contact Name \n3. Phone Number \n4. Opening Time \n5. Location \n6. Satisfaction With Previous Work\n").strip()
-        while True:    
+        # Select field to update
+        while True:
+            print("\nFields to update:")
+            print("1. Company")
+            print("2. Contact Name")
+            print("3. Phone Number")
+            print("4. Opening Time")
+            print("5. Location")
+            print("6. Satisfaction With Previous Work")
+            selected_field = input("\nEnter the field number to update (or 'b' to go back): ").strip()
             if selected_field.lower() == 'b':
                 return
             elif selected_field == '1':
@@ -215,20 +242,38 @@ class ContractorUI():
                 selected_field = "satisfaction_with_previous_work"
                 break
             else:
-                selected_field = input("\nYou must choose a number between 1-6, try again.\n")
-            
-        new_value = input(f"Enter the new value for your chosen field: ").strip()
-        if new_value.lower() == 'b':
-            return
-        updated_details = {selected_field: new_value}
-        result = self.logic_wrapper.change_contractor_info(contractor_id, updated_details)
-        print(result)
+                print("Invalid choice. Please select a valid field number.")
 
-        # Fetch the updated property information
-        updated_contractor = self.logic_wrapper.get_contractor_by_id(contractor_id)
-        print("\nUpdated Information:")
-        print(row_format.format(*headers))
-        print("-" * (columns - 2))
-        print(row_format.format(updated_contractor.contractor_id, updated_contractor.name, updated_contractor.contact_name, updated_contractor.phone_nr, updated_contractor.opening_time, updated_contractor.location, updated_contractor.satisfaction_with_previous_work))
+        # Prompt for new value
+        while True:
+            new_value = input(f"Enter the new value for {selected_field.replace('_', ' ').capitalize()} (or 'b' to go back): ").strip()
+            if new_value.lower() == 'b':
+                return
+            if new_value:
+                break
+            else:
+                print("Value cannot be empty. Please enter a valid value.")
+
+        # Update contractor information
+        try:
+            updated_details = {selected_field: new_value}
+            result = self.logic_wrapper.change_contractor_info(contractor_id, updated_details)
+            print(result)
+        except Exception as e:
+            print(f"Error while updating contractor: {e}")
+            input("\nPress Enter to return to the menu.")
+            return
+
+        # Fetch and display updated contractor information
+        try:
+            updated_contractor = self.logic_wrapper.get_contractor_by_id(contractor_id)
+            print("\nUpdated Information:")
+            print(row_format.format(*headers))
+            print("-" * (columns - 2))
+            print(row_format.format(updated_contractor.contractor_id, updated_contractor.name, updated_contractor.contact_name, 
+                                updated_contractor.phone_nr, updated_contractor.opening_time, updated_contractor.location, 
+                                updated_contractor.satisfaction_with_previous_work))
+        except Exception as e:
+            print(f"Error fetching updated contractor: {e}")
 
         input("\nPress Enter to return to the menu.")

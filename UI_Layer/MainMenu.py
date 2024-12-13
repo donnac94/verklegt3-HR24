@@ -20,13 +20,19 @@ class SupervisorUI:
         self.contractor_ui = ContractorUI(logic_wrapper)
         self.search_ui = SearchUI(logic_wrapper)
     def clear_terminal(self):
+        """Clears the terminal screen"""
         os.system('cls' if os.name == 'nt' else 'clear')
 
     def get_terminal_size(self):
+        """Get the current terminal size."""
         columns, rows = shutil.get_terminal_size(fallback=(80, 24))
         return columns, rows
 
-    def display_menu(self, employee_status):
+    def display_menu(self, employee_status: str):
+        """
+        Shows display for the main menu and handle user input.
+        :param str employee_status: Either "employee" or "supervisor" which the display uses to know what options should show.
+        """
         while True:
             self.clear_terminal()
             columns, _ = self.get_terminal_size()
