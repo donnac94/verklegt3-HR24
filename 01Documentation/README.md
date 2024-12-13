@@ -7,12 +7,26 @@
 - Helga Sigrún - helgass24@ru.is
 - Guðni Emil - gudni24@ru.is - gudniemil24 	
 
-### Kröfur
-- Hugbúnaður á að geta skráð starfsmenn og hvaða starfi þeir sinna 
-## Starfsmenn:
-- Fyrir hvern starfsmann þarf að skrá nafn,kennitölu,heimilisfang,heimasíma,GSM síma, netfang og á hvaða áfangastað viðkomandi starfar(landfræðilegaséð)
-## Áfangastað:
-- Fyrir hvern áfangastað þarf að skrá land,flugvöll,símanúmer og opnunartíma. Einnig þarf að vera skráður einn starfsmaður sem er yfirmaður rekstrasviðs á hverjum stað
-## Húsnæði:
-- Hver Fasteign sem er í útleigu þarf að auðkenna og skrá upplýsingar um ástand húskosts. Sérstaklega ætti að skrá aðstöðu sem er í boði er sem krefst viðhalds, svo sem heitir pottar,sundlaugar eða kjaraofnar  
+# Instructions for AirNaN
+
+## Step 1 
+- Firstly you need to setup the pip installer 
+
+-  install pip: curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+- Check python version: python --version
+
+- If that all works and is setup you are ready to go open the application and open main.py
+
+## Step 2
+- Select the main.py file and then just run the program
+- After you have run the program correctly then the main LoginUI.py pops up on your Terminal
+- after running the program you get a multiple choice option to choose from if you are a supervisor you get the supervisor menu or if you pick the employee you get the employee menu 
+
+- choice -> Supervisor = Supervisor main menu 
+- choice -> Employee = Employee main menu 
+
+## Step 3 
+- After choosing your menu they will appear according if you are an Employee or an Supervisor
+  
+
 
