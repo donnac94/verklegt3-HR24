@@ -33,7 +33,7 @@ class PropertyLogic:
             location=property_details["location"],
             property_condition=property_details["property_condition"],
             supervisor=property_details["supervisor"],
-            requires_maintenance=[item.strip() for item in property_details["requires_maintenance"] if item.strip()]
+            requires_maintenance=property_details["requires_maintenance"] #[item.strip() for item in property_details["requires_maintenance"] if item.strip()]
         )
         self.data_wrapper.add_property(new_property)
         return "Property added successfully."

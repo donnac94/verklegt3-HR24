@@ -32,7 +32,7 @@ class PropertyUI:
             if employee_status == "supervisor":
                 print(d + " 2. Add New Property ".ljust(columns - 2) + d)
                 print(d + " 3. Update Property Information ".ljust(columns - 2) + d)
-            print(d + " b. Back to Supervisor Menu ".ljust(columns - 2) + d)
+            print(d + " b. Back to Main Menu ".ljust(columns - 2) + d)
             print(c + h * (columns - 2) + c)
 
             choice = input("\nChoose an option: ").strip().lower()
@@ -72,7 +72,7 @@ class PropertyUI:
             print("-" * (columns - 2))
             for prop in properties:
                 print(row_format.format(prop.property_id, prop.address, prop.location, prop.property_condition,
-                                        prop.supervisor, str(prop.requires_maintenance)))
+                                        prop.supervisor, prop.requires_maintenance))
         input("\nPress Enter to return to the menu.")
 
     def add_new_property(self):
@@ -142,10 +142,10 @@ class PropertyUI:
 
         # Input for maintenance requirements
         while True:
-            requires_maintenance = str(input("Enter Requires Maintenance (comma-separated, can be empty): ")).strip()
+            requires_maintenance = input("Enter Requires Maintenance (comma-separated, can be empty): ").strip()
             if requires_maintenance.lower() == 'b':
                 return
-            property_details["requires_maintenance"] = [item.strip() for item in requires_maintenance.split(",") if item.strip()]
+            property_details["requires_maintenance"] = requires_maintenance #[item.strip() for item in requires_maintenance.split(",") if item.strip()]
             break
 
         # Save the new property using LogicWrapper
@@ -183,7 +183,7 @@ class PropertyUI:
         print(row_format.format(*headers))
         print("-" * (columns - 2))
         for prop in properties:
-            print(row_format.format(prop.property_id, prop.address, prop.location, prop.property_condition, prop.supervisor, ", ".join(prop.requires_maintenance)))
+            print(row_format.format(prop.property_id, prop.address, prop.location, prop.property_condition, prop.supervisor, prop.requires_maintenance))
 
         property_id = input("\nEnter Property ID to update: ").strip()
         if property_id.lower() == 'b':
@@ -197,7 +197,7 @@ class PropertyUI:
         print("\nCurrent Information:")
         print(row_format.format(*headers))
         print("-" * (columns - 2))
-        print(row_format.format(property.property_id, property.address, property.location, property.property_condition, property.supervisor, ", ".join(property.requires_maintenance)))
+        print(row_format.format(property.property_id, property.address, property.location, property.property_condition, property.supervisor, "".join(property.requires_maintenance)))
 
         selected_field = input("\nFields to update: \n1. Address \n2. Location \n3. Property condition \n4. Supervisor \n5. Requires maintenance \nEnter a number with the corresponding field to update: ").strip()
         while True:    
