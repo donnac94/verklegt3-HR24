@@ -153,3 +153,6 @@ class LogicWrapper:
     
     def get_work_plan(self):
         return self.employee_logic.get_work_plan()
+    
+    def check_if_employee_exists(self, ssn: int):
+        return self.employee_logic.check_if_employee_exists(ssn)

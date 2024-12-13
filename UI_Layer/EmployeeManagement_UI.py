@@ -89,20 +89,18 @@ class EmployeeManagementUI:
         employee_details = {}
 
         while True:
-            employee_details["ssn"] = input("Enter SSN (10 digits): ").strip()
+            ssn = input("Enter SSN (10 digits): ").strip()
+            employee_check = self.logic_wrapper.check_if_employee_exists(ssn)
+            employee_details["ssn"] = ssn
             if employee_details["ssn"].lower() == 'b':
                 return
             if not InputValidation.validate_ssn(employee_details["ssn"]):
                 print("Invalid SSN. Must only contain digits and should be exactly 10 digits.")
                 input("\nPress Enter to try again.")
+            elif employee_check == "An employee with that SSN already exists":
+                print(employee_check)
             else:
-                employees = self.logic_wrapper.list_employees()  # Fetch all employees
-                if any(emp.ssn == employee_details["ssn"] for emp in employees):  # Check if the SSN exists
-                    print("Error: Employee with this SSN already exists.")
-                    input("\nPress Enter to try again.")
-                else:
-                    break
-
+                break
 
         while True:
             employee_details["full_name"] = input("Enter Full Name: ").strip()
