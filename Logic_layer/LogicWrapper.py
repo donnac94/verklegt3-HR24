@@ -145,6 +145,10 @@ class LogicWrapper:
     def get_report_by_id(self, maintenance_report_id: int) -> MaintenanceReport:
         """gets the maintenance report by its id """
         return self.maintenance_report_logic.get_report_by_id(maintenance_report_id)
+    
+    def automatic_report_id(self):
+        return self.maintenance_report_logic.automatic_report_id()
+        
     #SearchLogic
 
     def search_employee_by_ssn(self, ssn):

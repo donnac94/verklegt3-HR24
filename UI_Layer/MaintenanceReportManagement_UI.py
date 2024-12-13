@@ -98,7 +98,7 @@ class MaintenanceReportUI:
         print("+".ljust(columns - 1, '-') + "+")
         print("Enter 'b' at any prompt to cancel and go back to the previous menu.\n")
         
-        report_id = self.automatic_report_id()
+        report_id = self.logic_wrapper.automatic_report_id()
         report_details = {
             "maintenance_report_id": report_id
         }
@@ -362,14 +362,3 @@ class MaintenanceReportUI:
         else:
             print(result)
             input("\nPress Enter to return to the menu.")
-    
-    def automatic_report_id(self):
-        """
-        Gets the latest maintenance report ID and increments it by 1.
-        """
-        reports = self.logic_wrapper.get_all_maintenance_reports()
-        if not reports:
-            return 1
-        latest_report = reports[-1]
-        latest_id = int(latest_report.maintenance_report_id)
-        return latest_id + 1
