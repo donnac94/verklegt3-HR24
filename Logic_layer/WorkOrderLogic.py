@@ -95,5 +95,4 @@ class WorkOrderLogic:
         Marks a work order as finished.
         :param int work_order_id: The ID of the work order to be marked as finished.
         """
-        self.change_work_order_info(work_order_id, "marked_as_finished", "True")
-        return "Work order marked as finished."
+        return self.change_work_order_info(work_order_id, "marked_as_finished", "True")
