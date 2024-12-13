@@ -269,7 +269,9 @@ class MaintenanceReportUI:
             if field == 'b':
                 return
             if not field.isdigit():
-                input("Invalid field. Please enter an integer: ")
+                print("Input was not an integer")
+                return
+                # input("Invalid field. Please enter an integer: ")
             field = int(field)
             if field in range(1, 10): 
                 value = input(f"Enter the new value for selected field: ").strip()
