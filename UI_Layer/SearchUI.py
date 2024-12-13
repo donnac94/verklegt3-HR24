@@ -35,7 +35,6 @@ class SearchUI:
             print(d + " 6. Search maintenance reports by property".ljust(columns - 2) + d)
             print(d + " 7. Search Workorders by employee".ljust(columns - 2) + d)
             print(d + " 8. Search maintenance reports by employee".ljust(columns - 2) + d)
-            print(d + " 9. Get work plan".ljust(columns - 2) + d)
             print(d + " b. Exit".ljust(columns - 2) + d)
             print(c + h * (columns - 2) + c)
 
@@ -64,14 +63,22 @@ class SearchUI:
                     print("invalid input")
             elif choice == '2':
                 ssn = input("\n Enter Social Security number: ")
-                
-                self.search_employee_by_ssn(ssn)
+                try:
+                    self.search_employee_by_ssn(ssn)
+                except:
+                    print("Not a valid SSN number")
             elif choice == '3':
                 location = input("\nEnter a property id: ")
-                self.list_all_prop_by_loc(location)
+                try:
+                    self.list_property_by_id(location)
+                except:
+                    print("Try again")
             elif choice == '4':
                 work_order_id = input("\nEnter Workorder Id: ")
-                self.search_work_order_by_id( work_order_id)
+                try:
+                    self.search_work_order_by_id( work_order_id)
+                except:
+                    print("try again")
             elif choice == '5':
                 property_name = input("\nEnter Property Name: ")
                 self.search_work_orders_by_property(property_name)
@@ -83,7 +90,7 @@ class SearchUI:
                 self.search_work_orders_by_employee(employee_ssn)
             elif choice == '8':
                 employee_ssn = input("\nEnter Employee Social Security Number to search work order: ")
-                self.search_work_orders_by_employee(employee_ssn)
+                self.search_maintenance_reports_by_employee(employee_ssn)
             elif choice == "b":
                 return
             else:

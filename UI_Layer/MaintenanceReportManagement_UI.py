@@ -145,7 +145,7 @@ class MaintenanceReportUI:
                 print("Invalid upkeep status. Please try again.")
 
         while True:
-            employee = input("Enter Employee: ").strip()
+            employee = input("Enter Employee SSN: ").strip()
             if employee == 'b':
                 return
             if InputValidation.validate_employee(employee):
@@ -264,7 +264,7 @@ class MaintenanceReportUI:
 
         report_details = {}
         while True:
-            field = input("\nEnter the field to update: \n1. Connected Work Order ID \n2. Property \n3. Work Done \n4. Upkeep Status \n5. Employee \n6. Total Cost \n7. Marked as Finished \n8. Report Closed \n9. Contractors Used: ").strip()
+            field = input("\nEnter the field to update: \n1. Connected Work Order ID \n2. Property \n3. Work Done \n4. Upkeep Status (Regular Maintenance or Emergency Repair) \n5. Employee \n6. Total Cost \n7. Marked as Finished (True or False) \n8. Report Closed (True or False) \n9. Contractors Used: ").strip()
             
             if field == 'b':
                 return
@@ -296,8 +296,8 @@ class MaintenanceReportUI:
                     report_details[field] = value
                     break
                 elif field == 6 and InputValidation.validate_total_costs(value):
-                    field = "total_cost"
-                    report_details[field] = int(value)
+                    field = "total_costs"
+                    report_details[field] = value
                     break
                 elif field == 7 and InputValidation.validate_boolean(value):
                     field = "marked_as_finished"
