@@ -49,15 +49,6 @@ class ContractorLogic:
         """
         Changes the contractor info
         :takes the old info and return the new updated data 
-        Args:
-            contractor_id (_type_): the id of the contractor that is about to be updated 
-            updated_details (dict): returns the new updated contractor info 
-
-        Raises:
-            ValueError: if the contractor with the id that was in the input does not exist then it raises a valueerror
-
-        Returns:
-            str: When the contractor is updated it will return the new value and a string that has the message that the update was completed 
         """
         contractors = self.data_wrapper.get_all_contractors()
         contractor_found = False
@@ -98,8 +89,6 @@ class ContractorLogic:
     def update_contractor(self, updated_contractor: Contractor) -> None:
         """
         Gets all the contractors and is selected by the id and then is updated 
-        Args:
-            updated_contractor (Contractor): the updated contractor gets the new value 
         """
         contractors = self.data_wrapper.get_all_contractors()
         with open(self.data_wrapper.contractor_data.filename, "w", newline="", encoding="utf-8") as csvfile:

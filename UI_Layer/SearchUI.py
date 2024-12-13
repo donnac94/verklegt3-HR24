@@ -199,17 +199,17 @@ class SearchUI:
         if not work_order:
             print("No work order found.")
         else:
-            headers = ["work_order_id", "work_to_be_done", "property", "submitting_supervisor", "date", "priority", "work_order_status"]
+            headers = ["work_order_id", "work_to_be_done", "property", "submitting_supervisor", "date", "priority", "work_order_status", "marked_as_finished"]
             col_widths = [(max(len(header), len(str( getattr(work_order, attr))))) 
             for header, attr in zip(
-                headers, ["work_order_id", "work_to_be_done", "property", "submitting_supervisor", "date", "priority", "work_order_status"]
+                headers, ["work_order_id", "work_to_be_done", "property", "submitting_supervisor", "date", "priority", "work_order_status", "marked_as_finished"]
             )]
             row_format = "  |  ".join([f"{{:<{width}}}" for width in col_widths])
             print(row_format.format(*headers))
             print("-" * (columns - 2))
 
             print(row_format.format(work_order.work_order_id, work_order.work_to_be_done, work_order.property, work_order.submitting_supervisor, work_order.date, 
-                                    work_order.priority, work_order.work_order_status))
+                                    work_order.priority, work_order.work_order_status, work_order.marked_as_finished))
         input("\nPress Enter to return to the menu.")
 
     def search_work_orders_by_property(self, property_name):
@@ -222,16 +222,16 @@ class SearchUI:
         if not filtered_work_orders:
             print("No work orders for this property")
         else:
-             headers = ["work_order_id", "work_to_be_done", "property", "submitting_supervisor", "date", "priority", "work_order_status"]
+             headers = ["work_order_id", "work_to_be_done", "property", "submitting_supervisor", "date", "priority", "work_order_status", "marked_as_finished"]
              col_widths = [max(len(str(getattr(work_order, attr))) for work_order in filtered_work_orders) for attr in
-                          ["work_order_id", "work_to_be_done", "property", "submitting_supervisor", "date", "priority", "work_order_status"]]
+                          ["work_order_id", "work_to_be_done", "property", "submitting_supervisor", "date", "priority", "work_order_status", "marked_as_finished"]]
              col_widths = [max(len(header), width) for header, width in zip(headers, col_widths)]
              row_format = "  |  ".join([f"{{:<{width}}}" for width in col_widths])
              print(row_format.format(*headers))
              print("-" * (columns - 2))
              for work_order in filtered_work_orders:
                 print(row_format.format(work_order.work_order_id, work_order.work_to_be_done, work_order.property, work_order.submitting_supervisor, work_order.date, 
-                                        work_order.priority, work_order.work_order_status))
+                                        work_order.priority, work_order.work_order_status, work_order.marked_as_finished))
         input("\nPress Enter to return to the menu.")
 
     def search_maintenance_reports_by_property(self, property_name):
@@ -267,16 +267,16 @@ class SearchUI:
         if not filtered_work_orders:
             print("No work orders for this employee")
         else:
-             headers = ["work_order_id", "work_to_be_done", "property", "submitting_supervisor", "date", "priority", "work_order_status"]
+             headers = ["work_order_id", "work_to_be_done", "property", "submitting_supervisor", "date", "priority", "work_order_status", "marked_as_finished"]
              col_widths = [max(len(str(getattr(work_order, attr))) for work_order in filtered_work_orders) for attr in
-                          ["work_order_id", "work_to_be_done", "property", "submitting_supervisor", "date", "priority", "work_order_status"]]
+                          ["work_order_id", "work_to_be_done", "property", "submitting_supervisor", "date", "priority", "work_order_status", "marked_as_finished"]]
              col_widths = [max(len(header), width) for header, width in zip(headers, col_widths)]
              row_format = "  |  ".join([f"{{:<{width}}}" for width in col_widths])
              print(row_format.format(*headers))
              print("-" * (columns - 2))
              for work_order in filtered_work_orders:
                 print(row_format.format(work_order.work_order_id, work_order.work_to_be_done, work_order.property, work_order.submitting_supervisor, work_order.date, 
-                                        work_order.priority, work_order.work_order_status))
+                                        work_order.priority, work_order.work_order_status, work_order.marked_as_finished))
         input("\nPress Enter to return to the menu.")
 
     def search_maintenance_reports_by_employee(self, employee_ssn):
