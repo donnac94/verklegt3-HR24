@@ -6,17 +6,17 @@ class EmployeeLogic:
         self.data_wrapper = DataWrapper()
 
     def register_employee(self, employee_details: dict) -> str:
-        """_summary_
-
+        """
+        Register a new employee, takes the input and assigns by id 
         Args:
-            employee_details (dict): _description_
+            employee_details (dict): checks if the employee details already exist and return a error message
 
         Returns:
-            str: _description_
+            str: Returns the new value and a message that the employee was registered successfully 
         """
         existing_employees = self.data_wrapper.list_employees()
         if any(emp.ssn == employee_details["ssn"] for emp in existing_employees):
-            return "Error: Employee with this SSN already exists."
+            return "Error: Employee with this SSN already exists." #Mögulega betra að hafa raise ValueError("Error: Employee with this SSN already exists.")
         
         new_employee = Employee(
             ssn=employee_details["ssn"],
@@ -32,9 +32,24 @@ class EmployeeLogic:
         return "Employee registered successfully."
 
     def list_employees(self) -> list[Employee]:
+        """
+        Takes all the employees and lists them up in a list 
+        Returns:
+            list[Employee]: Takes the employee model and shows it in a list 
+        """
         return self.data_wrapper.list_employees()
 
     def change_employee_info(self, ssn: str, field: str, new_value: str) -> str:
+        """
+        Shows all the employees in a list, then the employee is selected by their id  
+        Args:
+            ssn (str): the ssn that you want to change
+            field (str): the field that you want to change
+            new_value (str): the new value that is replacing the old one
+
+        Returns:
+            str: returns the message that the information change about the employee was successful 
+        """
         self.data_wrapper.update_employee(ssn, field, new_value)
         return "Employee information updated successfully."
     

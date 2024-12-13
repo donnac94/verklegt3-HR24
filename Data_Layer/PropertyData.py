@@ -6,10 +6,8 @@ class PropertyData:
         self.file_name = "Files/properties.csv"
 
     def add_property(self, property: Property) -> None:
-        """_summary_
-
-        Args:
-            property (Property): _description_
+        """
+        Reads the csv file properties.csv and writes the user input using the dictwriter 
         """
         with open(self.file_name, 'a', newline='', encoding="utf-8") as csvfile:
             fieldnames = ["property_id", "address", "location", "property_condition", "supervisor", "requires_maintenance"]
@@ -21,10 +19,8 @@ class PropertyData:
             writer.writerow(property.to_dict())
 
     def get_all_properties(self) -> list[Property]:
-        """_summary_
-
-        Returns:
-            list[Property]: _description_
+        """
+        Reads the the file properties returns it as a list 
         """
         properties = []
         try:
@@ -37,14 +33,10 @@ class PropertyData:
         return properties
 
     def update_property(self, property_id, updated_details: dict):
-        """_summary_
-
-        Args:
-            property_id (_type_): _description_
-            updated_details (dict): _description_
-
-        Raises:
-            ValueError: _description_
+        """
+        Updates the property
+        :Gets all the the properties and opens the csv file 
+        :returns the new value of the property 
         """
         properties = self.get_all_properties()
         property_found = False
@@ -68,13 +60,10 @@ class PropertyData:
                 writer.writerow(property.to_dict())
 
     def load_locations(self):
-        """_summary_
-
-        Raises:
-            KeyError: _description_
-
-        Returns:
-            _type_: _description_
+        """
+        reads the locations from the csv file
+        
+        valueerror: will stop the program if there is no airport in the csv file or supervisor
         """
         locations = {}
         with open(self.file_name, mode='r') as file:
