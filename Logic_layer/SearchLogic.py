@@ -5,9 +5,7 @@ class SearchLogic:
     
     def __init__(self):
         self.data_wrapper = DataWrapper()
-        
-        
-        
+
     def search_employee_by_location(self, location):
         """Search employees by location"""
         filtered_list= []

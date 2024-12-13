@@ -2,7 +2,7 @@ contractor_id,name,contact_name,phone_nr,opening_time,location,satisfaction_with
 1,Gangverk,John Contractor,123-456-7890,08:00-18:00,Reykjavík,High
 2,MarioPípur,Mario Leblanc,7758890,10:00-17:00,Tingwall,Medium
 3,Gangverk,Gússi Þorsteinsson,7791010,13:00-20:00,Reykjavík,
-4,,,7771212,13:00-21:00,,
+4,Klárverk,Stefán Stéfanson,7771212,13:00-21:00,Tingwall,Good
 5,Gangverk,Dobby Potter,5578080,13:00-22:00,Nuuk,Medium
 6,Browski,Brendan Lovitt,8889090,13:00-22:00,Nuuk,Medium
 7,Browskis,Brendan Lovitt,8981011,13:00-22:00,Nuuk,Medium

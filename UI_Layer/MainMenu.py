@@ -1,7 +1,6 @@
 from Logic_layer.LogicWrapper import LogicWrapper
 import os
 import shutil
-import sys
 
 from UI_Layer.ContractorManagment_UI import ContractorUI
 from UI_Layer.EmployeeManagement_UI import EmployeeManagementUI
@@ -10,7 +9,7 @@ from UI_Layer.PropertyManagement_UI import PropertyUI
 from UI_Layer.WorkOrderManagement_UI import WorkOrderUI
 from UI_Layer.SearchUI import SearchUI
 
-class SupervisorUI:
+class MainMenu:
     def __init__(self, logic_wrapper: LogicWrapper):
         self.logic_wrapper = logic_wrapper
         self.employee_management_ui = EmployeeManagementUI(logic_wrapper)

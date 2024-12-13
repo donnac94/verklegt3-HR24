@@ -1,7 +1,5 @@
 from Data_Layer.DataWrapper import DataWrapper
 from Models.Contractor import Contractor
-import csv
-
 
 class ContractorLogic:
     def __init__(self):

@@ -19,21 +19,13 @@ class PropertyLogic:
             if property.address == property_details["address"]:
                 raise ValueError ("Error: Property with this address already exists in the system.")
 
-        # Validate location
-        # locations = self.property_data.load_locations()
-        # if property_details["location"] not in locations:
-        #     return "Error: Invalid location. Please enter a valid location from the locations list."
-
-        # # Automatically assign supervisor based on location
-        # property_details["supervisor"] = locations[property_details["location"]]
-
         new_property = Property(
             property_id=property_details["property_id"],
             address=property_details["address"],
             location=property_details["location"],
             property_condition=property_details["property_condition"],
             supervisor=property_details["supervisor"],
-            requires_maintenance=property_details["requires_maintenance"] #[item.strip() for item in property_details["requires_maintenance"] if item.strip()]
+            requires_maintenance=property_details["requires_maintenance"]
         )
         self.data_wrapper.add_property(new_property)
         return "Property added successfully."
