@@ -38,5 +38,10 @@
 **YouTube Video to Showing the function of the application**
 - https://youtu.be/O4vzWAq9Nqg 
 
+**Requirements**
+- We didnt use any external libraries 
+- we used: Python 3.12.6
+- Can run on Windows and Mac 
+
 
 
