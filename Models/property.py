@@ -1,5 +1,5 @@
 class Property:
-    def __init__(self, property_id, address, location, property_condition, supervisor, requires_maintenance):
+    def __init__(self, property_id:int, address:str, location:str, property_condition:str, supervisor:str, requires_maintenance:str):
         self.property_id = property_id
         self.address = address
         self.location = location

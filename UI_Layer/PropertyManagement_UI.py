@@ -44,6 +44,8 @@ class PropertyUI:
                     self.add_new_property()
                 elif choice == "3":
                     self.update_property_info()
+                elif choice == "b":
+                    return
             elif choice == "b":
                 return
             else:
@@ -72,7 +74,7 @@ class PropertyUI:
             print("-" * (columns - 2))
             for prop in properties:
                 print(row_format.format(prop.property_id, prop.address, prop.location, prop.property_condition,
-                                        prop.supervisor, ", ".join(prop.requires_maintenance)))
+                                        prop.supervisor, str(prop.requires_maintenance)))
         input("\nPress Enter to return to the menu.")
 
     def add_new_property(self):
@@ -142,7 +144,7 @@ class PropertyUI:
 
         # Input for maintenance requirements
         while True:
-            requires_maintenance = input("Enter Requires Maintenance (comma-separated, can be empty): ").strip()
+            requires_maintenance = str(input("Enter Requires Maintenance (comma-separated, can be empty): ")).strip()
             if requires_maintenance.lower() == 'b':
                 return
             property_details["requires_maintenance"] = [item.strip() for item in requires_maintenance.split(",") if item.strip()]
