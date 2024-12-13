@@ -145,7 +145,7 @@ class PropertyUI:
             requires_maintenance = input("Enter Requires Maintenance (comma-separated, can be empty): ").strip()
             if requires_maintenance.lower() == 'b':
                 return
-            property_details["requires_maintenance"] = requires_maintenance #[item.strip() for item in requires_maintenance.split(",") if item.strip()]
+            property_details["requires_maintenance"] = requires_maintenance 
             break
 
         # Save the new property using LogicWrapper
@@ -224,8 +224,6 @@ class PropertyUI:
         new_value = input(f"Enter the new value for your chosen field: ").strip()
         if new_value.lower() == 'b':
             return
-        if selected_field == "requires_maintenance":
-            updated_details = {selected_field: [item.strip() for item in new_value.split(",") if item.strip()]}
         else:
             updated_details = {selected_field: new_value}
         result = self.logic_wrapper.update_property(property_id, updated_details)
@@ -235,6 +233,6 @@ class PropertyUI:
         print("\nUpdated Information:")
         print(row_format.format(*headers))
         print("-" * (columns - 2))
-        print(row_format.format(updated_property.property_id, updated_property.address, updated_property.location, updated_property.property_condition, updated_property.supervisor, ", ".join(updated_property.requires_maintenance)))
+        print(row_format.format(updated_property.property_id, updated_property.address, updated_property.location, updated_property.property_condition, updated_property.supervisor, updated_property.requires_maintenance))
 
         input("\nPress Enter to return to the menu.")

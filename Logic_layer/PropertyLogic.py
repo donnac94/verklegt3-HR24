@@ -49,8 +49,6 @@ class PropertyLogic:
         """
         Updates the property info and returns the new value 
         """
-        if "requires_maintenance" in updated_details:
-            updated_details["requires_maintenance"] = [item.strip() for item in updated_details["requires_maintenance"] if item.strip()]
         self.data_wrapper.update_property(property_id, updated_details)
         return "Property updated successfully."
 
