@@ -1,10 +1,10 @@
 maintenance_report_id,connected_work_order_id,property,work_done,upkeep_status,employee,total_costs,marked_as_finished,report_closed,contractors_used
-1,3,123 Main St,Repaired roof,Regular Maintenance,John Smith,5000,True,True,Contractor A
-2,4,456 Elm St,Window cleaning,Regular Maintenance,Jane Doe,2000,True,True,Contractor B
-3,10,789 Oak St,Fixed heater,Emergency Repair,Emily Davis,3000,False,False,Contractor C
-4,9,101 Pine St,Fixed plumbing,Regular Maintenance,Michael Brown,4000,True,True,Contractor D
-5,8,202 Maple St,Garden maintenance,Regular Maintenance,Sarah Connor,1500,True,True,Contractor E
-6,2,303 Birch St,Fixed bathroom tile,Emergency Repair,Lísa Alfreðs,3500,False,False,Contractor F
-7,1,Langholt 33,fix hottub,Emergency Repair,Snorri Snorrasson,500,False,False,{'Contractor D'}
-8,7,Tunguháls 12,Fix hottub,Regular Maintenance,Donna,0,True,False,"{' Gunnar', 'Sigga'}"
-9,7,Tunguháls 33,Fixed wall,Regular Maintenance,Sara,600,True,False,"Jón, Páll"
+1,3,123 Main St,Repaired roof,Regular Maintenance,1711732219,5000,True,True,Contractor A
+2,4,456 Elm St,Window cleaning,Regular Maintenance,1302932839,2000,True,True,Contractor B
+3,10,789 Oak St,Fixed heater,Emergency Repair,1711732219,3000,False,False,Contractor C
+4,9,101 Pine St,Fixed plumbing,Regular Maintenance,2511945959,4000,True,True,Contractor D
+5,8,202 Maple St,Garden maintenance,Regular Maintenance,2511945959,1500,True,True,Contractor E
+6,2,303 Birch St,Fixed bathroom tile,Emergency Repair,2511945959,3500,False,False,Contractor F
+7,1,Langholt 33,fix hottub,Emergency Repair,1502922929,500,False,False,{'Contractor D'}
+8,7,Tunguháls 12,Fix hottub,Regular Maintenance,1502922929,0,True,False,"{' Gunnar', 'Sigga'}"
+9,7,Tunguháls 33,Fixed wall,Regular Maintenance,1502922929,600,True,False,"Jón, Páll"
