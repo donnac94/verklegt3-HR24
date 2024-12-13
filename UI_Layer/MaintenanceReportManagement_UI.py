@@ -145,7 +145,7 @@ class MaintenanceReportUI:
                 print("Invalid upkeep status. Please try again.")
 
         while True:
-            employee = input("Enter Employee: ").strip()
+            employee = input("Enter Employee SSN: ").strip()
             if employee == 'b':
                 return
             if InputValidation.validate_employee(employee):
