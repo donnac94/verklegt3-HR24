@@ -18,7 +18,9 @@
 - If that all works and is setup you are ready to go open the application and open main.py
 
 ## Step 2
-- Select the main.py file and then just run the program
+- Select the main.py file and then just run the program from the terminal 
+- Select full screen and then enter this in your terminal to run the program 
+- python YOUR_PATH\main.py
 - After you have run the program correctly then the main LoginUI.py pops up on your Terminal
 - after running the program you get a multiple choice option to choose from if you are a supervisor you get the supervisor menu or if you pick the employee you get the employee menu 
 
@@ -27,6 +29,6 @@
 
 ## Step 3 
 - After choosing your menu they will appear according if you are an Employee or an Supervisor
-  
+
 
 
