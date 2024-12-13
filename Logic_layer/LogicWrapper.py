@@ -19,9 +19,6 @@ class LogicWrapper:
         self.search_logic = SearchLogic()
 
     # PropertyLogic
-    def get_maintenance_history(self, property_id: int) -> list:
-        return self.property_logic.get_maintenance_history(property_id)
-
     def list_properties(self) -> list:
         return self.property_logic.list_properties()
 
