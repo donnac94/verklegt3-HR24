@@ -51,3 +51,4 @@ class WorkOrderData():
             writer.writeheader()
             for work_order in work_orders:
                 writer.writerow(work_order.to_dict())
+            return "Work Order Marked as Finished"
