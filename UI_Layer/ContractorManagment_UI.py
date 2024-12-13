@@ -36,7 +36,7 @@ class ContractorUI():
             if employee_status == "supervisor":
                 print(d + " 2. Add New Contractor ".ljust(columns - 2) + d)
                 print(d + " 3. Update Contractor Information ".ljust(columns - 2) + d)
-            print(d + " b. Back to Login Menu ".ljust(columns - 2) + d)
+            print(d + " b. Back to Main Menu ".ljust(columns - 2) + d)
             print(c + h * (columns - 2) + c)
 
             choice = input("\nChoose an option: ").strip().lower()

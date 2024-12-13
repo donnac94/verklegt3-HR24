@@ -19,8 +19,4 @@ property_id,address,location,property_condition,supervisor,requires_maintenance
 20,Fellaberg 19,Reykjavík,Good,Donna Cruz,
 21,Gutenbrurr 19,Longyearbyen,Excellent,Lísa Alfreðs,
 22,WhaleStreet 1211,Tingwall,Excellent,Sarah Connor,fix doorway
-23,,,,,
-24,sldkfj,sldjkf,aslædghae,asieofh,['skjhfuaipwe']
-25,sldkjfah,haeifao,oievjoafv,æslkdjf,"['comma seperated', 'can be empty']"
-26,skldjfad,alskdjfla,leafoijdsf,laskjdfiejv,['læadkfjine']
-27,sdkjfaskdf,æasldkjflaæs,æalskdjfal,æslkdjf,['sældjfkalæsd']
+23,sldkjfa,alsdkjf,laskdjf,sælkdjf,"lskdjf, aslkdjf skdf"

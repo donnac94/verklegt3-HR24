@@ -36,7 +36,7 @@ class WorkOrderUI:
                 print(d + " 4. Update Work Order Information ".ljust(columns - 2) + d)
                 print(d + " 5. Close Work Order ".ljust(columns - 2) + d)
                 print(d + " 6. Reopen Work Order ".ljust(columns - 2) + d)
-            print(d + " b. Go Back ".ljust(columns - 2) + d)
+            print(d + " b. Back to Main Menu".ljust(columns - 2) + d)
             print(c + h * (columns - 2) + c)
 
             choice = input("Enter your choice: ").strip().lower()

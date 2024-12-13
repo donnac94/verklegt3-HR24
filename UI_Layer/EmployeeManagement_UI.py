@@ -30,7 +30,7 @@ class EmployeeManagementUI:
             if employee_status == "supervisor":
                 print(d + " 3. Update Employee Information ".ljust(columns - 2) + d)
                 print(d + " 4. Register New Employee ".ljust(columns - 2) + d)
-            print(d + " b. Back to Supervisor Menu ".ljust(columns - 2) + d)
+            print(d + " b. Back to Main Menu ".ljust(columns - 2) + d)
             print(c + h * (columns - 2) + c)
 
             choice = input("\nChoose an option: ").strip().lower()
