@@ -14,6 +14,16 @@ class Employee:
         location: str,
         is_supervisor: bool
     ) -> None:
+        """
+        :param str ssn: The unique SSN for this employee.
+        :param str full_name: The full name of the employee.
+        :param str address: The address of where the employee lives.
+        :param str phone: The home phone number for the employee.
+        :param str gsm: The GSM for this employee.
+        :param str email: The email of this employee.
+        :param str location: The location where this employee works.
+        :param bool is_supervisor: Whether this employee is a supervisor or not (True or False).
+        """
         self.ssn = ssn
         self.full_name = full_name
         self.address = address

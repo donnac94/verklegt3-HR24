@@ -4,9 +4,6 @@ import shutil
 
 from UI_Layer.Validation import InputValidation
 
-
-#TODO: Error handling, input validation
-
 class MaintenanceReportUI:
     def __init__(self, logic_wrapper: LogicWrapper):
         self.logic_wrapper = logic_wrapper

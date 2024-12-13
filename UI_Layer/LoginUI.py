@@ -19,7 +19,6 @@ class LoginUI:
     def display_menu(self):
         """Display the login menu and handle user input."""
         main_menu = MainMenu(self.logic_wrapper)
-        # employee_ui = EmployeeUI(self.logic_wrapper)
         while True:
             self.clear_terminal()
             columns, _ = self.get_terminal_size()

@@ -1,5 +1,19 @@
 class Property:
-    def __init__(self, property_id:int, address:str, location:str, property_condition:str, supervisor:str, requires_maintenance:str):
+    def __init__(self, 
+                 property_id: int, 
+                 address: str, 
+                 location:str, 
+                 property_condition: str, 
+                 supervisor: str, 
+                 requires_maintenance: str):
+        """
+        :param int property_id: the unique ID for this property.
+        :param str address: The address for this property.
+        :param str location: What location the property is in.
+        :param property_condition: A description of the property condition.
+        :param str supervisor: SSN of the supervisor managing this property.
+        :param str requires_maintenance: A description of everything that requires maintenance on this property.
+        """
         self.property_id = property_id
         self.address = address
         self.location = location

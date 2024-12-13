@@ -1,7 +1,6 @@
 from Logic_layer.LogicWrapper import LogicWrapper
 import os
 import shutil
-import sys
 
 from UI_Layer.ContractorManagment_UI import ContractorUI
 from UI_Layer.EmployeeManagement_UI import EmployeeManagementUI
