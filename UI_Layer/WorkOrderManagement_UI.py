@@ -37,6 +37,7 @@ class WorkOrderUI:
             choice = input("Enter your choice: ").strip().lower()
             if choice == "1":
                 self.list_all_work_orders()
+                continue
             elif choice == "2":
                 self.mark_work_order_finished()
             if employee_status == "supervisor":
@@ -48,6 +49,12 @@ class WorkOrderUI:
                     self.close_work_order()
                 elif choice == "6":
                     self.reopen_work_order()
+                
+                elif choice.lower() == 'b':
+                    return 
+                else:
+                    input("Invalid. Press Enter to return to the menu: ")
+                    
             elif choice == "b":
                 return
             else:
@@ -67,7 +74,7 @@ class WorkOrderUI:
         while True:
             choice = input("\nEnter 'b' to go back: ").strip().lower()
             if choice == 'b':
-                return
+                return 
             else:
                 print("Invalid choice. Please try again.")
 
@@ -257,6 +264,11 @@ class WorkOrderUI:
         self.clear_terminal()
         print("Mark work order as Finished")
         work_order_id = input("Enter work order ID: ").strip()
+        if work_order_id == 'b':
+            return
         result = self.logic_wrapper.mark_work_order_finished(work_order_id)
-        print(result)
-        input("\nPress Enter to return to the menu.")
+        if not result:
+            print("No work order with this ID.")
+        else:
+            print(result)
+            input("\nPress Enter to return to the menu.")

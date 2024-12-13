@@ -3,9 +3,10 @@ work_order_id,work_to_be_done,property,submitting_supervisor,date,priority,work_
 2,Window cleaning,456 Elm St,Ylfa Sig,2024-12-02 11:00:00,Medium,Open,False
 3,Fix heater,789 Oak St,Brad Pitt,2024-12-03 12:00:00,High,Open,True
 4,Fix plumbing,101 Pine St,John Doe,2024-12-04 13:00:00,Low,Open,True
-5,Garden maintenance,202 Maple St,Sarah Connor,2024-12-05 14:00:00,Medium,Open,False
+5,Garden maintenance,202 Maple St,Sarah Connor,2024-12-05 14:00:00,Medium,Open,True
 6,Fix bathroom tile,303 Birch St,Lísa Alfreðs,2024-12-06 15:00:00,High,Closed,True
 7,fix tile,11,Donna,2024-12-12 12:12:12,High,Open,True
-8,,,,,,Open,False
+8,,,,,,Closed,False
 9,fix tile,Lækjargata 4,Donna Cruz,2024-12-12 12:12:12,High,Closed,True
 10,fix tile,Lækargata 44,Donna Cruz,2024-12-12 12:12:12,Medium,Closed,True
+11,fix floor,Tunguháls 2,2507932379,2024-12-13 23-11-44,High,Closed,True
