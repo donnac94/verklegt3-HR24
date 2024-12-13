@@ -1,5 +1,4 @@
 from UI_Layer.MainMenu import SupervisorUI
-from UI_Layer.EmployeeUI import EmployeeUI
 from Logic_layer.LogicWrapper import LogicWrapper
 import os
 import shutil

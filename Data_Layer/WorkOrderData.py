@@ -42,7 +42,8 @@ class WorkOrderData():
                 work_order_found = True
 
         if not work_order_found:
-            raise ValueError(f"Work order with ID {work_order_id} not found.")
+            return False
+
 
         with open(self.file_name, 'w', newline='', encoding="utf-8") as csvfile:
             fieldnames = ["work_order_id", "work_to_be_done", "property", "submitting_supervisor", "date", "priority", "work_order_status", "marked_as_finished"]

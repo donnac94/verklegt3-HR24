@@ -19,10 +19,6 @@ class LogicWrapper:
         self.search_logic = SearchLogic()
 
     # PropertyLogic
-    def get_maintenance_history(self, property_id: int) -> list:
-        """Returns the maintenance history as a list"""
-        return self.property_logic.get_maintenance_history(property_id)
-
     def list_properties(self) -> list:
         """Returns all the properties as a list"""
         return self.property_logic.list_properties()
@@ -190,3 +186,6 @@ class LogicWrapper:
     def get_work_plan(self):
         """test"""
         return self.employee_logic.get_work_plan()
+    
+    def check_if_employee_exists(self, ssn: int):
+        return self.employee_logic.check_if_employee_exists(ssn)
