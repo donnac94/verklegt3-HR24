@@ -93,3 +93,14 @@ class MaintenanceReportLogic:
                 return report
             
         return False
+    
+    def automatic_report_id(self):
+        """
+        Gets the latest maintenance report ID and increments it by 1.
+        """
+        reports = self.get_all_maintenance_reports()
+        if not reports:
+            return 1
+        latest_report = reports[-1]
+        latest_id = int(latest_report.maintenance_report_id)
+        return latest_id + 1
