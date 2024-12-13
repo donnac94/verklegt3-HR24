@@ -8,6 +8,7 @@ class PropertyLogic:
         self.property_data = PropertyData()
 
     def add_property(self, property_details: dict) -> str:
+        """test"""
         # Check if property already in system
         existing_properties = self.data_wrapper.list_properties()
         for property in existing_properties:
@@ -34,18 +35,27 @@ class PropertyLogic:
         return "Property added successfully."
 
     def list_properties(self) -> list[Property]:
+        """test"""
         properties = self.data_wrapper.list_properties()
         if not properties:
             return []
         return properties
 
     def update_property(self, property_id, updated_details: dict) -> str:
+        """
+        
+        """
         if "requires_maintenance" in updated_details:
             updated_details["requires_maintenance"] = [item.strip() for item in updated_details["requires_maintenance"] if item.strip()]
         self.data_wrapper.update_property(property_id, updated_details)
         return "Property updated successfully."
 
     def get_property_by_id(self, property_id):
+        """
+        Gets all the properties
+        :will check if the all the properties and return the property by the id 
+        :if the id does not exist then there will be a error message that says that the input was invalid
+        """
         properties = self.data_wrapper.list_properties()
         for property in properties:
             if property.property_id == property_id:
@@ -53,6 +63,11 @@ class PropertyLogic:
         raise ValueError(f"Property with ID {property_id} not found.")
 
     def property_exists(self, address: str) -> bool:
+        """
+        Checks if the property exists or not
+        :if the address exists it will return True
+        :else if the address does not exist it will return False
+        """
         existing_properties = self.data_wrapper.list_properties()
         for property in existing_properties:
             if property.address == address:

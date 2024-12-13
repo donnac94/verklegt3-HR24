@@ -84,6 +84,7 @@ class WorkOrderLogic:
         return "Work order and connected maintenance report reopened successfully."
     
     def automatic_work_order_id(self):
+        """"""
         work_orders = self.get_all_work_orders()
         if not work_orders:
             return 1
@@ -95,5 +96,4 @@ class WorkOrderLogic:
         Marks a work order as finished.
         :param int work_order_id: The ID of the work order to be marked as finished.
         """
-        self.change_work_order_info(work_order_id, "marked_as_finished", "True")
-        return "Work order marked as finished."
+        return self.change_work_order_info(work_order_id, "marked_as_finished", "True")
