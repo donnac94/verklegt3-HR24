@@ -10,10 +10,6 @@ class EmployeeLogic:
         Register a new employee, takes the input and assigns by id 
         :employee_details (dict): checks if the employee details already exist and return a error message
         """
-        existing_employees = self.data_wrapper.list_employees()
-        if any(emp.ssn == employee_details["ssn"] for emp in existing_employees):
-            return "Error: Employee with this SSN already exists." #Mögulega betra að hafa raise ValueError("Error: Employee with this SSN already exists.")
-        
         new_employee = Employee(
             ssn=employee_details["ssn"],
             full_name=employee_details["full_name"],
@@ -70,3 +66,12 @@ class EmployeeLogic:
             if work_order.priority.lower() == "low":
                 work_plan.append(work_order)
         return work_plan
+    
+    def check_if_employee_exists(self, ssn: int):
+        """
+        Checks if employee with given SSN already exists.
+        :param int ssn: the ssn you want to check for.
+        """
+        employees = self.data_wrapper.list_employees()  # Fetch all employees
+        if any(emp.ssn == ssn for emp in employees):  # Check if the SSN exists
+            return "An employee with that SSN already exists"

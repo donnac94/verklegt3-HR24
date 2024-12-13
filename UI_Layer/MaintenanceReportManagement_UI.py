@@ -12,6 +12,7 @@ class MaintenanceReportUI:
         self.logic_wrapper = logic_wrapper
 
     def clear_terminal(self):
+        """Clears the terminal screen"""
         os.system('cls' if os.name == 'nt' else 'clear')
 
     def get_terminal_size(self):
@@ -20,6 +21,10 @@ class MaintenanceReportUI:
         return columns, rows
 
     def display_menu(self, employee_status: str):
+        """
+        Shows display menu for maintenance report management and handle user input.
+        :param str employee_status: Either "employee" or "supervisor" which the display uses to know what options should show.
+        """
         while True:
             self.clear_terminal()
             columns, _ = self.get_terminal_size()
@@ -60,6 +65,9 @@ class MaintenanceReportUI:
                 input("\nPress Enter to return to the menu.")
                 
     def list_all_reports(self):
+        """
+        Lists all maintenance reports in CSV file.
+        """
         self.clear_terminal()
         columns, _ = self.get_terminal_size()
         print("+".ljust(columns - 1, '-') + "+")
@@ -83,6 +91,9 @@ class MaintenanceReportUI:
         input("\nPress Enter to return to the menu.")
 
     def submit_maintenance_report(self):
+        """
+        Adds a new maintenance report to the maintenance reports CSV file.
+        """
         self.clear_terminal()
         columns, _ = self.get_terminal_size()
         print("+".ljust(columns - 1, '-') + "+")
@@ -192,6 +203,9 @@ class MaintenanceReportUI:
         self.list_all_reports()
 
     def update_report_info(self):
+        """
+        Updates selected maintenance report with a new value in the chosen field.
+        """
         self.clear_terminal()
         columns, _ = self.get_terminal_size()
         print("+".ljust(columns - 1, '-') + "+")
@@ -308,6 +322,9 @@ class MaintenanceReportUI:
         input("\nPress Enter to return to the menu.")
 
     def mark_report_finished(self):
+        """
+        Marks an maintenance report as finished.
+        """
         self.clear_terminal()
         print("Mark Maintenance Report as Finished")
         report_id = input("Enter Report ID: ").strip()
@@ -319,7 +336,9 @@ class MaintenanceReportUI:
             input("\nPress Enter to return to the menu.")
 
     def close_report(self):
-
+        """
+        Closes a maintenance report. Changes report_closed to True.
+        """
         self.clear_terminal()
         print("Close Maintenance Report")
         report_id = input("Enter Report ID: ").strip()
@@ -332,6 +351,9 @@ class MaintenanceReportUI:
 
 
     def reopen_report(self):
+        """
+        Reopen a maintenance report. Changes report_closed to False.
+        """
         self.clear_terminal()
         print("Reopen Maintenance Report")
         report_id = input("Enter Report ID: ").strip()

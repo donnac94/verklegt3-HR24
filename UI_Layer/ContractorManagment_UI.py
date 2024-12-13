@@ -10,6 +10,7 @@ class ContractorUI():
         self.logic_wrapper = logic_wrapper
 
     def clear_terminal(self):
+        """Clears the terminal screen"""
         os.system('cls' if os.name == 'nt' else 'clear')
     
     def get_terminal_size(self):
@@ -17,7 +18,11 @@ class ContractorUI():
         columns, rows = shutil.get_terminal_size(fallback=(80, 24))
         return columns, rows
     
-    def display_menu(self, employee_status):
+    def display_menu(self, employee_status: str):
+        """
+        Shows display menu for contractor management and handle user input.
+        :param str employee_status: Either "employee" or "supervisor" which the display uses to know what options should show.
+        """
         while True:
             self.clear_terminal()
             columns, _ = self.get_terminal_size()
@@ -50,6 +55,9 @@ class ContractorUI():
                 input("\nPress Enter to return to the menu.")
 
     def list_contractors(self):
+        """
+        Lists all contractors in CSV file.
+        """
         self.clear_terminal()
         columns, _ = self.get_terminal_size()
 
@@ -71,6 +79,9 @@ class ContractorUI():
         input("\nPress Enter to return to the menu.")
     
     def create_contractor(self):
+        """
+        Adds a new contractor to the contractors CSV file.
+        """
         self.clear_terminal()
         columns, _ = self.get_terminal_size()
         print("+".ljust(columns - 1, '-') + "+")
@@ -155,7 +166,9 @@ class ContractorUI():
         input("\nPress Enter to return to the menu.")
 
     def change_contractor_info(self):
-        """ Change a contractor's information. """
+        """
+        Updates selected contractor with a new value in the chosen field.
+        """
         self.clear_terminal()
         columns, _ = self.get_terminal_size()
         print("+".ljust(columns - 1, '-') + "+")

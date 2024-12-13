@@ -9,7 +9,7 @@ class PropertyUI:
         self.logic_wrapper = logic_wrapper
 
     def clear_terminal(self):
-        """Clears the terminal."""
+        """Clears the terminal screen"""
         os.system('cls' if os.name == 'nt' else 'clear')
 
     def get_terminal_size(self):
@@ -18,7 +18,7 @@ class PropertyUI:
         return columns, rows
 
     def display_menu(self, employee_status):
-        """Shows display menu for property management"""
+        """Shows display menu for property management and handle user input"""
         while True:
             self.clear_terminal()
             columns, _ = self.get_terminal_size()
