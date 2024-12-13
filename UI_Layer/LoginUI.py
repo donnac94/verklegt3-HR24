@@ -18,7 +18,7 @@ class LoginUI:
 
     def display_menu(self):
         """Display the login menu and handle user input."""
-        supervisor_ui = SupervisorUI(self.logic_wrapper)
+        main_menu = MainMenu(self.logic_wrapper)
         # employee_ui = EmployeeUI(self.logic_wrapper)
         while True:
             self.clear_terminal()
@@ -38,9 +38,9 @@ class LoginUI:
             choice = input("\nChoose an option: ").strip().lower()
 
             if choice == "1":
-                MainMenu.display_menu("supervisor")
+                main_menu.display_menu("supervisor")
             elif choice == "2":
-                MainMenu.display_menu("employee")
+                main_menu.display_menu("employee")
             elif choice == "q":
                 print("\n Exiting. Goodbye!")
                 break
