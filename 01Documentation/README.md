@@ -18,9 +18,12 @@
 - If that all works and is setup you are ready to go open the application and open main.py
 
 ## Step 2
-- Select the main.py file and then just run the program from the terminal 
-- Select full screen and then enter this in your terminal to run the program 
-- python YOUR_PATH\main.py
+- 
+- First you should get the path for where your verklegt3-HR24 file is
+- Open your terminal/command line
+- make the terminal full screen
+- then input cd 'your path for verklegt3-HR24'
+- Lastly input python main.py
 - After you have run the program correctly then the main LoginUI.py pops up on your Terminal
 - after running the program you get a multiple choice option to choose from if you are a supervisor you get the supervisor menu or if you pick the employee you get the employee menu 
 
